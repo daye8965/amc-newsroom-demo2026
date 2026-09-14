@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>현재 vs 개편안 | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=8">
+<link rel="stylesheet" href="assets/css/main.css?v=9">
 <style>
   .cmp{margin-bottom:52px}
   .cmp-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
@@ -326,7 +326,8 @@
   <!-- 3. 등록 화면 -->
   <section class="cmp">
     <div class="cmp-h"><span class="n">비교 03</span><h2>콘텐츠 등록 — 담당자 업무</h2></div>
-    <p class="cmp-lead">직원 의견의 20.0%가 몰린 영역이며, 분석 리포트에서 최우선 과제로 꼽힌 항목입니다. 같은 정보를 두 화면에 나눠 입력하는 구조가 핵심 문제입니다.</p>
+    <p class="cmp-lead">직원 의견의 20.0%가 몰린 영역이며, 분석 리포트에서 최우선 과제로 꼽힌 항목입니다. 같은 정보를 두 번 입력하는 구조가 핵심 문제입니다.
+      다만 아카이브 구조 전면 개편은 이번 범위에 포함되지 않는다고 전달받았으므로, <b>두 영역은 그대로 두고 「게시물 끌고오기」로 재입력만 없애는</b> 방향으로 제안합니다.</p>
 
     <div class="pair">
       <div class="side now">
@@ -357,30 +358,34 @@
       </div>
 
       <div class="side next">
-        <div class="side-h"><span class="dot"></span>개편안 — 화면 1개</div>
+        <div class="side-h"><span class="dot"></span>개편안 — 화면 2개 유지 + 끌고오기</div>
         <div class="side-b">
           <div class="mk">
             <div class="mk-screens">
-              <div class="mk-scr" style="flex:1.6">
-                <div class="h">통합 등록화면</div>
+              <div class="mk-scr">
+                <div class="h">① 언론정보 (아카이브)</div>
                 <div class="ln"></div><div class="ln"></div><div class="ln s"></div>
-                <div style="font-size:7.5px;color:var(--ink-3);margin-top:5px">드래그 업로드 · 썸네일 클릭 지정<br>AI 태그 자동 추출 · KEY는 선택</div>
+                <div style="font-size:7.5px;color:var(--ink-3);margin-top:5px">드래그 업로드 · 대표사진 클릭 지정<br>AI 태그 자동 추출 · KEY는 선택</div>
               </div>
-              <div class="mk-scr" style="flex:1">
-                <div class="h">노출 설정</div>
-                <div class="mk-ck"><i></i>아카이브</div>
-                <div class="mk-ck"><i></i>뉴스룸</div>
-                <div class="mk-ck"><i></i>메인 카드</div>
-                <div class="mk-ck"><i class="off"></i>롤링 배너</div>
-                <div class="mk-ck"><i></i>앱</div>
-                <div class="mk-ck"><i class="off"></i>푸시</div>
+              <div class="mk-arrow" style="color:var(--amc-blue)">→</div>
+              <div class="mk-scr">
+                <div class="h">② 대외용 콘텐츠 등록</div>
+                <div class="ln" style="background:#cfe4f6"></div>
+                <div class="ln" style="background:#cfe4f6"></div>
+                <div class="ln s" style="background:#cfe4f6"></div>
+                <div style="font-size:7.5px;color:var(--amc-blue);margin-top:5px">끌고오기로 <b>자동 입력됨</b><br>뉴스룸용으로 수정만</div>
               </div>
             </div>
-            <div style="font-size:8px;color:var(--amc-navy);margin-top:8px;line-height:1.6">
-              · 한 번 입력 → 체크한 채널에 자동 반영<br>
+            <div style="text-align:center;margin-top:9px">
+              <span style="display:inline-block;background:var(--amc-blue);color:#fff;font-size:8.5px;
+                           font-weight:800;border-radius:999px;padding:4px 12px">⬇ 게시물 끌고오기</span>
+            </div>
+            <div style="font-size:8px;color:var(--amc-navy);margin-top:9px;line-height:1.6">
+              · 두 영역은 그대로 — 아카이브 구조 개편은 이번 범위 밖<br>
+              · 제목·본문·대표사진을 버튼 한 번으로 아래에 채움<br>
+              · 메인 썸네일 600×400 자동 생성 (편집기 불필요)<br>
               · zip·xlsx·pptx 허용, 용량 상향, 드래그 앤 드롭<br>
-              · 의료진·질환·검사·시술·신체부위 태그 자동 추출<br>
-              · PC·모바일·앱 미리보기 · 예약 발행
+              · 의료진·질환·검사·시술·신체부위 태그 자동 추출
             </div>
           </div>
         </div>
@@ -490,8 +495,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=8"></script>
-<script src="assets/js/site.js?v=8"></script>
+<script src="assets/js/data.js?v=9"></script>
+<script src="assets/js/site.js?v=9"></script>
 <script>AMC.layout({ active: '' });</script>
 </body>
 </html>
