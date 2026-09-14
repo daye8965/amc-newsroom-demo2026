@@ -314,12 +314,6 @@ body.annot-on [data-annot]{outline:2px dashed rgba(194,65,12,.5);outline-offset:
 .tag.db{border-color:#cfe4f6;background:var(--bg-tint);color:var(--amc-navy);font-weight:600}
 .tag.db::before{content:"ID";font-size:9px;background:var(--amc-blue);color:#fff;border-radius:2px;padding:1px 3px;margin-right:5px;vertical-align:1px}
 
-/* 공유 */
-.sharesec{margin-top:30px;padding:20px;background:var(--bg-soft);border-radius:8px;
-  display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.sharesec .lb{font-size:13px;font-weight:700;color:var(--ink-2);margin-right:4px}
-.sharesec .removed{margin-left:auto;font-size:11.5px;color:var(--ink-3);text-decoration:line-through;opacity:.6}
-
 /* 연관 콘텐츠 */
 .related{margin-top:46px}
 .related h3{font-size:18px;margin-bottom:6px}
