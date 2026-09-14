@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>프레스센터 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=7">
+<link rel="stylesheet" href="assets/css/main.css?v=8">
 <style>
   /* ---------- 목록 ---------- */
   .prhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
@@ -26,7 +26,7 @@
   .pr .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
   .pr .tags span{font-size:11.5px;color:var(--amc-blue);background:var(--bg-tint);
     border:1px solid #cfe4f6;border-radius:3px;padding:3px 9px}
-  .pr .acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
+  .pr:hover h3{color:var(--amc-blue);text-decoration:underline;text-underline-offset:3px}
 
   /* ---------- 상세 ---------- */
   .detail{border:1px solid var(--line);border-radius:10px;padding:34px 38px;background:#fff}
@@ -154,15 +154,7 @@
       <span class="cnt">총 <b>563</b> 개 자료가 조회되었습니다.</span>
     </div>
 
-    <div class="annot">
-      <div class="annot-pin"><b>18</b> 목록에서 바로 공유·다운로드</div>
-      <div class="annot-box">
-        상세로 들어가지 않고 목록에서 바로 본문을 복사하거나 사진을 내려받을 수 있게 했습니다. 기자가 여러 건을 훑을 때 클릭 수가 줄어듭니다.
-        <span class="src">근거 · 9/14 회의 「프레스센터 한글 파일 다운로드 → 텍스트 복사 기능으로 대체 검토」</span>
-      </div>
-    </div>
-
-    <div class="prlist" id="prlist" data-annot></div>
+    <div class="prlist" id="prlist"></div>
   </div>
 </section>
 
@@ -174,10 +166,10 @@
     <div class="annot">
       <div class="annot-pin"><b>13</b> 공유 버튼 하나로 — 본문 복사 · 사진 선택 다운로드</div>
       <div class="annot-box">
-        현재는 사진을 <b>한 장씩</b> 눌러야 하고, 본문을 가져가려면 한글 파일을 내려받아 다시 열어야 합니다. 개편안에서는 공유 버튼을 누르면 <b>본문 텍스트 복사 · 사진 선택 다운로드 · 첨부파일 · 링크 공유</b>가 한 패널에 모입니다. 삼성전자 뉴스룸의 프레스킷 방식입니다.
+        현재는 사진을 <b>한 장씩</b> 눌러야 하고, 본문을 가져가려면 한글 파일을 내려받아 다시 열어야 합니다. 개편안에서는 기사에 들어와 <b>공유 버튼</b>을 누르면 <b>본문 텍스트 복사 · 사진 선택 다운로드 · 첨부파일 · 링크 공유</b>가 한 패널에 모입니다. 삼성전자 뉴스룸의 프레스킷 방식입니다.
         <span class="src">근거 · 9/14 회의 「프레스센터 한글 파일 다운로드 → 텍스트 복사 기능으로 대체」 / 분석 리포트 「프레스센터에서 사진 다운로드와 본문 복사를 쉽게」</span>
       </div>
-      <div class="annot-pin"><b>19</b> 공감 5종 → 스크랩</div>
+      <div class="annot-pin"><b>18</b> 공감 5종 → 스크랩</div>
       <div class="annot-box">
         유용해요·추천해요·좋아요·공감해요·후속강추 5종은 로그인 없이 중복 클릭이 가능해 숫자를 신뢰하기 어렵습니다. 스크랩 하나로 정리했습니다.
         <span class="src">근거 · 9/14 회의 「스크랩 기능은 전체 도입, 좋아요 서비스는 삭제 방향」</span>
@@ -234,10 +226,10 @@
         </span>
       </div>
 
-      <div style="margin-top:26px;padding-top:20px;border-top:1px solid var(--line);display:flex;gap:9px;flex-wrap:wrap">
-        <button class="sharebtn" onclick="openDrawer('text')">📋 본문 텍스트 복사</button>
-        <button class="sharebtn ghost" onclick="openDrawer('photo')">🖼 사진 선택 다운로드</button>
-        <button class="sharebtn ghost" onclick="openDrawer('file')">📎 첨부파일</button>
+      <div style="margin-top:26px;padding-top:20px;border-top:1px solid var(--line);
+                  display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <span style="font-size:13px;color:var(--ink-3)">본문 텍스트 · 사진 원본 · 첨부파일이 필요하신가요?</span>
+        <button class="sharebtn" onclick="openDrawer()">⤴ 공유 · 다운로드</button>
       </div>
     </article>
   </div>
@@ -356,8 +348,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=7"></script>
-<script src="assets/js/site.js?v=7"></script>
+<script src="assets/js/data.js?v=8"></script>
+<script src="assets/js/site.js?v=8"></script>
 <script>
 AMC.layout({ active: 'press' });
 
@@ -380,17 +372,13 @@ var LIST = [
 ];
 
 document.getElementById('prlist').innerHTML = LIST.map(function (p) {
-  return '<article class="pr">' +
+  return '<a class="pr" href="#detail">' +
     '<div class="th">' + AMC.ph(p.c1, p.c2, '보도자료 사진') + '</div>' +
     '<div><div class="meta"><span>' + p.d + '</span><span class="cat">' + p.c + '</span></div>' +
     '<h3>' + p.t + '</h3>' +
     '<p class="ex">' + p.e + '</p>' +
     '<div class="tags">' + p.tg.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
-    '<div class="acts">' +
-    '<button class="btn sm" onclick="openDrawer(\'text\')">📋 본문 복사</button>' +
-    '<button class="btn sm" onclick="openDrawer(\'photo\')">🖼 사진 다운로드</button>' +
-    '<a class="btn sm" href="#detail">상세 보기 ›</a>' +
-    '</div></div></article>';
+    '</div></a>';
 }).join('');
 
 /* ---------- Fast Facts / 미디어 라이브러리 ---------- */
