@@ -5,6 +5,7 @@
   'use strict';
 
   var PAGES = [
+    { href: 'start.html', label: '시연 시작' },
     { href: 'index.html', label: '뉴스룸 메인' },
     { href: 'article.html', label: '기사 상세' },
     { href: 'press.html', label: '프레스센터' },

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>뉴스룸 개편 시안 시연 | 서울아산병원 홍보팀</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="2026 뉴스룸 웹·앱 통합개편 시연용 프로토타입 시작 페이지">
+<link rel="stylesheet" href="assets/css/main.css?v=7">
+<style>
+  .cover{background:linear-gradient(140deg,#00223f,#00335f 45%,#0064ae);color:#fff;padding-block:56px}
+  .cover .tag{font-size:12px;font-weight:700;letter-spacing:.08em;color:#8fd0ff}
+  .cover h1{font-size:38px;letter-spacing:-.045em;margin-top:12px;line-height:1.25;color:#fff}
+  @media (max-width:640px){.cover h1{font-size:27px}.cover{padding-block:38px}}
+  .cover p{font-size:15.5px;color:#c7ddf0;margin-top:16px;max-width:720px;line-height:1.75}
+  .cover .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+  .cover .meta span{font-size:12px;border:1px solid rgba(255,255,255,.3);border-radius:999px;
+    padding:5px 14px;color:#dbe9f5}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media (max-width:920px){.steps{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:600px){.steps{grid-template-columns:1fr}}
+  .step{border:1px solid var(--line);border-radius:10px;background:#fff;padding:22px;
+    display:flex;flex-direction:column;transition:.15s}
+  .step:hover{border-color:var(--amc-blue);box-shadow:0 6px 22px rgba(0,100,174,.09);transform:translateY(-2px)}
+  .step .n{width:26px;height:26px;border-radius:50%;background:var(--amc-blue);color:#fff;
+    font-size:12px;font-weight:800;display:grid;place-items:center}
+  .step.key .n{background:#c2410c}
+  .step h3{font-size:17px;margin-top:13px;letter-spacing:-.03em}
+  .step .k{font-size:11px;font-weight:800;color:#c2410c;margin-top:6px;letter-spacing:.02em}
+  .step p{font-size:13px;color:var(--ink-3);line-height:1.7;margin-top:9px;flex:1}
+  .step .go{margin-top:16px;font-size:13px;font-weight:700;color:var(--amc-blue)}
+
+  .howto{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media (max-width:820px){.howto{grid-template-columns:1fr}}
+  .how{border:1px solid var(--line);border-radius:10px;padding:20px;background:#fff}
+  .how .badge{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;
+    border-radius:999px;padding:5px 13px}
+  .how .badge.o{background:#c2410c;color:#fff}
+  .how .badge.b{background:var(--amc-navy);color:#fff}
+  .how .badge.g{background:#fff7ed;color:#9a3412;border:1px solid #f0e0d2}
+  .how p{font-size:13px;color:var(--ink-3);line-height:1.75;margin-top:11px}
+
+  .linkbox{border:1px solid var(--line);border-radius:10px;background:var(--bg-soft);padding:22px 24px}
+  .linkbox .u{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;
+    color:var(--amc-navy);word-break:break-all;font-weight:600;line-height:1.6}
+  .linkbox .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
+
+  .tips{display:grid;gap:9px}
+  .tip{display:flex;gap:11px;font-size:13.5px;color:var(--ink-2);line-height:1.7}
+  .tip i{flex:none;width:20px;height:20px;border-radius:50%;background:var(--bg-tint);
+    color:var(--amc-blue);font-size:11px;font-weight:800;display:grid;place-items:center;
+    font-style:normal;margin-top:2px}
+</style>
+</head>
+<body>
+
+<div id="site-top"></div>
+
+<div class="cover">
+  <div class="wrap">
+    <div class="tag">2026 뉴스룸 웹·앱 통합개편</div>
+    <h1>서울아산병원 뉴스룸<br>개편 시안 시연</h1>
+    <p>직원 의견 취합 결과와 회의 결정 사항을 실제 화면으로 옮긴 프로토타입입니다.
+       삼성전자 뉴스룸의 카드형 레이아웃을 기준 방향으로 삼았습니다.
+       아래 순서대로 보시면 설명이 이어집니다.</p>
+    <div class="meta">
+      <span>홍보팀 언론Unit</span>
+      <span>내부 검토용</span>
+      <span>기사·인물·수치는 모두 가상 예시</span>
+    </div>
+  </div>
+</div>
+
+<!-- 시연 순서 -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head"><h2>시연 순서</h2><span class="desc">카드를 누르면 해당 화면으로 이동합니다</span></div>
+    <div class="steps">
+
+      <a class="step" href="compare.html">
+        <span class="n">1</span>
+        <h3>현재 vs 개편안</h3>
+        <p>지금 뉴스룸과 개편안을 항목별로 나란히 비교합니다. 메인 구조, 기사 하단, 등록 화면, 컬러, 검색 5개 항목. “지금 이게 불편하죠”로 시작하는 도입부입니다.</p>
+        <span class="go">비교 화면 열기 →</span>
+      </a>
+
+      <a class="step key" href="admin.html">
+        <span class="n">2</span>
+        <div class="k">★ 핵심 화면</div>
+        <h3>업로드 페이지 (관리자)</h3>
+        <p>담당자 업무와 직결되는 화면입니다. 실제 등록 폼을 재현한 <b>현재 화면</b>과 이중 입력을 없앤 <b>개편 가안</b>을 전환하며 봅니다. 「문제 지점 표시」를 켜고 설명하세요.</p>
+        <span class="go">업로드 페이지 열기 →</span>
+      </a>
+
+      <a class="step" href="index.html">
+        <span class="n">3</span>
+        <h3>뉴스룸 메인</h3>
+        <p>삼성전자 방식 카드형 목록, 롤링 축소, 상단 메뉴 중복 제거, ‘리서치·AI’ 신설, 건강TV 하단 배치.</p>
+        <span class="go">메인 화면 열기 →</span>
+      </a>
+
+      <a class="step" href="article.html">
+        <span class="n">4</span>
+        <h3>기사 상세</h3>
+        <p>AI 3줄 요약, 태그 5종 확장, 연관 콘텐츠 텍스트 목록, 이전·다음 글, 스크랩(좋아요 삭제), 링크드인 공유.</p>
+        <span class="go">기사 화면 열기 →</span>
+      </a>
+
+      <a class="step key" href="press.html#detail">
+        <span class="n">5</span>
+        <div class="k">★ 실제 동작</div>
+        <h3>프레스센터</h3>
+        <p>공유 버튼 하나로 <b>본문 텍스트 복사</b>와 <b>사진 선택 다운로드</b>. 복사는 실제로 동작하니 메모장에 붙여넣어 보여주면 효과적입니다.</p>
+        <span class="go">프레스센터 열기 →</span>
+      </a>
+
+      <a class="step" href="app.html">
+        <span class="n">6</span>
+        <h3>앱 화면</h3>
+        <p>앱이 통합 홈페이지의 뉴스룸을 그대로 쓰는 구조. 앱 메인·기사 상세·푸시 선별 발송 관리.</p>
+        <span class="go">앱 화면 열기 →</span>
+      </a>
+
+      <a class="step" href="guide.html">
+        <span class="n">7</span>
+        <h3>개편 포인트 정리</h3>
+        <p>직원 의견 비중, 요구사항 19건 → 구현 화면 매핑표, 4단계 로드맵, 업체(디콘) 선확인 필요 사항. 마무리 자료로 사용하세요.</p>
+        <span class="go">정리 문서 열기 →</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- 사용법 -->
+<section class="sec" style="background:var(--bg-soft);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head"><h2>화면에 있는 버튼 세 가지</h2><span class="desc">설명할 때 쓰는 도구입니다</span></div>
+    <div class="howto">
+      <div class="how">
+        <span class="badge o">개편 포인트</span>
+        <p>모든 화면 <b>우측 하단</b>에 있습니다. 누르면 번호가 붙은 설명이 화면 위에 떠서, 무엇이 바뀌었고 그 근거가 어느 회의의 어떤 결정인지 함께 보입니다. 다시 누르면 숨겨집니다.</p>
+      </div>
+      <div class="how">
+        <span class="badge b">현재 화면 / 개편 가안</span>
+        <p>업로드 페이지 <b>상단</b>에 있습니다. 같은 화면의 두 버전을 오갑니다. 현재 화면은 실제 등록 폼의 필드와 안내문구를 그대로 옮긴 것입니다.</p>
+      </div>
+      <div class="how">
+        <span class="badge g">문제 지점 표시</span>
+        <p>업로드 페이지의 ‘현재 화면’에서만 나타납니다. 켜면 어느 필드가 왜 불편한지 주황색으로 표시됩니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 링크 -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head"><h2>시연 링크</h2><span class="desc">인터넷만 되면 어느 컴퓨터에서든 바로 열립니다</span></div>
+    <div class="linkbox">
+      <div class="u" id="shareUrl">https://daye8965.github.io/amc-newsroom-demo2026/start.html</div>
+      <div class="row">
+        <button class="btn pri" onclick="copyLink()">🔗 링크 복사</button>
+        <button class="btn" onclick="AMC.toast('브라우저 메뉴에서 인쇄 → PDF로 저장하시면 배포 자료로 쓸 수 있습니다')">🖨 인쇄 안내</button>
+      </div>
+    </div>
+
+    <div class="tips" style="margin-top:26px">
+      <div class="tip"><i>1</i><span>로그인이나 설치가 필요 없습니다. 링크를 메일·메신저로 보내면 받는 분이 바로 열 수 있습니다.</span></div>
+      <div class="tip"><i>2</i><span>휴대폰에서도 열립니다. 모바일 화면 구성을 함께 보여줄 때 쓰세요.</span></div>
+      <div class="tip"><i>3</i><span>시연 장소 인터넷이 불안하면 <b>오프라인 대비</b>를 해두세요. 저장소 페이지에서 <b>Code → Download ZIP</b>으로 받아 압축을 풀고 <code>start.html</code>을 더블클릭하면 인터넷 없이 똑같이 동작합니다.</span></div>
+      <div class="tip"><i>4</i><span>화면이 예전 것으로 보이면 <b>Ctrl+Shift+R</b>로 새로고침하세요.</span></div>
+    </div>
+
+    <div style="margin-top:22px;font-size:13px;color:var(--ink-3);line-height:1.8">
+      저장소 · <a href="https://github.com/daye8965/amc-newsroom-demo2026" style="color:var(--amc-blue);font-weight:600">github.com/daye8965/amc-newsroom-demo2026</a>
+    </div>
+
+    <div style="border:1px solid #f3dcc0;background:#fff7ed;border-radius:8px;padding:16px 18px;
+                font-size:13px;color:#7c2d12;line-height:1.75;margin-top:26px">
+      <b>안내</b> — 이 페이지는 화면 구성과 동선을 합의하기 위한 <b>시안</b>입니다. 실제 서비스가 아니며 데이터·검색·업로드는 동작하지 않습니다.
+      게시된 기사·인물·수치는 모두 가상이며, 실제 직원·의료진 이름은 사용하지 않았습니다.
+      색상·폰트·간격은 통합 홈페이지 디자인 시스템이 확정되면 그에 맞춰 조정해야 합니다.
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/data.js?v=7"></script>
+<script src="assets/js/site.js?v=7"></script>
+<script>
+AMC.layout({ active: '' });
+
+document.getElementById('shareUrl').textContent = location.href.split('#')[0];
+
+function copyLink() {
+  var u = location.href.split('#')[0];
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(u).then(
+      function () { AMC.toast('시연 링크를 복사했습니다.'); },
+      function () { AMC.toast('링크: ' + u); });
+  } else { AMC.toast('링크: ' + u); }
+}
+</script>
+</body>
+</html>
