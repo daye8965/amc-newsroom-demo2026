@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>업로드 페이지 가안 | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=12">
+<link rel="stylesheet" href="assets/css/main.css?v=13">
 <style>
   /* ===== 모드 전환 바 ===== */
   .modebar{background:#fff;border:1px solid var(--line);
@@ -217,6 +217,35 @@
   .thumbpick .tp .ph{aspect-ratio:3/2;border-radius:5px;font-size:10.5px}
   .thumbpick .tx{flex:1 1 220px;font-size:12.5px;color:var(--ink-3);line-height:1.7}
   .thumbpick .tx b{color:var(--ink)}
+
+  /* 썸네일 구도 조정 */
+  .cropper{border:1px solid #cfe4f6;background:#f4faff;border-radius:8px;padding:16px;margin-top:12px}
+  .cp-h{font-size:13.5px;font-weight:800;color:var(--amc-navy);margin-bottom:13px}
+  .cp-h span{font-weight:500;color:var(--ink-3);font-size:12px;margin-left:8px}
+  .cp-body{display:grid;grid-template-columns:1fr 230px;gap:16px;align-items:start}
+  @media (max-width:820px){.cp-body{grid-template-columns:1fr}}
+
+  .cp-src{position:relative;aspect-ratio:4/3;border-radius:6px;overflow:hidden;
+    background:linear-gradient(135deg,var(--c1,#00335f),var(--c2,#0091d4))}
+  .cp-subject{position:absolute;left:72%;top:40%;transform:translate(-50%,-50%);
+    width:22%;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.92);
+    display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--amc-navy);
+    box-shadow:0 2px 12px rgba(0,0,0,.3)}
+  .cp-frame{position:absolute;border:2px solid #fff;border-radius:2px;
+    box-shadow:0 0 0 9999px rgba(0,22,44,.5);transition:.18s ease;pointer-events:none}
+  .cp-frame::after{content:"600 × 400";position:absolute;left:5px;top:4px;
+    font-size:9.5px;font-weight:800;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+  .cp-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}
+  .cp-grid button{border:0;background:transparent;transition:.12s}
+  .cp-grid button:hover{background:rgba(255,255,255,.2);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}
+
+  .cp-lb{font-size:11.5px;font-weight:800;color:var(--ink-3);margin-bottom:6px}
+  .cp-prev{width:100%;aspect-ratio:3/2;border-radius:6px;overflow:hidden;position:relative;
+    border:1px solid var(--line);background:#eef1f5}
+  .cp-shot{position:absolute;background:linear-gradient(135deg,var(--c1,#00335f),var(--c2,#0091d4))}
+  .cp-range{width:100%;accent-color:var(--amc-blue);margin-top:2px}
+  .cp-note{font-size:11px;color:var(--ink-3);line-height:1.65;margin-top:10px}
+  .cp-acts{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}
 
   .pvtabs{display:flex;gap:4px}
   .pvtabs button{border:1px solid var(--line);background:#fff;border-radius:999px;
@@ -716,7 +745,7 @@
         </div>
 
         <div class="fld">
-          <label>메인 썸네일 이미지 <span class="hint">600 × 400 자동 생성</span></label>
+          <label>메인 썸네일 이미지 <span class="hint">600 × 400 자동 생성 · 구도는 직접 조정</span></label>
           <div class="thumbpick">
             <div class="tp" id="oThumb">
               <div class="ph" style="--c1:#e3e7ec;--c2:#c9d0d8;color:#8b9199"><span style="border-color:#b4bcc6;color:#6b7785;background:#fff">아직 없음</span></div>
@@ -726,6 +755,44 @@
               별도 썸네일 편집기를 내려받아 직접 자를 필요가 없습니다.
             </div>
           </div>
+
+          <div id="thumbTools" hidden style="display:flex;gap:7px;flex-wrap:wrap;margin-top:10px">
+            <button class="btn sm" onclick="openCrop()">✂ 구도 수정</button>
+            <button class="btn sm" onclick="nextPhoto()">🔄 다른 사진으로</button>
+            <button class="btn sm" onclick="AMC.toast('썸네일용 이미지를 직접 올릴 수도 있습니다 (시연)')">⬆ 직접 올리기</button>
+          </div>
+
+          <div class="cropper" id="cropper" hidden>
+            <div class="cp-h">썸네일 구도 조정 <span>원본에서 잘라낼 영역을 정합니다. 자동 크롭이 마음에 들지 않을 때만 쓰면 됩니다.</span></div>
+            <div class="cp-body">
+              <div>
+                <div class="cp-lb">원본 사진 — 잘라낼 위치를 클릭하세요</div>
+                <div class="cp-src" id="cpSrc">
+                  <div class="cp-subject">인물</div>
+                  <div class="cp-frame" id="cpFrame"></div>
+                  <div class="cp-grid" id="cpGrid"></div>
+                </div>
+                <div class="cp-note">9칸 중 한 곳을 누르면 그 지점이 중심이 되도록 잘라냅니다. 인물이 오른쪽에 치우친 사진이면 오른쪽을 누르세요.</div>
+              </div>
+              <div>
+                <div class="cp-lb">미리보기 600 × 400</div>
+                <div class="cp-prev" id="cpPrev"><div class="cp-shot" id="cpShot"><div class="cp-subject">인물</div></div></div>
+                <div class="cp-lb" style="margin-top:13px">확대 <b id="zoomV" style="color:var(--amc-blue)">100%</b></div>
+                <input class="cp-range" type="range" min="100" max="170" value="100" id="zoomR" oninput="updateCrop()">
+                <div class="cp-acts">
+                  <button class="btn pri sm" onclick="applyCrop()">적용</button>
+                  <button class="btn sm" onclick="resetCrop()">자동으로 되돌리기</button>
+                  <button class="btn sm" onclick="closeCrop()">취소</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="annot"><div class="annot-box" style="margin-top:12px">
+            자동 크롭만 두면 인물이 한쪽에 치우친 사진에서 얼굴이 잘립니다. 그래서 <b>초점 영역을 직접 지정</b>하는 기능을 함께 요청 항목에 넣었습니다.
+            기본은 자동이고, 구도가 어색할 때만 담당자가 위치를 바꾸면 됩니다. 마음에 들지 않으면 다른 사진으로 바꾸거나 직접 올릴 수도 있어야 합니다.
+            <span class="src">근거 · 킥오프 회의 5순위 「원본 이미지 1회 업로드 후 목록·메인·모바일·OG 이미지 자동 생성」, 「이미지 자동 크롭 시 <b>초점 영역 지정</b> 기능」 / 9/14 회의 「세로 사진이 가로 썸네일에서 잘리는 문제」</span>
+          </div></div>
         </div>
 
         <div class="fld">
@@ -822,8 +889,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=12"></script>
-<script src="assets/js/site.js?v=12"></script>
+<script src="assets/js/data.js?v=13"></script>
+<script src="assets/js/site.js?v=13"></script>
 <script>
 AMC.layout({ active: '' });
 
@@ -871,6 +938,9 @@ function setThumb(i, el) {
   thumbIdx = i;
   document.querySelectorAll('.shot').forEach(function (s) { s.classList.remove('on'); });
   el.classList.add('on');
+  cropFocal = { x: 50, y: 50 };
+  cropZoom = 100;
+  if (!document.getElementById('thumbTools').hidden) renderThumb(true);
   AMC.toast('대표 사진으로 지정했습니다. 끌고오기를 하면 600×400 썸네일로 자동 생성됩니다 (시연)');
 }
 
@@ -950,12 +1020,10 @@ function pullContent() {
   }
 
   if (document.getElementById('pullP').checked) {
-    var c = shotColors[thumbIdx];
-    document.getElementById('oThumb').innerHTML =
-      AMC.ph(c[0], c[1], '600 × 400 자동 생성');
-    document.getElementById('oThumbTx').innerHTML =
-      '<b>20260912_인터뷰_0' + (thumbIdx + 1) + '.jpg</b> 를 600×400으로 잘라 메인 썸네일로 만들었습니다.<br>' +
-      '목록·메인·모바일·앱·OG 이미지도 같은 원본에서 자동 생성됩니다.';
+    cropFocal = { x: 50, y: 50 };
+    cropZoom = 100;
+    renderThumb(true);
+    document.getElementById('thumbTools').hidden = false;
     moved.push('대표사진');
   }
 
@@ -975,6 +1043,115 @@ function pullContent() {
     document.getElementById('oTitle').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, 150);
 }
+
+/* ---------- 썸네일 구도 조정 ---------- */
+var cropFocal = { x: 50, y: 50 };   /* 잘라낼 영역의 중심 (원본 대비 %) */
+var cropZoom = 100;                 /* 100 = 원본 가로 전체 사용 */
+
+/* 9분할 초점 버튼 */
+document.getElementById('cpGrid').innerHTML = [0, 1, 2].map(function (r) {
+  return [0, 1, 2].map(function (c) {
+    var x = [18, 50, 82][c], y = [18, 50, 82][r];
+    return '<button title="이 지점을 중심으로" onclick="setFocal(' + x + ',' + y + ')"></button>';
+  }).join('');
+}).join('');
+
+function setFocal(x, y) { cropFocal = { x: x, y: y }; updateCrop(); }
+
+/* 현재 설정으로 잘린 영역 계산 (원본 대비 %) */
+function cropRect() {
+  var w = 10000 / cropZoom;   /* 프레임 가로 % */
+  var h = w * 8 / 9;          /* 원본 4:3 → 결과 3:2 */
+  return {
+    w: w, h: h,
+    l: Math.min(Math.max(cropFocal.x - w / 2, 0), 100 - w),
+    t: Math.min(Math.max(cropFocal.y - h / 2, 0), 100 - h)
+  };
+}
+
+/* 잘린 결과를 미리보기 상자에 그리기 */
+function paintCrop(box, shot) {
+  var r = cropRect();
+  var pw = box.clientWidth;
+  if (!pw) return;
+  var iw = pw * 100 / r.w;
+  var ih = iw * 3 / 4;
+  shot.style.width = iw + 'px';
+  shot.style.height = ih + 'px';
+  shot.style.left = -(r.l / 100 * iw) + 'px';
+  shot.style.top = -(r.t / 100 * ih) + 'px';
+}
+
+function updateCrop() {
+  cropZoom = +document.getElementById('zoomR').value;
+  document.getElementById('zoomV').textContent = cropZoom + '%';
+  var r = cropRect();
+  var f = document.getElementById('cpFrame');
+  f.style.width = r.w + '%'; f.style.height = r.h + '%';
+  f.style.left = r.l + '%'; f.style.top = r.t + '%';
+  paintCrop(document.getElementById('cpPrev'), document.getElementById('cpShot'));
+}
+
+/* 대외용 썸네일 자리에 현재 구도로 렌더링 */
+function renderThumb(auto) {
+  var c = shotColors[thumbIdx];
+  var box = document.getElementById('oThumb');
+  box.innerHTML =
+    '<div class="cp-prev" style="--c1:' + c[0] + ';--c2:' + c[1] + '">' +
+    '<div class="cp-shot" id="oShot"><div class="cp-subject">인물</div></div></div>';
+  paintCrop(box.querySelector('.cp-prev'), document.getElementById('oShot'));
+
+  document.getElementById('oThumbTx').innerHTML = auto
+    ? '<b>20260912_인터뷰_0' + (thumbIdx + 1) + '.jpg</b> 를 600×400으로 자동 생성했습니다.<br>' +
+      '목록·메인·모바일·앱·OG 이미지도 같은 원본에서 만들어집니다. 구도가 어색하면 아래 <b>구도 수정</b>을 누르세요.'
+    : '<b>20260912_인터뷰_0' + (thumbIdx + 1) + '.jpg</b> · 구도를 직접 조정했습니다 ' +
+      '(초점 ' + cropFocal.x + '% / ' + cropFocal.y + '%, 확대 ' + cropZoom + '%).<br>' +
+      '이 구도가 목록·메인·모바일·앱·OG 이미지에 함께 적용됩니다.';
+}
+
+function openCrop() {
+  var c = shotColors[thumbIdx];
+  var src = document.getElementById('cpSrc');
+  src.style.setProperty('--c1', c[0]);
+  src.style.setProperty('--c2', c[1]);
+  var prev = document.getElementById('cpPrev');
+  prev.style.setProperty('--c1', c[0]);
+  prev.style.setProperty('--c2', c[1]);
+  document.getElementById('zoomR').value = cropZoom;
+  document.getElementById('cropper').hidden = false;
+  updateCrop();
+  document.getElementById('cropper').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function closeCrop() { document.getElementById('cropper').hidden = true; }
+
+function resetCrop() {
+  cropFocal = { x: 50, y: 50 };
+  cropZoom = 100;
+  document.getElementById('zoomR').value = 100;
+  updateCrop();
+  AMC.toast('자동 생성 구도로 되돌렸습니다 (시연)');
+}
+
+function applyCrop() {
+  renderThumb(false);
+  closeCrop();
+  AMC.toast('썸네일 구도를 적용했습니다. 목록·메인·모바일·앱·OG 이미지에 같이 반영됩니다 (시연)');
+}
+
+function nextPhoto() {
+  thumbIdx = (thumbIdx + 1) % shotColors.length;
+  document.querySelectorAll('.shot').forEach(function (s, i) { s.classList.toggle('on', i === thumbIdx); });
+  cropFocal = { x: 50, y: 50 };
+  cropZoom = 100;
+  renderThumb(true);
+  if (!document.getElementById('cropper').hidden) openCrop();
+  AMC.toast('대표 사진을 사진 ' + (thumbIdx + 1) + '로 바꿨습니다 (시연)');
+}
+
+window.addEventListener('resize', function () {
+  if (!document.getElementById('cropper').hidden) updateCrop();
+  if (document.getElementById('oShot')) paintCrop(document.getElementById('oThumb').querySelector('.cp-prev'), document.getElementById('oShot'));
+});
 
 /* ---------- AI 자동 태깅 ---------- */
 var AITAGS = [
