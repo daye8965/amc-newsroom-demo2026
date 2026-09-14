@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>통합 등록화면 CMS (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="assets/css/main.css">
+<style>
+  .cms{display:grid;grid-template-columns:1fr 330px;gap:20px;align-items:start}
+  @media (max-width:1000px){.cms{grid-template-columns:1fr}}
+
+  .fld{margin-bottom:18px}
+  .fld label{display:block;font-size:12.5px;font-weight:700;color:var(--ink-2);margin-bottom:7px}
+  .fld .hint{font-size:11.5px;color:var(--ink-3);font-weight:500;margin-left:6px}
+  .fld input[type=text],.fld input[type=url],.fld textarea,.fld select{
+    width:100%;border:1px solid var(--line);border-radius:6px;padding:10px 12px;
+    font-size:14px;font-family:inherit;color:var(--ink);outline:none;background:#fff
+  }
+  .fld input:focus,.fld textarea:focus,.fld select:focus{border-color:var(--amc-blue);box-shadow:0 0 0 3px rgba(0,100,174,.1)}
+  .fld textarea{resize:vertical;min-height:150px;line-height:1.7}
+
+  /* 에디터 툴바 */
+  .toolbar{display:flex;gap:4px;flex-wrap:wrap;border:1px solid var(--line);border-bottom:0;
+    border-radius:6px 6px 0 0;padding:8px;background:var(--bg-soft);align-items:center}
+  .toolbar button{border:1px solid transparent;background:#fff;border-radius:4px;padding:5px 9px;
+    font-size:12.5px;color:var(--ink-2);font-weight:600}
+  .toolbar button:hover{border-color:var(--line);color:var(--amc-blue)}
+  .toolbar .sep{width:1px;height:18px;background:var(--line);margin-inline:4px}
+  .toolbar + textarea{border-radius:0 0 6px 6px}
+  .swatches{display:flex;gap:4px;align-items:center;margin-left:auto}
+  .swatches i{width:18px;height:18px;border-radius:3px;display:block;border:1px solid rgba(0,0,0,.12);cursor:pointer}
+  .swatches .lbl{font-size:11px;color:var(--ink-3);font-weight:700;margin-right:2px}
+
+  /* 드롭존 */
+  .dropzone{border:2px dashed #c8d4e0;border-radius:8px;background:#f8fbfe;padding:26px;text-align:center;transition:.15s}
+  .dropzone.hot{border-color:var(--amc-blue);background:var(--bg-tint)}
+  .dropzone .big{font-size:14.5px;font-weight:700;color:var(--amc-navy)}
+  .dropzone .sm{font-size:12px;color:var(--ink-3);margin-top:6px;line-height:1.7}
+  .dropzone code{background:#fff;border:1px solid var(--line);border-radius:3px;padding:1px 5px;font-size:11px}
+
+  /* 업로드된 사진 */
+  .shots{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:14px}
+  @media (max-width:700px){.shots{grid-template-columns:repeat(3,1fr)}}
+  .shot{position:relative;border-radius:5px;overflow:hidden;border:2px solid transparent;cursor:pointer}
+  .shot .ph{aspect-ratio:16/9;font-size:10.5px}
+  .shot.on{border-color:var(--amc-blue)}
+  .shot .mark{position:absolute;left:5px;top:5px;background:var(--amc-blue);color:#fff;
+    font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:3px;display:none}
+  .shot.on .mark{display:block}
+
+  /* 노출 설정 */
+  .expose{display:grid;gap:2px}
+  .ck{display:flex;gap:10px;align-items:flex-start;padding:10px;border-radius:6px;transition:.12s}
+  .ck:hover{background:var(--bg-soft)}
+  .ck input{margin-top:3px;accent-color:var(--amc-blue);width:15px;height:15px;flex:none}
+  .ck .t{font-size:13.5px;font-weight:600;color:var(--ink)}
+  .ck .d{font-size:11.5px;color:var(--ink-3);margin-top:2px;line-height:1.5}
+
+  /* 버튼형 선택 */
+  .pills{display:flex;gap:6px;flex-wrap:wrap}
+  .pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;
+    font-size:12.5px;font-weight:600;color:var(--ink-2);transition:.12s}
+  .pill.on{background:var(--amc-blue);border-color:var(--amc-blue);color:#fff}
+
+  .removed-row{border:1px dashed #e5c9b8;background:#fffaf6;border-radius:6px;padding:11px 14px;
+    font-size:12px;color:#9a3412;line-height:1.6}
+  .removed-row s{color:#c2410c;font-weight:700}
+
+  /* AI 태깅 */
+  .aitags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;min-height:30px}
+  .aitag{font-size:12px;padding:4px 10px;border-radius:999px;background:var(--bg-tint);
+    color:var(--amc-navy);border:1px solid #cfe4f6;font-weight:600;
+    animation:pop .25s ease both}
+  .aitag .x{color:var(--ink-3);margin-left:5px;cursor:pointer}
+  @keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .aitag.g1{background:#eef5fb}
+  .aitag.g2{background:#effaf7;border-color:#c5eae3;color:#0f5f58}
+  .aitag.g3{background:#fef7ed;border-color:#f3dcc0;color:#8a4b16}
+
+  /* 미리보기 */
+  .pvtabs{display:flex;gap:4px;margin-bottom:14px}
+  .pvtabs button{border:1px solid var(--line);background:#fff;border-radius:999px;
+    padding:6px 14px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+  .pvtabs button.on{background:var(--amc-navy);border-color:var(--amc-navy);color:#fff}
+  .pvstage{background:var(--bg-soft);border:1px solid var(--line);border-radius:8px;padding:18px;display:grid;place-items:center}
+  .pvframe{background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden;width:100%;transition:.2s}
+  .pvframe.pc{max-width:100%}
+  .pvframe.mo{max-width:300px;border-radius:16px}
+  .pvframe.app{max-width:300px;border-radius:16px}
+  .pvframe .ph{aspect-ratio:16/9;font-size:11px}
+  .pvframe .cap{padding:12px 14px}
+  .pvframe .cap .c{font-size:11px;font-weight:700;color:var(--amc-blue)}
+  .pvframe .cap .t{font-size:15px;font-weight:700;letter-spacing:-0.03em;margin-top:5px;line-height:1.4}
+  .pvframe .cap .d{font-size:11.5px;color:var(--ink-3);margin-top:7px}
+  .pvframe .appbar{background:var(--amc-navy);color:#fff;font-size:11.5px;padding:8px 14px;font-weight:700}
+
+  .sticky{position:sticky;top:82px}
+  @media (max-width:1000px){.sticky{position:static}}
+</style>
+</head>
+<body>
+
+<div id="site-top"></div>
+
+<div class="pagehead">
+  <div class="wrap">
+    <h1>통합 콘텐츠 등록화면 (관리자)</h1>
+    <p>아카이브 등록과 뉴스룸 노출 설정을 각각 입력하던 두 개의 화면을 <b>하나의 화면</b>으로 합친 안입니다. 한 번 입력한 본문·사진·메타정보를 아카이브·뉴스룸·메인·롤링·앱·푸시에 재사용합니다.</p>
+  </div>
+</div>
+
+<div class="wrap" style="padding-block:28px">
+
+  <div class="annot">
+    <div class="annot-pin"><b>14</b> 이중 입력 제거 — 단일 입력 구조</div>
+    <div class="annot-box">
+      현재는 아카이브와 뉴스룸 노출 영역에 같은 정보를 두 번 입력해야 합니다. 개편안에서는 콘텐츠 1건을 원본으로 두고, 우측 <b>노출 설정 체크박스</b>만으로 어디에 보일지 결정합니다.
+      <span class="src">근거 · 9/14 회의 「아카이브 ↔ 뉴스룸 노출 분리 문제 — 체크박스 하나로 자동 반영」 / 분석 리포트 최우선 과제 「업로드·노출 단일 입력」</span>
+    </div>
+  </div>
+
+  <div class="cms">
+
+    <!-- ================= 좌: 에디터 ================= -->
+    <div class="panel" data-annot>
+      <div class="panel-h">
+        <h3>콘텐츠 등록</h3>
+        <span class="tagpill">단일 입력</span>
+        <div style="margin-left:auto;display:flex;gap:6px">
+          <button class="btn sm" onclick="AMC.toast('임시저장했습니다 (시연)')">임시저장</button>
+          <button class="btn sm" onclick="AMC.toast('수정이력 · 이전 버전 복원 (시연)')">수정이력</button>
+        </div>
+      </div>
+      <div class="panel-b">
+
+        <div class="fld">
+          <label>콘텐츠 유형</label>
+          <div class="pills">
+            <button class="pill on" onclick="pick(this)">보도자료</button>
+            <button class="pill" onclick="pick(this)">병원뉴스</button>
+            <button class="pill" onclick="pick(this)">건강정보</button>
+            <button class="pill" onclick="pick(this)">연구·리서치</button>
+            <button class="pill" onclick="pick(this)">인터뷰·사람</button>
+            <button class="pill" onclick="pick(this)">영상</button>
+          </div>
+        </div>
+
+        <div class="fld">
+          <label>제목</label>
+          <input type="text" id="fTitle" value="중입자치료기 가동 1년, 치료 환자 1,000명 넘어서">
+        </div>
+
+        <!-- 에디터 -->
+        <div class="fld">
+          <label>본문 <span class="hint">블로그 수준 편집기 · 드래그 이미지 삽입 · 표 편집 지원</span></label>
+          <div class="toolbar">
+            <button onclick="return false">B</button>
+            <button onclick="return false"><i>I</i></button>
+            <button onclick="return false">U</button>
+            <span class="sep"></span>
+            <button onclick="AMC.toast('표 삽입 — 셀 병합·헤더·정렬 지원 (시연)')">⊞ 표</button>
+            <button onclick="AMC.toast('이미지 삽입 (시연)')">🖼 이미지</button>
+            <button onclick="AMC.toast('유튜브·건강TV 임베드 (시연)')">▶ 영상</button>
+            <button onclick="AMC.toast('인용구 삽입 (시연)')">❝ 인용</button>
+            <div class="swatches">
+              <span class="lbl">아산 컬러</span>
+              <i style="background:#00335f" title="AMC Navy" onclick="AMC.toast('AMC Navy #00335F 적용 (시연)')"></i>
+              <i style="background:#0064ae" title="AMC Blue" onclick="AMC.toast('AMC Blue #0064AE 적용 (시연)')"></i>
+              <i style="background:#0091d4" title="AMC Sky" onclick="AMC.toast('AMC Sky #0091D4 적용 (시연)')"></i>
+              <i style="background:#00a19a" title="AMC Mint" onclick="AMC.toast('AMC Mint #00A19A 적용 (시연)')"></i>
+              <i style="background:#111820" title="본문 기본" onclick="AMC.toast('본문 기본색 적용 (시연)')"></i>
+            </div>
+          </div>
+          <textarea id="fBody">서울아산병원 중입자치료센터가 가동 1년 만에 누적 치료 환자 1,000명을 넘어섰다고 12일 밝혔다. 지난해 9월 첫 환자 치료를 시작한 이후 1년 만의 기록이다.
+
+중입자치료는 탄소 이온을 가속해 암세포에 조사하는 치료법으로, 정상 조직 손상을 줄이면서 암 조직에 집중적으로 선량을 전달할 수 있다. 전립선암·췌장암·간암 등에 주로 적용됐다.</textarea>
+          <div class="annot">
+            <div class="annot-box" style="margin-top:10px">
+              <b>색상 팔레트 기본값 변경</b> — 편집기의 기본 색상 팔레트를 아산 브랜드 컬러가 먼저 보이도록 구성합니다(현재는 무료 버전 팔레트로 커스터마이즈에 비용이 필요한 상태).
+              <span class="src">근거 · 9/14 회의 「기본 색상을 아산 브랜드 컬러 우선으로 표시되도록 변경 요청」</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 파일 업로드 -->
+        <div class="fld">
+          <label>사진·파일 업로드 <span class="hint">드래그 앤 드롭</span></label>
+          <div class="dropzone" id="dz"
+               ondragover="event.preventDefault();this.classList.add('hot')"
+               ondragleave="this.classList.remove('hot')"
+               ondrop="event.preventDefault();this.classList.remove('hot');AMC.toast('파일을 업로드했습니다 (시연)')"
+               onclick="AMC.toast('파일 선택창 (시연)')">
+            <div class="big">여기에 파일을 끌어다 놓으세요</div>
+            <div class="sm">
+              허용 형식 <code>jpg</code> <code>png</code> <code>hwp</code> <code>docx</code>
+              <code>xlsx</code> <code>pptx</code> <code>zip</code> <code>pdf</code> <code>mp4</code><br>
+              대량 이미지도 버튼을 따로 누르지 않고 한 번에 업로드됩니다 · 파일당 최대 2GB
+            </div>
+          </div>
+          <div class="annot">
+            <div class="annot-box" style="margin-top:10px">
+              현재는 이미지·워드·한글만 지원되고 용량은 500MB이며, 아카이브 대량 이미지는 별도 버튼을 눌러야 올라갑니다. 압축파일·엑셀·PPT 허용, 용량 상향, 드래그 앤 드롭, 자동 업로드를 요청 항목에 포함했습니다.
+              <span class="src">근거 · 9/14 회의 「파일 업로드 용량 500MB → 업그레이드」, 「압축·엑셀·PPT 허용 및 드래그 앤 드롭 지원」</span>
+            </div>
+          </div>
+
+          <div class="shots" id="shots"></div>
+          <div style="font-size:11.5px;color:var(--ink-3);margin-top:8px">
+            사진을 클릭하면 <b>대표 썸네일</b>로 지정됩니다. 지정한 사진은 목록·메인·모바일·앱·OG 이미지로 자동 생성되며, 본문에도 같은 사진을 함께 사용할 수 있습니다.
+          </div>
+        </div>
+
+        <!-- 건강TV -->
+        <div class="fld">
+          <label>건강TV 영상 연동 <span class="hint">URL 한 줄만 입력</span></label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <input type="url" id="tvUrl" style="flex:1 1 260px" placeholder="https://health.amc.seoul.kr/tv/..." value="https://health.amc.seoul.kr/tv/20260912">
+            <button class="btn pri" onclick="pullTv()">불러오기</button>
+          </div>
+          <div id="tvPulled" style="display:none;margin-top:12px;border:1px solid var(--line);border-radius:6px;padding:12px"></div>
+        </div>
+
+        <!-- 삭제/간소화 항목 -->
+        <div class="fld">
+          <label>배포 범위 <span class="hint">버튼식 선택</span></label>
+          <div class="pills">
+            <button class="pill on" onclick="pick(this,true)">전체 언론</button>
+            <button class="pill" onclick="pick(this,true)">의학전문지</button>
+            <button class="pill" onclick="pick(this,true)">지역지</button>
+            <button class="pill" onclick="pick(this,true)">사내</button>
+          </div>
+          <div class="annot">
+            <div class="removed-row" style="margin-top:12px">
+              <s>취재경로</s>, <s>비고</s> 항목 삭제 · 배포범위는 직접 입력에서 버튼식 선택으로 변경
+              <span style="display:block;margin-top:5px;opacity:.85">근거 · 9/14 회의 「취재 경로·비고 항목 삭제, 배포 범위는 버튼식으로 변경」</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ================= 우: 노출 설정 ================= -->
+    <div class="sticky">
+
+      <div class="panel" data-annot style="margin-bottom:16px">
+        <div class="panel-h"><h3>노출 설정</h3><span class="tagpill">한 번 입력 → 전 채널 반영</span></div>
+        <div class="panel-b">
+          <div class="expose">
+            <label class="ck"><input type="checkbox" checked>
+              <span><span class="t">아카이브 등록</span><span class="d">사내 자료 보관 · 항상 등록</span></span></label>
+            <label class="ck"><input type="checkbox" checked>
+              <span><span class="t">뉴스룸 노출</span><span class="d">체크 시 별도 입력 없이 뉴스룸에 자동 반영</span></span></label>
+            <label class="ck"><input type="checkbox" checked>
+              <span><span class="t">메인 카드 노출</span><span class="d">최신 콘텐츠 그리드</span></span></label>
+            <label class="ck"><input type="checkbox">
+              <span><span class="t">메인 롤링 배너</span><span class="d">대표 썸네일 자동 사용</span></span></label>
+            <label class="ck"><input type="checkbox" checked>
+              <span><span class="t">프레스센터</span><span class="d">보도자료 원문·사진 제공</span></span></label>
+            <label class="ck"><input type="checkbox" checked>
+              <span><span class="t">앱 노출</span><span class="d">웹·앱 통합 콘텐츠</span></span></label>
+            <label class="ck"><input type="checkbox">
+              <span><span class="t">푸시 발송</span><span class="d">중요 공지에 한해 운영자가 선별 발송</span></span></label>
+          </div>
+          <div class="annot">
+            <div class="annot-box" style="margin-top:12px">
+              푸시는 상시 구독형이 아니라 <b>운영자 선별 발송</b>을 기본값으로 두었습니다. 기사마다 알림이 가면 노이즈가 커진다는 의견을 반영했습니다.
+              <span class="src">근거 · 9/14 회의 「정말 중요한 공지에만 전체 알람을 선별적으로 사용」</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" data-annot style="margin-bottom:16px">
+        <div class="panel-h"><h3>기준정보 매핑 · 태그</h3><span class="tagpill">AI 자동 추출</span></div>
+        <div class="panel-b">
+          <button class="btn pri" style="width:100%;justify-content:center" onclick="autoTag()">
+            ✨ 본문에서 태그 자동 추출
+          </button>
+          <div class="aitags" id="aitags">
+            <span style="font-size:12px;color:var(--ink-3)">버튼을 누르면 의료진·질환·검사·시술·신체부위를 자동으로 뽑아 기준 DB와 매핑합니다.</span>
+          </div>
+          <div class="annot">
+            <div class="annot-box" style="margin-top:12px">
+              태그는 텍스트가 아니라 병원 기준정보 DB의 <b>ID</b>와 연결됩니다. 이 매핑이 홈페이지 의료진·질환 페이지의 관련 뉴스 노출, 통합검색, 앱·푸시, AI 검색의 공통 기반이 됩니다. 이관 시 기존 매핑 보존이 최우선 확인 사항입니다.
+              <span class="src">근거 · 킥오프 회의 1순위 / 8/24 팀장 회의 「키워드 매핑 유지 여부 디콘에 재확인」</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" data-annot style="margin-bottom:16px">
+        <div class="panel-h"><h3>발행</h3></div>
+        <div class="panel-b">
+          <div class="fld" style="margin-bottom:14px">
+            <label>예약 발행</label>
+            <input type="text" value="2026-09-12  09:00" readonly>
+          </div>
+          <div class="fld" style="margin-bottom:14px">
+            <label>메인 노출 종료</label>
+            <input type="text" value="2026-09-26  23:59" readonly>
+          </div>
+          <label class="ck" style="padding-inline:0">
+            <input type="checkbox" id="keyCk">
+            <span><span class="t">KEY 생성</span>
+            <span class="d">필요한 경우에만 생성합니다. 원소스 멀티유즈로 묶을 콘텐츠가 있을 때만 체크하세요. (현재는 등록 시 필수)</span></span>
+          </label>
+          <div class="annot">
+            <div class="annot-box" style="margin-top:10px">
+              보도자료 제목을 복사해 일회성 KEY를 매번 만드는 현재 방식은 재사용이 되지 않아 악순환이 반복됩니다. <b>선택 항목</b>으로 전환하거나 폐지 가능한지 업체 확인이 필요합니다.
+              <span class="src">근거 · 9/14 회의 「키 생성 없이 보도자료 등록 가능 여부 검토」 / 8/24 팀장 회의 「키 관리 방식 개선 또는 폐지 문의」</span>
+            </div>
+          </div>
+          <button class="btn pri" style="width:100%;justify-content:center;margin-top:14px"
+                  onclick="AMC.toast('등록되었습니다. 체크한 모든 채널에 동시에 반영됩니다 (시연)')">등록</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 미리보기 -->
+  <section style="margin-top:34px">
+    <div class="annot">
+      <div class="annot-pin"><b>15</b> PC · 모바일 · 앱 미리보기</div>
+      <div class="annot-box">
+        등록 화면에서 나가지 않고 세 화면을 모두 확인합니다. 대표 썸네일 1장을 올리면 목록·메인·모바일·앱·OG 이미지가 자동 생성됩니다.
+        <span class="src">근거 · 킥오프 회의 5순위 「PC·모바일·앱 미리보기 제공」, 「원본 이미지 1회 업로드 후 자동 생성」</span>
+      </div>
+    </div>
+    <div class="panel" data-annot>
+      <div class="panel-h"><h3>미리보기</h3>
+        <div class="pvtabs" style="margin:0 0 0 auto">
+          <button class="on" onclick="pv(this,'pc')">PC</button>
+          <button onclick="pv(this,'mo')">모바일</button>
+          <button onclick="pv(this,'app')">앱</button>
+        </div>
+      </div>
+      <div class="panel-b">
+        <div class="pvstage">
+          <div class="pvframe pc" id="pvframe">
+            <div id="pvAppbar" style="display:none" class="appbar">서울아산병원 앱 · 뉴스룸</div>
+            <div class="ph" style="--c1:#00335f;--c2:#0091d4"><span>대표 썸네일 (자동 생성)</span></div>
+            <div class="cap">
+              <div class="c">리서치 · AI</div>
+              <div class="t" id="pvTitle">중입자치료기 가동 1년, 치료 환자 1,000명 넘어서</div>
+              <div class="d">2026.09.12</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+AMC.layout({ active: '' });
+
+/* 업로드 사진 */
+var shotColors = [['#00335f','#0091d4'],['#0064ae','#00a19a'],['#0091d4','#0064ae'],
+                  ['#1d4ed8','#0091d4'],['#00a19a','#00335f']];
+document.getElementById('shots').innerHTML = shotColors.map(function (c, i) {
+  return '<div class="shot' + (i === 0 ? ' on' : '') + '" onclick="setThumb(this)">' +
+    '<div class="mark">대표</div>' + AMC.ph(c[0], c[1], '사진 ' + (i + 1)) + '</div>';
+}).join('');
+
+function setThumb(el) {
+  document.querySelectorAll('.shot').forEach(function (s) { s.classList.remove('on'); });
+  el.classList.add('on');
+  AMC.toast('대표 썸네일로 지정했습니다. 목록·메인·모바일·앱·OG 이미지에 자동 반영됩니다 (시연)');
+}
+
+function pick(el, multi) {
+  if (multi) { el.classList.toggle('on'); return; }
+  el.parentNode.querySelectorAll('.pill').forEach(function (p) { p.classList.remove('on'); });
+  el.classList.add('on');
+}
+
+/* 건강TV 자동 연동 */
+function pullTv() {
+  var box = document.getElementById('tvPulled');
+  box.style.display = 'block';
+  box.innerHTML =
+    '<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">' +
+    '<div style="width:150px;flex:none">' + AMC.ph('#00335f', '#0064ae', '썸네일 자동') + '</div>' +
+    '<div style="flex:1 1 200px">' +
+    '<div style="font-size:11px;font-weight:700;color:var(--amc-blue)">건강TV · 자동 연동됨</div>' +
+    '<div style="font-size:14.5px;font-weight:700;letter-spacing:-.02em;margin-top:4px">중입자치료, 어떤 암에 쓰이나요?</div>' +
+    '<div style="font-size:12px;color:var(--ink-3);margin-top:6px">재생시간 05:48 · 제목·썸네일·본문 텍스트가 함께 연동되어 뉴스룸에서도 검색됩니다</div>' +
+    '</div></div>';
+  AMC.toast('URL 하나로 제목·썸네일·재생시간을 불러왔습니다 (시연)');
+}
+
+/* AI 자동 태깅 */
+var AITAGS = [
+  { t: '김○○ 교수 · 방사선종양학과', g: 'g1' }, { t: '이○○ 교수 · 종양내과', g: 'g1' },
+  { t: '전립선암', g: 'g2' }, { t: '췌장암', g: 'g2' }, { t: '간암', g: 'g2' },
+  { t: '중입자치료', g: 'g3' }, { t: '방사선치료', g: 'g3' },
+  { t: '전립선', g: '' }, { t: '췌장', g: '' }
+];
+function autoTag() {
+  var box = document.getElementById('aitags');
+  box.innerHTML = '';
+  AITAGS.forEach(function (t, i) {
+    setTimeout(function () {
+      var s = document.createElement('span');
+      s.className = 'aitag ' + t.g;
+      s.innerHTML = t.t + '<span class="x" onclick="this.parentNode.remove()">×</span>';
+      box.appendChild(s);
+    }, i * 90);
+  });
+  setTimeout(function () { AMC.toast('9개 태그를 추출해 기준정보 DB와 매핑했습니다. 수정·삭제할 수 있습니다 (시연)'); }, 900);
+}
+
+/* 미리보기 전환 */
+function pv(btn, mode) {
+  btn.parentNode.querySelectorAll('button').forEach(function (b) { b.classList.remove('on'); });
+  btn.classList.add('on');
+  var f = document.getElementById('pvframe');
+  f.className = 'pvframe ' + mode;
+  document.getElementById('pvAppbar').style.display = mode === 'app' ? 'block' : 'none';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>서울아산병원 뉴스룸 (개편 시안) | 2026 웹·앱 통합개편 시연용</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="2026 뉴스룸 웹·앱 통합개편 논의를 위한 시연용 프로토타입입니다. 실제 서비스가 아닙니다.">
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+<div id="site-top"></div>
+
+<!-- ============ 히어로 (메인 롤링 · 크기 축소) ============ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="annot">
+      <div class="annot-pin"><b>1</b> 메인 롤링 축소</div>
+      <div class="annot-box">
+        통합 홈페이지의 상단 GNB가 화면을 차지하므로 롤링 배너 높이를 기존보다 낮춰 첫 화면에서 카드 콘텐츠가 바로 보이도록 했습니다. 3건만 순환합니다.
+        <span class="src">근거 · 9/14 직원 의견 취합 회의 「메인 롤링 페이지 크기 축소 검토」</span>
+      </div>
+    </div>
+    <div class="hero-stage" data-annot>
+      <div id="hero-slides"></div>
+      <div class="hero-ctrl">
+        <div class="hero-dots" id="hero-dots"></div>
+        <button class="js-prev" aria-label="이전 슬라이드">‹</button>
+        <button class="js-next" aria-label="다음 슬라이드">›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 최신 콘텐츠 카드 그리드 ============ -->
+<section class="sec" id="news">
+  <div class="wrap">
+    <div class="annot">
+      <div class="annot-pin"><b>2</b> 카드형 목록 (삼성전자 뉴스룸 방식)</div>
+      <div class="annot-box">
+        가로 이미지 + 카테고리 + 제목만 노출하고 본문 미리보기 텍스트는 제거했습니다. 사진은 16:9로 자동 정렬되며, 제목은 최대 2줄로 고정해 카드 높이를 맞춥니다. 세로 사진이 잘리는 문제를 피하기 위해 가로 사진을 기준으로 통일합니다.
+        <span class="src">근거 · 8/24 팀장 회의 「썸네일과 제목만 표시, 본문 미리보기 제거 → 삼성전자 뉴스룸 방식 참고」 / 9/14 회의 「사진 사이즈 가로 기준 자동 정렬」</span>
+      </div>
+    </div>
+
+    <div class="sec-head">
+      <h2>최신 콘텐츠</h2>
+      <span class="desc">뉴스 · 헬스 · 피플 · 리서치·AI 전체</span>
+      <a class="more" href="#" onclick="return AMC.toast('카테고리별 목록으로 이동합니다 (시연)')">전체보기 ›</a>
+    </div>
+
+    <div class="cards" id="card-grid" data-annot></div>
+    <button class="loadmore" onclick="AMC.toast('다음 12건을 불러옵니다 (시연)')">더보기</button>
+  </div>
+</section>
+
+<!-- ============ 리서치·AI (신설 카테고리) ============ -->
+<section class="sec" id="research" style="background:var(--bg-soft);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="annot">
+      <div class="annot-pin"><b>3</b> ‘리서치·AI’ 카테고리 신설</div>
+      <div class="annot-box">
+        환자에게 바로 적용되지 않는 기초연구·논문 기반 보도자료를 별도 디렉토리로 분리해 메인 혼잡도를 낮추고, 연구 중심 브랜드 이미지를 강화합니다. 영문 뉴스룸에는 이미 Research 카테고리가 운영 중입니다.
+        <span class="src">근거 · 8/24 팀장 회의 「기초연구 콘텐츠 별도 카테고리 분리」 / 9/14 회의 「리서치/AI 신규 디렉토리 상단 노출 검토」</span>
+      </div>
+    </div>
+    <div class="sec-head">
+      <h2>리서치 · AI</h2>
+      <span class="desc">연구성과 · 논문 · 의료 AI</span>
+      <a class="more" href="#" onclick="return AMC.toast('리서치·AI 전체 목록 (시연)')">전체보기 ›</a>
+    </div>
+    <div class="cards" id="research-grid" data-annot></div>
+  </div>
+</section>
+
+<!-- ============ 건강TV ============ -->
+<section class="sec tvsec">
+  <div class="wrap">
+    <div class="annot">
+      <div class="annot-pin"><b>4</b> 건강TV URL 자동 연동</div>
+      <div class="annot-box">
+        영상은 우측 배너가 아니라 메인 하단에 기본 영역으로 배치합니다. 등록 담당자는 건강TV URL 한 줄만 입력하면 제목·썸네일·재생시간이 자동으로 채워집니다.
+        <span class="src">근거 · 9/14 회의 「건강TV URL 링크 자동 연동」, 「영상은 메인 하단 디폴트 표시」</span>
+      </div>
+    </div>
+    <div class="sec-head">
+      <h2>건강TV</h2>
+      <span class="desc">URL 한 줄 입력으로 제목·썸네일 자동 연동</span>
+      <a class="more" href="#" onclick="return AMC.toast('건강TV 전체 영상 (시연)')">전체보기 ›</a>
+    </div>
+    <div class="tv-grid" id="tv-grid" data-annot></div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+AMC.layout({ active: 'all' });
+
+var D = window.AMC_DATA;
+
+/* 히어로 */
+document.getElementById('hero-slides').innerHTML = D.hero.map(function (h, i) {
+  return '<div class="hero-slide' + (i === 0 ? ' on' : '') + '">' +
+    AMC.ph(h.c1, h.c2, h.tag) +
+    '<div class="hero-cap"><div class="cat">' + h.cat + '</div><h2>' + h.title + '</h2></div>' +
+    '</div>';
+}).join('');
+document.getElementById('hero-dots').innerHTML =
+  D.hero.map(function (_, i) { return '<i' + (i === 0 ? ' class="on"' : '') + '></i>'; }).join('');
+
+/* 카드 */
+function cardHTML(c) {
+  return '<a class="card" href="article.html">' +
+    '<div class="thumb">' + AMC.ph(c.c1, c.c2, '16:9 가로 이미지') + '</div>' +
+    '<div class="cat">' + c.cat + '</div>' +
+    '<h3>' + c.title + '</h3>' +
+    '<div class="date">' + c.date + '</div></a>';
+}
+document.getElementById('card-grid').innerHTML = D.cards.slice(0, 9).map(cardHTML).join('');
+document.getElementById('research-grid').innerHTML =
+  D.cards.filter(function (c) { return c.cat === '리서치·AI'; }).map(cardHTML).join('');
+
+/* 건강TV */
+document.getElementById('tv-grid').innerHTML = D.tv.map(function (t) {
+  return '<a class="tv-card" href="#" onclick="return AMC.toast(\'건강TV 영상 재생 (시연)\')">' +
+    '<div class="thumb">' + AMC.ph(t.c1, t.c2, '영상 썸네일') +
+    '<div class="play"><i></i></div><div class="dur">' + t.dur + '</div></div>' +
+    '<h4>' + t.title + '</h4></a>';
+}).join('');
+</script>
+</body>
+</html>

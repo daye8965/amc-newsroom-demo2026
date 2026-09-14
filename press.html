@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>프레스센터 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="assets/css/main.css">
+<style>
+  .factgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  @media (max-width:860px){.factgrid{grid-template-columns:repeat(2,1fr)}}
+  .fact{border:1px solid var(--line);border-radius:8px;padding:20px;background:#fff}
+  .fact .k{font-size:12.5px;color:var(--ink-3);font-weight:600}
+  .fact .v{font-size:30px;font-weight:800;color:var(--amc-blue);letter-spacing:-0.04em;margin-top:6px}
+  .fact .s{font-size:11.5px;color:var(--ink-3);margin-top:4px}
+
+  .prlist{display:grid;gap:16px}
+  .pr{border:1px solid var(--line);border-radius:8px;padding:20px;background:#fff}
+  .pr .top{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;font-size:12.5px;color:var(--ink-3)}
+  .pr h3{font-size:19px;margin-top:8px;letter-spacing:-0.03em}
+  .pr .body{margin-top:12px;font-size:14.5px;color:var(--ink-2);line-height:1.75;
+    background:var(--bg-soft);border-radius:6px;padding:14px 16px}
+  .pr .files{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .pr .file{font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--ink-2)}
+  .pr .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+
+  .medialib{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+  @media (max-width:860px){.medialib{grid-template-columns:repeat(3,1fr)}}
+  .medialib .ph{aspect-ratio:4/3;border-radius:4px;font-size:11px}
+</style>
+</head>
+<body>
+
+<div id="site-top"></div>
+
+<div class="pagehead">
+  <div class="wrap">
+    <h1>프레스센터</h1>
+    <p>보도자료 원문, 사진·영상 원본, 병원 기본 정보를 한곳에서 제공합니다. 언론 취재에 필요한 자료를 별도 문의 없이 바로 내려받을 수 있도록 구성했습니다.</p>
+  </div>
+</div>
+
+<!-- Fast Facts -->
+<section class="sec">
+  <div class="wrap">
+    <div class="annot">
+      <div class="annot-pin"><b>12</b> 병원 개요는 인포그래픽 우선</div>
+      <div class="annot-box">
+        기자가 프레스센터·병원소개에 들어왔을 때 긴 텍스트 대신 핵심 수치(Fast Facts)를 먼저 보도록 배치했습니다.
+        <span class="src">근거 · 분석 리포트 「병원소개 진입 시 인포그래픽을 우선 노출」 / 킥오프 회의 4단계 「Fast Facts · Media Center」</span>
+      </div>
+    </div>
+    <div class="sec-head"><h2>Fast Facts</h2><span class="desc">한눈에 보는 서울아산병원 (가상 수치)</span></div>
+    <div class="factgrid" id="facts" data-annot></div>
+  </div>
+</section>
+
+<!-- 보도자료 -->
+<section class="sec" style="background:var(--bg-soft);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="annot">
+      <div class="annot-pin"><b>13</b> 본문 텍스트 복사 · 사진 일괄 다운로드</div>
+      <div class="annot-box">
+        기자들이 한글 파일을 내려받아 다시 여는 대신, <b>본문 복사</b> 버튼 한 번으로 기사 작성에 바로 붙여 넣을 수 있게 했습니다. 사진은 원본 파일명을 유지한 채 일괄 다운로드됩니다(현재는 다운로드 시 파일명이 깨지는 문제가 있습니다).
+        <span class="src">근거 · 9/14 회의 「한글 파일 다운로드 → 텍스트 복사 기능으로 대체 검토」 / 분석 리포트 「다운로드 파일명이 이상해지는 문제」</span>
+      </div>
+    </div>
+    <div class="sec-head"><h2>보도자료</h2><span class="desc">최신순</span></div>
+    <div class="prlist" id="prlist" data-annot></div>
+  </div>
+</section>
+
+<!-- 미디어 라이브러리 -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head"><h2>미디어 라이브러리</h2><span class="desc">병원 전경 · 로고 · 주요 시설 원본 이미지</span>
+      <a class="more" href="#" onclick="return AMC.toast('전체 이미지 보기 (시연)')">전체보기 ›</a></div>
+    <div class="medialib" id="medialib"></div>
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn pri" onclick="AMC.toast('선택한 이미지를 원본 파일명 그대로 내려받습니다 (시연)')">선택 이미지 다운로드</button>
+      <button class="btn" onclick="AMC.toast('CI·로고 가이드라인 PDF (시연)')">CI·로고 가이드라인</button>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+AMC.layout({ active: 'press' });
+
+document.getElementById('facts').innerHTML = AMC_DATA.facts.map(function (f) {
+  return '<div class="fact"><div class="k">' + f.k + '</div><div class="v">' + f.v + '</div><div class="s">' + f.s + '</div></div>';
+}).join('');
+
+document.getElementById('prlist').innerHTML = AMC_DATA.press.map(function (p) {
+  return '<article class="pr">' +
+    '<div class="top"><span>' + p.date + '</span><span>· ' + p.dept + '</span></div>' +
+    '<h3>' + p.title + '</h3>' +
+    '<div class="body" id="body-' + p.id + '">' + p.body + '</div>' +
+    '<div class="files">' + p.files.map(function (f) { return '<span class="file">📎 ' + f + '</span>'; }).join('') + '</div>' +
+    '<div class="acts">' +
+    '<button class="btn pri sm" onclick="copyBody(\'' + p.id + '\')">📋 본문 복사</button>' +
+    '<button class="btn sm" onclick="AMC.toast(\'사진 6장을 원본 파일명 그대로 ZIP으로 내려받습니다 (시연)\')">🖼 사진 일괄 다운로드</button>' +
+    '<button class="btn sm" onclick="AMC.toast(\'보도자료 원문(HWP) 다운로드 (시연)\')">⬇ 원문 파일</button>' +
+    '<button class="btn sm" onclick="AMC.toast(\'뉴스룸 기사로 이동 (시연)\')">기사로 보기 ›</button>' +
+    '</div></article>';
+}).join('');
+
+function copyBody(id) {
+  var txt = document.getElementById('body-' + id).textContent.trim();
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(
+      function () { AMC.toast('보도자료 본문을 복사했습니다.'); },
+      function () { AMC.toast('본문 복사 (시연)'); }
+    );
+  } else {
+    AMC.toast('본문 복사 (시연)');
+  }
+}
+
+var libColors = [['#00335f','#0091d4'],['#0064ae','#00a19a'],['#0091d4','#0064ae'],
+                 ['#1d4ed8','#0091d4'],['#00a19a','#00335f'],['#334155','#0064ae'],
+                 ['#0064ae','#1d4ed8'],['#00335f','#00a19a'],['#0091d4','#334155'],
+                 ['#0064ae','#0091d4'],['#00a19a','#0064ae'],['#1d4ed8','#00335f']];
+var libNames = ['병원 전경','로비','수술실','중입자치료기','연구동','헬리포트',
+                '소아병동','응급실','로고 (기본형)','로고 (영문)','의료진 단체','야간 전경'];
+document.getElementById('medialib').innerHTML = libNames.map(function (n, i) {
+  return '<a href="#" onclick="return AMC.toast(\'' + n + ' 원본 다운로드 (시연)\')">' +
+    AMC.ph(libColors[i][0], libColors[i][1], n) + '</a>';
+}).join('');
+</script>
+</body>
+</html>
