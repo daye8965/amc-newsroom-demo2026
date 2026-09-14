@@ -5,25 +5,131 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>프레스센터 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=4">
+<link rel="stylesheet" href="assets/css/main.css?v=5">
 <style>
+  /* ---------- 목록 ---------- */
+  .prhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .prhead h2{font-size:24px;letter-spacing:-.04em}
+  .prhead .cnt{margin-left:auto;font-size:13px;color:var(--ink-3)}
+  .prhead .cnt b{color:#e8730c}
+
+  .prlist{border-top:2px solid var(--ink)}
+  .pr{display:grid;grid-template-columns:230px 1fr;gap:22px;padding:24px 4px;
+    border-bottom:1px solid var(--line-2);align-items:start}
+  @media (max-width:700px){.pr{grid-template-columns:1fr;gap:14px}}
+  .pr .th .ph{aspect-ratio:16/10;border-radius:3px;font-size:11px}
+  .pr .meta{font-size:12.5px;color:var(--ink-3);display:flex;gap:10px;align-items:center}
+  .pr .meta .cat{color:var(--amc-blue);font-weight:600}
+  .pr h3{font-size:19px;margin-top:7px;letter-spacing:-.035em;line-height:1.4}
+  .pr .ex{font-size:13.5px;color:var(--ink-3);line-height:1.7;margin-top:9px;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .pr .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
+  .pr .tags span{font-size:11.5px;color:var(--amc-blue);background:var(--bg-tint);
+    border:1px solid #cfe4f6;border-radius:3px;padding:3px 9px}
+  .pr .acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
+
+  /* ---------- 상세 ---------- */
+  .detail{border:1px solid var(--line);border-radius:10px;padding:34px 38px;background:#fff}
+  @media (max-width:700px){.detail{padding:22px 18px}}
+  .detail .crumb{font-size:12.5px;color:var(--amc-blue);font-weight:600}
+  .detail h2{font-size:29px;margin-top:10px;letter-spacing:-.045em;line-height:1.35}
+  @media (max-width:700px){.detail h2{font-size:22px}}
+  .detail .dhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    margin-top:16px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+  .detail .dhead .date{font-size:13px;color:var(--ink-3)}
+  .detail .dhead .tools{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .iconbtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;
+    display:grid;place-items:center;font-size:14px;color:var(--ink-2)}
+  .iconbtn:hover{border-color:var(--amc-blue);color:var(--amc-blue)}
+  .sharebtn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--amc-blue);
+    background:var(--amc-blue);color:#fff;border-radius:999px;padding:9px 20px;
+    font-size:13.5px;font-weight:700;transition:.15s}
+  .sharebtn:hover{background:var(--amc-navy);border-color:var(--amc-navy)}
+  .sharebtn.ghost{background:#fff;color:var(--amc-blue)}
+  .sharebtn.ghost:hover{background:var(--bg-tint);color:var(--amc-navy)}
+
+  .lead1{color:var(--amc-blue);font-size:18px;font-weight:700;text-align:center;margin-top:26px;line-height:1.55;letter-spacing:-.03em}
+  .lead2{font-size:15.5px;font-weight:700;text-align:center;margin-top:12px;color:var(--ink);letter-spacing:-.02em}
+  .lead3{font-size:14px;text-align:center;margin-top:8px;color:var(--ink-2);line-height:1.6}
+  .detail figure{margin:28px 0 0}
+  .detail figure .ph{aspect-ratio:16/10;border-radius:4px}
+  .detail figcaption{font-size:12.5px;color:var(--ink-3);margin-top:10px;line-height:1.6}
+  .detail .body{font-size:16px;line-height:1.85;color:var(--ink-2);margin-top:26px}
+  .detail .body p{margin-bottom:20px}
+
+  .dztag{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:28px}
+  .dztag .lb{background:#e8730c;color:#fff;font-size:11.5px;font-weight:700;
+    padding:4px 12px;border-radius:3px;position:relative}
+  .dztag .lb::after{content:"";position:absolute;right:-6px;top:50%;transform:translateY(-50%);
+    border-left:6px solid #e8730c;border-block:9px solid transparent}
+  .dztag a{font-size:12.5px;background:var(--bg-tint);border:1px solid #cfe4f6;color:var(--amc-navy);
+    border-radius:999px;padding:4px 12px;font-weight:600}
+  .dztag a:hover{background:#dceefb}
+  .dztag .kind{font-size:11px;color:var(--ink-3);margin-right:2px}
+
+  .scrapline{display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+    margin-top:26px;padding-top:20px;border-top:1px solid var(--line)}
+
+  /* ---------- 공유·다운로드 드로어 ---------- */
+  .scrim{position:fixed;inset:0;background:rgba(10,18,28,.45);z-index:100;opacity:0;
+    pointer-events:none;transition:.2s}
+  .scrim.on{opacity:1;pointer-events:auto}
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:min(480px,100%);background:#fff;z-index:101;
+    transform:translateX(102%);transition:transform .28s cubic-bezier(.3,.8,.4,1);
+    display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(10,18,28,.18)}
+  .drawer.on{transform:none}
+  .drawer .dh{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start}
+  .drawer .dh .t{font-size:15px;font-weight:800;letter-spacing:-.03em;line-height:1.4}
+  .drawer .dh .s{font-size:12px;color:var(--ink-3);margin-top:4px}
+  .drawer .dh button{margin-left:auto;flex:none;border:0;background:transparent;font-size:20px;color:var(--ink-3);line-height:1}
+  .drawer .tabs{display:flex;gap:2px;padding:0 12px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+  .drawer .tabs::-webkit-scrollbar{display:none}
+  .drawer .tabs button{border:0;background:transparent;padding:13px 13px;font-size:13.5px;font-weight:700;
+    color:var(--ink-3);border-bottom:2px solid transparent;white-space:nowrap}
+  .drawer .tabs button.on{color:var(--amc-blue);border-bottom-color:var(--amc-blue)}
+  .drawer .db{padding:20px;overflow-y:auto;flex:1}
+  .drawer .df{padding:16px 20px;border-top:1px solid var(--line);background:var(--bg-soft);
+    display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .drawer .df .n{font-size:12.5px;color:var(--ink-3)}
+  .drawer .df .go{margin-left:auto}
+  @media (max-width:560px){.drawer .df .go{width:100%;justify-content:center;margin-left:0}}
+
+  .segsm{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .segsm button{border:1px solid var(--line);background:#fff;border-radius:999px;
+    padding:6px 13px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+  .segsm button.on{background:var(--amc-blue);border-color:var(--amc-blue);color:#fff}
+  .copybox{border:1px solid var(--line);border-radius:8px;background:var(--bg-soft);
+    padding:15px 16px;font-size:13.5px;line-height:1.85;color:var(--ink-2);
+    max-height:340px;overflow-y:auto;white-space:pre-wrap;font-family:inherit}
+
+  .picks{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  .pick{border:2px solid var(--line);border-radius:7px;overflow:hidden;cursor:pointer;position:relative;background:#fff}
+  .pick.on{border-color:var(--amc-blue)}
+  .pick .ph{aspect-ratio:4/3;font-size:10px}
+  .pick .fn{font-size:10.5px;color:var(--ink-3);padding:6px 7px;line-height:1.4;word-break:break-all}
+  .pick .ck{position:absolute;left:7px;top:7px;width:19px;height:19px;border-radius:4px;
+    border:1.5px solid #fff;background:rgba(0,0,0,.28);display:grid;place-items:center;
+    color:#fff;font-size:11px;font-weight:800}
+  .pick.on .ck{background:var(--amc-blue);border-color:var(--amc-blue)}
+  .pickbar{display:flex;gap:8px;align-items:center;margin-bottom:13px;flex-wrap:wrap}
+  .pickbar .sel{font-size:12.5px;color:var(--ink-3);margin-left:auto}
+
+  .filerow{display:flex;gap:12px;align-items:center;border:1px solid var(--line);
+    border-radius:8px;padding:13px 15px;margin-bottom:9px}
+  .filerow .nm{font-size:13.5px;font-weight:600;color:var(--ink);word-break:break-all;line-height:1.5}
+  .filerow .sz{font-size:11.5px;color:var(--ink-3);margin-top:3px}
+  .filerow .ic{flex:none;font-size:19px}
+
+  .linkgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .linkgrid .btn{justify-content:center}
+
+  /* Fast Facts / 미디어 라이브러리 */
   .factgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
   @media (max-width:860px){.factgrid{grid-template-columns:repeat(2,1fr)}}
   .fact{border:1px solid var(--line);border-radius:8px;padding:20px;background:#fff}
   .fact .k{font-size:12.5px;color:var(--ink-3);font-weight:600}
   .fact .v{font-size:30px;font-weight:800;color:var(--amc-blue);letter-spacing:-0.04em;margin-top:6px}
   .fact .s{font-size:11.5px;color:var(--ink-3);margin-top:4px}
-
-  .prlist{display:grid;gap:16px}
-  .pr{border:1px solid var(--line);border-radius:8px;padding:20px;background:#fff}
-  .pr .top{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;font-size:12.5px;color:var(--ink-3)}
-  .pr h3{font-size:19px;margin-top:8px;letter-spacing:-0.03em}
-  .pr .body{margin-top:12px;font-size:14.5px;color:var(--ink-2);line-height:1.75;
-    background:var(--bg-soft);border-radius:6px;padding:14px 16px}
-  .pr .files{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-  .pr .file{font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--ink-2)}
-  .pr .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
-
   .medialib{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
   @media (max-width:860px){.medialib{grid-template-columns:repeat(3,1fr)}}
   .medialib .ph{aspect-ratio:4/3;border-radius:4px;font-size:11px}
@@ -36,17 +142,114 @@
 <div class="pagehead">
   <div class="wrap">
     <h1>프레스센터</h1>
-    <p>보도자료 원문, 사진·영상 원본, 병원 기본 정보를 한곳에서 제공합니다. 언론 취재에 필요한 자료를 별도 문의 없이 바로 내려받을 수 있도록 구성했습니다.</p>
+    <p>기자가 기사를 쓰는 데 필요한 것은 <b>본문 텍스트</b>와 <b>사진 원본</b>입니다. 지금은 한글 파일을 내려받아 다시 열어야 하고 사진도 한 장씩 눌러야 합니다. 공유 버튼 하나에서 두 가지를 모두 해결하는 안입니다.</p>
   </div>
 </div>
 
-<!-- Fast Facts -->
+<!-- ============ 보도자료 목록 ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="prhead">
+      <h2>프레스센터 〉 보도자료</h2>
+      <span class="cnt">총 <b>563</b> 개 자료가 조회되었습니다.</span>
+    </div>
+
+    <div class="annot">
+      <div class="annot-pin"><b>18</b> 목록에서 바로 공유·다운로드</div>
+      <div class="annot-box">
+        상세로 들어가지 않고 목록에서 바로 본문을 복사하거나 사진을 내려받을 수 있게 했습니다. 기자가 여러 건을 훑을 때 클릭 수가 줄어듭니다.
+        <span class="src">근거 · 9/14 회의 「프레스센터 한글 파일 다운로드 → 텍스트 복사 기능으로 대체 검토」</span>
+      </div>
+    </div>
+
+    <div class="prlist" id="prlist" data-annot></div>
+  </div>
+</section>
+
+<!-- ============ 보도자료 상세 ============ -->
+<section class="sec" id="detail" style="background:var(--bg-soft);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head"><h2>보도자료 상세</h2><span class="desc">공유 버튼을 눌러 동작을 확인해 보세요</span></div>
+
+    <div class="annot">
+      <div class="annot-pin"><b>13</b> 공유 버튼 하나로 — 본문 복사 · 사진 선택 다운로드</div>
+      <div class="annot-box">
+        현재는 사진을 <b>한 장씩</b> 눌러야 하고, 본문을 가져가려면 한글 파일을 내려받아 다시 열어야 합니다. 개편안에서는 공유 버튼을 누르면 <b>본문 텍스트 복사 · 사진 선택 다운로드 · 첨부파일 · 링크 공유</b>가 한 패널에 모입니다. 삼성전자 뉴스룸의 프레스킷 방식입니다.
+        <span class="src">근거 · 9/14 회의 「프레스센터 한글 파일 다운로드 → 텍스트 복사 기능으로 대체」 / 분석 리포트 「프레스센터에서 사진 다운로드와 본문 복사를 쉽게」</span>
+      </div>
+      <div class="annot-pin"><b>19</b> 공감 5종 → 스크랩</div>
+      <div class="annot-box">
+        유용해요·추천해요·좋아요·공감해요·후속강추 5종은 로그인 없이 중복 클릭이 가능해 숫자를 신뢰하기 어렵습니다. 스크랩 하나로 정리했습니다.
+        <span class="src">근거 · 9/14 회의 「스크랩 기능은 전체 도입, 좋아요 서비스는 삭제 방향」</span>
+      </div>
+    </div>
+
+    <article class="detail" data-annot>
+      <div class="crumb">보도자료 〉 프레스센터</div>
+      <h2 id="artTitle">서울아산병원, 두경부암 미세재건수술 2,000례 달성</h2>
+
+      <div class="dhead">
+        <span class="date">2026.09.14 · 의료</span>
+        <div class="tools">
+          <button class="iconbtn" title="인쇄" onclick="AMC.toast('인쇄 (시연)')">🖨</button>
+          <button class="chipbtn" id="scrapBtn" onclick="toggleScrap()">☆ 스크랩 <b>128</b></button>
+          <button class="sharebtn" onclick="openDrawer()">⤴ 공유 · 다운로드</button>
+        </div>
+      </div>
+
+      <p class="lead1">암 환자들이 다시 말하고, 삼키고, 일상으로 돌아갈 수 있는 기반 만드는 ‘미세재건수술’</p>
+      <p class="lead2">최근 5년간 연평균 130건 이상 시행, 2000년대 대비 4배 증가… 수술 성공률 97% 기록</p>
+      <p class="lead3">최○○ 교수 “이비인후과·종양내과·방사선종양학과·재활의학과·치과 등 의료진 팀워크 있었기에 가능”</p>
+
+      <figure>
+        <div class="ph" style="--c1:#00335f;--c2:#0091d4"><span>대표 이미지 (기념촬영)</span></div>
+        <figcaption>▲ 서울아산병원 이비인후과 최○○ 교수, 성형외과 최○○ 교수를 비롯한 의료진이 9월 10일 열린 두경부암 미세재건수술 2,000례 달성 기념식에서 기념촬영을 하고 있다. (시연용 가상 이미지)</figcaption>
+      </figure>
+
+      <div class="body" id="artBody">
+        <p>지난 4월 송 모 씨(남, 50세)는 구강암 치료를 위해 혀 전체를 절제해야 했다. 암을 제거하는 것만으로도 큰 수술이었지만, 수술 후 말을 하고 음식을 삼키는 기능을 최대한 보존하기 위해서는 절제된 조직을 다시 만들어 주는 과정이 필요했다.</p>
+        <p>서울아산병원은 두경부암 미세재건수술 2,000례를 달성했다고 14일 밝혔다. 최근 5년간 연평균 130건 이상을 시행해 2000년대 대비 4배 가까이 늘었으며, 수술 성공률은 97%를 기록했다.</p>
+        <p>미세재건수술은 환자의 다른 부위에서 떼어낸 조직을 현미경으로 혈관을 이어 붙여 절제 부위를 복원하는 수술이다. 기능 회복이 목표이기 때문에 이비인후과·성형외과·종양내과·방사선종양학과·재활의학과·치과 등 여러 진료과의 협진이 필수적이다.</p>
+        <p>(※ 이 보도자료는 시연을 위한 가상 콘텐츠이며, 인명은 실제와 관계없이 처리했습니다.)</p>
+      </div>
+
+      <div class="dztag">
+        <span class="lb">관련 질환</span>
+        <a href="#" onclick="return AMC.toast('질환 페이지의 관련 뉴스로 이동 (시연)')">두경부암</a>
+        <a href="#" onclick="return AMC.toast('질환 페이지의 관련 뉴스로 이동 (시연)')">구강암</a>
+      </div>
+      <div class="dztag" style="margin-top:9px">
+        <span class="kind">검사·시술</span>
+        <a href="#" onclick="return AMC.toast('검사·시술 연계 검색 (시연)')">미세재건수술</a>
+        <span class="kind" style="margin-left:8px">신체부위</span>
+        <a href="#" onclick="return AMC.toast('신체부위 연계 검색 (시연)')">혀</a>
+        <a href="#" onclick="return AMC.toast('신체부위 연계 검색 (시연)')">두경부</a>
+      </div>
+
+      <div class="scrapline">
+        <span style="font-size:13px;color:var(--ink-3)">이 콘텐츠가 도움이 되었다면 스크랩해 두세요.</span>
+        <button class="chipbtn" onclick="AMC.toast('마이페이지에 스크랩했습니다 (시연)')">☆ 스크랩</button>
+        <span style="font-size:11.5px;color:var(--ink-3);text-decoration:line-through;opacity:.6;margin-left:auto">
+          유용해요 · 추천해요 · 좋아요 · 공감해요 · 후속강추 제거
+        </span>
+      </div>
+
+      <div style="margin-top:26px;padding-top:20px;border-top:1px solid var(--line);display:flex;gap:9px;flex-wrap:wrap">
+        <button class="sharebtn" onclick="openDrawer('text')">📋 본문 텍스트 복사</button>
+        <button class="sharebtn ghost" onclick="openDrawer('photo')">🖼 사진 선택 다운로드</button>
+        <button class="sharebtn ghost" onclick="openDrawer('file')">📎 첨부파일</button>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ Fast Facts ============ -->
 <section class="sec">
   <div class="wrap">
     <div class="annot">
       <div class="annot-pin"><b>12</b> 병원 개요는 인포그래픽 우선</div>
       <div class="annot-box">
-        기자가 프레스센터·병원소개에 들어왔을 때 긴 텍스트 대신 핵심 수치(Fast Facts)를 먼저 보도록 배치했습니다.
+        기자가 프레스센터에 들어왔을 때 긴 텍스트 대신 핵심 수치를 먼저 보도록 배치했습니다.
         <span class="src">근거 · 분석 리포트 「병원소개 진입 시 인포그래픽을 우선 노출」 / 킥오프 회의 4단계 「Fast Facts · Media Center」</span>
       </div>
     </div>
@@ -55,26 +258,10 @@
   </div>
 </section>
 
-<!-- 보도자료 -->
+<!-- ============ 미디어 라이브러리 ============ -->
 <section class="sec" style="background:var(--bg-soft);border-top:1px solid var(--line)">
   <div class="wrap">
-    <div class="annot">
-      <div class="annot-pin"><b>13</b> 본문 텍스트 복사 · 사진 일괄 다운로드</div>
-      <div class="annot-box">
-        기자들이 한글 파일을 내려받아 다시 여는 대신, <b>본문 복사</b> 버튼 한 번으로 기사 작성에 바로 붙여 넣을 수 있게 했습니다. 사진은 원본 파일명을 유지한 채 일괄 다운로드됩니다(현재는 다운로드 시 파일명이 깨지는 문제가 있습니다).
-        <span class="src">근거 · 9/14 회의 「한글 파일 다운로드 → 텍스트 복사 기능으로 대체 검토」 / 분석 리포트 「다운로드 파일명이 이상해지는 문제」</span>
-      </div>
-    </div>
-    <div class="sec-head"><h2>보도자료</h2><span class="desc">최신순</span></div>
-    <div class="prlist" id="prlist" data-annot></div>
-  </div>
-</section>
-
-<!-- 미디어 라이브러리 -->
-<section class="sec">
-  <div class="wrap">
-    <div class="sec-head"><h2>미디어 라이브러리</h2><span class="desc">병원 전경 · 로고 · 주요 시설 원본 이미지</span>
-      <a class="more" href="#" onclick="return AMC.toast('전체 이미지 보기 (시연)')">전체보기 ›</a></div>
+    <div class="sec-head"><h2>미디어 라이브러리</h2><span class="desc">병원 전경 · 로고 · 주요 시설 원본 이미지</span></div>
     <div class="medialib" id="medialib"></div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn pri" onclick="AMC.toast('선택한 이미지를 원본 파일명 그대로 내려받습니다 (시연)')">선택 이미지 다운로드</button>
@@ -83,42 +270,133 @@
   </div>
 </section>
 
+<!-- ============ 공유·다운로드 드로어 ============ -->
+<div class="scrim" id="scrim" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-label="공유 및 다운로드">
+  <div class="dh">
+    <div>
+      <div class="t">서울아산병원, 두경부암 미세재건수술 2,000례 달성</div>
+      <div class="s">2026.09.14 · 보도자료</div>
+    </div>
+    <button onclick="closeDrawer()" aria-label="닫기">×</button>
+  </div>
+
+  <div class="tabs">
+    <button class="on" data-tab="text" onclick="setTab('text')">본문 텍스트</button>
+    <button data-tab="photo" onclick="setTab('photo')">사진 <span id="photoCnt">(4)</span></button>
+    <button data-tab="file" onclick="setTab('file')">첨부파일</button>
+    <button data-tab="link" onclick="setTab('link')">링크 공유</button>
+  </div>
+
+  <div class="db">
+    <!-- 본문 텍스트 -->
+    <div data-pane="text">
+      <div class="segsm">
+        <button class="on" onclick="setScope(this,'full')">제목 + 부제 + 본문</button>
+        <button onclick="setScope(this,'body')">본문만</button>
+        <button onclick="setScope(this,'title')">제목만</button>
+      </div>
+      <div class="copybox" id="copyPreview"></div>
+      <div style="font-size:11.5px;color:var(--ink-3);margin-top:11px;line-height:1.7">
+        한글 파일을 내려받아 다시 열 필요 없이 바로 붙여 넣을 수 있습니다. 줄바꿈과 문단 구분이 그대로 유지됩니다.
+      </div>
+    </div>
+
+    <!-- 사진 -->
+    <div data-pane="photo" hidden>
+      <div class="pickbar">
+        <button class="btn sm" onclick="selectAll(true)">전체 선택</button>
+        <button class="btn sm" onclick="selectAll(false)">선택 해제</button>
+        <span class="sel" id="selCnt">4장 선택됨</span>
+      </div>
+      <div class="picks" id="picks"></div>
+      <div style="font-size:11.5px;color:var(--ink-3);margin-top:12px;line-height:1.7">
+        원하는 사진만 골라 <b>한 번에</b> 내려받습니다. 파일명은 등록 시 규칙(날짜_내용_순번)이 그대로 유지되어, 다운로드 후 파일명이 깨지는 문제가 없습니다.
+      </div>
+    </div>
+
+    <!-- 첨부파일 -->
+    <div data-pane="file" hidden>
+      <div class="filerow">
+        <span class="ic">📄</span>
+        <div><div class="nm">[서울아산병원] 두경부암 미세재건수술 2,000례 달성.hwp</div>
+          <div class="sz">HWP · 284 KB</div></div>
+        <button class="btn sm" style="margin-left:auto" onclick="AMC.toast('원문 파일 다운로드 (시연)')">⬇</button>
+      </div>
+      <div class="filerow">
+        <span class="ic">📊</span>
+        <div><div class="nm">두경부암 미세재건수술 추이 인포그래픽.pdf</div>
+          <div class="sz">PDF · 1.2 MB</div></div>
+        <button class="btn sm" style="margin-left:auto" onclick="AMC.toast('인포그래픽 다운로드 (시연)')">⬇</button>
+      </div>
+      <div style="font-size:11.5px;color:var(--ink-3);margin-top:12px;line-height:1.7">
+        본문을 그대로 쓰는 경우가 대부분이라 한글 파일은 보조 수단으로 두고, <b>본문 텍스트 복사</b>를 기본으로 안내합니다.
+      </div>
+    </div>
+
+    <!-- 링크 공유 -->
+    <div data-pane="link" hidden>
+      <div class="linkgrid">
+        <button class="btn" onclick="copyUrl()">🔗 URL 복사</button>
+        <button class="btn" onclick="AMC.toast('메일 공유 (시연)')">✉ 메일</button>
+        <button class="btn" onclick="AMC.toast('카카오톡 공유 (시연)')">💬 카카오톡</button>
+        <button class="btn" onclick="AMC.toast('링크드인 공유 (시연)')">in 링크드인</button>
+      </div>
+      <div style="font-size:11.5px;color:var(--ink-3);margin-top:14px;line-height:1.7">
+        이용이 거의 없는 <s>라인</s> 공유는 제외하고 링크드인을 추가했습니다. 영문 기사가 있는 경우 이곳에 ‘영문 기사 링크 복사’가 함께 표시됩니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="df">
+    <span class="n" id="drawerNote">붙여 넣을 준비가 된 상태입니다.</span>
+    <button class="sharebtn go" id="drawerGo" onclick="drawerAction()">본문 복사</button>
+  </div>
+</aside>
+
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=4"></script>
-<script src="assets/js/site.js?v=4"></script>
+<script src="assets/js/data.js?v=5"></script>
+<script src="assets/js/site.js?v=5"></script>
 <script>
 AMC.layout({ active: 'press' });
 
-document.getElementById('facts').innerHTML = AMC_DATA.facts.map(function (f) {
+var D = AMC_DATA;
+
+/* ---------- 목록 ---------- */
+var LIST = [
+  { d:'2026.09.14', c:'의료', t:'서울아산병원, 두경부암 미세재건수술 2,000례 달성',
+    e:'지난 4월 송 모 씨(남, 50세)는 구강암 치료를 위해 혀 전체를 절제해야 했다. 암을 제거하는 것만으로도 큰 수술이었지만, 수술 후 말을 하고 음식을 삼키는 기능을 최대한 보존하기 위해서는 절제된 조…',
+    tg:['#언론보도','#암병원'], c1:'#00335f', c2:'#0091d4' },
+  { d:'2026.09.11', c:'의료', t:'생후 4주 내 전장유전체로 희귀유전질환 찾는다',
+    e:'최근 유전체 분석 기술의 발달로 더 많은 희귀유전질환을 한 번에 진단할 수 있는 전장유전체(모든 유전적 정보) 스크리닝의 필요성이 높아지고 있다. 이러한 가운데 서울아산병원이…',
+    tg:['#언론보도'], c1:'#1d4ed8', c2:'#00a19a' },
+  { d:'2026.09.10', c:'의료', t:'중이염으로 20년 넘게 난청 겪어도 인공와우 통해 청각 회복',
+    e:'만성 중이염 환자들은 오랜 기간 난청을 겪으며 보청기로도 큰 효과를 보지 못했는데, 20년 이상 난청을 방치했더라도 인공와우 수술을 통해 청력을 회복할 수 있다는 연구 결과가…',
+    tg:['#언론보도'], c1:'#0064ae', c2:'#0091d4' },
+  { d:'2026.09.08', c:'의료', t:'서울아산병원, ‘국내 최고령’ 100세 환자 대동맥 박리 수술',
+    e:'지난 8월 5일, 서울아산병원에서 특별한 생일파티가 열렸다. 초응급 질환으로 알려진 대동맥 박리로 서울아산병원 응급실에 실려온 99세 초고령 환자가 무사히 수술을 받고…',
+    tg:['#언론보도','#심장병원'], c1:'#00a19a', c2:'#0064ae' }
+];
+
+document.getElementById('prlist').innerHTML = LIST.map(function (p) {
+  return '<article class="pr">' +
+    '<div class="th">' + AMC.ph(p.c1, p.c2, '보도자료 사진') + '</div>' +
+    '<div><div class="meta"><span>' + p.d + '</span><span class="cat">' + p.c + '</span></div>' +
+    '<h3>' + p.t + '</h3>' +
+    '<p class="ex">' + p.e + '</p>' +
+    '<div class="tags">' + p.tg.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
+    '<div class="acts">' +
+    '<button class="btn sm" onclick="openDrawer(\'text\')">📋 본문 복사</button>' +
+    '<button class="btn sm" onclick="openDrawer(\'photo\')">🖼 사진 다운로드</button>' +
+    '<a class="btn sm" href="#detail">상세 보기 ›</a>' +
+    '</div></div></article>';
+}).join('');
+
+/* ---------- Fast Facts / 미디어 라이브러리 ---------- */
+document.getElementById('facts').innerHTML = D.facts.map(function (f) {
   return '<div class="fact"><div class="k">' + f.k + '</div><div class="v">' + f.v + '</div><div class="s">' + f.s + '</div></div>';
 }).join('');
-
-document.getElementById('prlist').innerHTML = AMC_DATA.press.map(function (p) {
-  return '<article class="pr">' +
-    '<div class="top"><span>' + p.date + '</span><span>· ' + p.dept + '</span></div>' +
-    '<h3>' + p.title + '</h3>' +
-    '<div class="body" id="body-' + p.id + '">' + p.body + '</div>' +
-    '<div class="files">' + p.files.map(function (f) { return '<span class="file">📎 ' + f + '</span>'; }).join('') + '</div>' +
-    '<div class="acts">' +
-    '<button class="btn pri sm" onclick="copyBody(\'' + p.id + '\')">📋 본문 복사</button>' +
-    '<button class="btn sm" onclick="AMC.toast(\'사진 6장을 원본 파일명 그대로 ZIP으로 내려받습니다 (시연)\')">🖼 사진 일괄 다운로드</button>' +
-    '<button class="btn sm" onclick="AMC.toast(\'보도자료 원문(HWP) 다운로드 (시연)\')">⬇ 원문 파일</button>' +
-    '<button class="btn sm" onclick="AMC.toast(\'뉴스룸 기사로 이동 (시연)\')">기사로 보기 ›</button>' +
-    '</div></article>';
-}).join('');
-
-function copyBody(id) {
-  var txt = document.getElementById('body-' + id).textContent.trim();
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(txt).then(
-      function () { AMC.toast('보도자료 본문을 복사했습니다.'); },
-      function () { AMC.toast('본문 복사 (시연)'); }
-    );
-  } else {
-    AMC.toast('본문 복사 (시연)');
-  }
-}
 
 var libColors = [['#00335f','#0091d4'],['#0064ae','#00a19a'],['#0091d4','#0064ae'],
                  ['#1d4ed8','#0091d4'],['#00a19a','#00335f'],['#334155','#0064ae'],
@@ -130,6 +408,122 @@ document.getElementById('medialib').innerHTML = libNames.map(function (n, i) {
   return '<a href="#" onclick="return AMC.toast(\'' + n + ' 원본 다운로드 (시연)\')">' +
     AMC.ph(libColors[i][0], libColors[i][1], n) + '</a>';
 }).join('');
+
+/* ---------- 드로어 ---------- */
+var PHOTOS = [
+  { n:'20260910_두경부암2000례_01.jpg', s:'4032×3024 · 3.1 MB', c1:'#00335f', c2:'#0091d4' },
+  { n:'20260910_두경부암2000례_02.jpg', s:'4032×3024 · 2.8 MB', c1:'#0064ae', c2:'#00a19a' },
+  { n:'20260910_두경부암2000례_03.jpg', s:'4032×3024 · 3.4 MB', c1:'#0091d4', c2:'#0064ae' },
+  { n:'20260910_두경부암2000례_04.jpg', s:'4032×3024 · 2.6 MB', c1:'#1d4ed8', c2:'#0091d4' }
+];
+var picked = [true, true, true, true];
+var curTab = 'text', curScope = 'full';
+
+document.getElementById('picks').innerHTML = PHOTOS.map(function (p, i) {
+  return '<div class="pick on" onclick="togglePick(' + i + ',this)">' +
+    '<div class="ck">✓</div>' + AMC.ph(p.c1, p.c2, '사진 ' + (i + 1)) +
+    '<div class="fn">' + p.n + '<br>' + p.s + '</div></div>';
+}).join('');
+
+function togglePick(i, el) {
+  picked[i] = !picked[i];
+  el.classList.toggle('on', picked[i]);
+  updatePick();
+}
+function selectAll(v) {
+  picked = picked.map(function () { return v; });
+  document.querySelectorAll('.pick').forEach(function (el) { el.classList.toggle('on', v); });
+  updatePick();
+}
+function updatePick() {
+  var n = picked.filter(Boolean).length;
+  document.getElementById('selCnt').textContent = n + '장 선택됨';
+  document.getElementById('photoCnt').textContent = '(' + n + ')';
+  if (curTab === 'photo') {
+    document.getElementById('drawerGo').textContent = '선택한 ' + n + '장 다운로드';
+    document.getElementById('drawerNote').textContent = n
+      ? '원본 파일명 그대로 ZIP으로 내려받습니다.' : '사진을 한 장 이상 선택하세요.';
+  }
+}
+
+function buildText(scope) {
+  var title = document.getElementById('artTitle').textContent.trim();
+  var leads = ['암 환자들이 다시 말하고, 삼키고, 일상으로 돌아갈 수 있는 기반 만드는 ‘미세재건수술’',
+               '최근 5년간 연평균 130건 이상 시행, 2000년대 대비 4배 증가… 수술 성공률 97% 기록',
+               '최○○ 교수 “이비인후과·종양내과·방사선종양학과·재활의학과·치과 등 의료진 팀워크 있었기에 가능”'].join('\n');
+  var body = Array.prototype.map.call(
+    document.querySelectorAll('#artBody p'),
+    function (p) { return p.textContent.trim(); }).join('\n\n');
+  if (scope === 'title') return title;
+  if (scope === 'body') return body;
+  return title + '\n\n' + leads + '\n\n' + body;
+}
+
+function setScope(btn, s) {
+  btn.parentNode.querySelectorAll('button').forEach(function (b) { b.classList.remove('on'); });
+  btn.classList.add('on');
+  curScope = s;
+  document.getElementById('copyPreview').textContent = buildText(s);
+}
+
+function setTab(t) {
+  curTab = t;
+  document.querySelectorAll('.drawer .tabs button').forEach(function (b) {
+    b.classList.toggle('on', b.getAttribute('data-tab') === t);
+  });
+  document.querySelectorAll('.drawer [data-pane]').forEach(function (p) {
+    p.hidden = p.getAttribute('data-pane') !== t;
+  });
+  var go = document.getElementById('drawerGo'), note = document.getElementById('drawerNote');
+  if (t === 'text') { go.textContent = '본문 복사'; note.textContent = '붙여 넣을 준비가 된 상태입니다.'; }
+  else if (t === 'photo') { updatePick(); }
+  else if (t === 'file') { go.textContent = '전체 파일 다운로드'; note.textContent = 'HWP · PDF 2건'; }
+  else { go.textContent = 'URL 복사'; note.textContent = '기사 주소를 클립보드에 복사합니다.'; }
+}
+
+function openDrawer(tab) {
+  document.getElementById('copyPreview').textContent = buildText(curScope);
+  setTab(tab || 'text');
+  document.getElementById('scrim').classList.add('on');
+  document.getElementById('drawer').classList.add('on');
+}
+function closeDrawer() {
+  document.getElementById('scrim').classList.remove('on');
+  document.getElementById('drawer').classList.remove('on');
+}
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeDrawer(); });
+
+function copyText(txt, msg) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(
+      function () { AMC.toast(msg); },
+      function () { AMC.toast(msg + ' (시연)'); });
+  } else { AMC.toast(msg + ' (시연)'); }
+}
+function copyUrl() { copyText(location.href, '기사 URL을 복사했습니다.'); }
+
+function drawerAction() {
+  if (curTab === 'text') {
+    copyText(buildText(curScope), '보도자료 본문을 복사했습니다. 기사 작성 창에 바로 붙여 넣으세요.');
+  } else if (curTab === 'photo') {
+    var n = picked.filter(Boolean).length;
+    if (!n) { AMC.toast('사진을 한 장 이상 선택하세요.'); return; }
+    AMC.toast('사진 ' + n + '장을 원본 파일명 그대로 ZIP으로 내려받습니다 (시연)');
+  } else if (curTab === 'file') {
+    AMC.toast('첨부파일 2건을 내려받습니다 (시연)');
+  } else {
+    copyUrl();
+  }
+}
+
+var scrapped = false;
+function toggleScrap() {
+  scrapped = !scrapped;
+  var b = document.getElementById('scrapBtn');
+  b.classList.toggle('on', scrapped);
+  b.innerHTML = scrapped ? '★ 스크랩됨 <b>129</b>' : '☆ 스크랩 <b>128</b>';
+  AMC.toast(scrapped ? '마이페이지에 스크랩했습니다 (시연)' : '스크랩을 해제했습니다 (시연)');
+}
 </script>
 </body>
 </html>
