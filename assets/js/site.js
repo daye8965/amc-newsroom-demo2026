@@ -8,7 +8,7 @@
     { href: 'index.html', label: '뉴스룸 메인' },
     { href: 'article.html', label: '기사 상세' },
     { href: 'press.html', label: '프레스센터' },
-    { href: 'admin.html', label: '통합 등록화면(CMS)' },
+    { href: 'admin.html', label: '업로드 페이지(CMS)' },
     { href: 'app.html', label: '앱 화면' },
     { href: 'compare.html', label: '현재 vs 개편안' },
     { href: 'guide.html', label: '개편 포인트 정리' }

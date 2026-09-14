@@ -367,6 +367,27 @@ body.annot-on [data-annot]{outline:2px dashed rgba(194,65,12,.5);outline-offset:
 .btn.pri:hover{background:var(--amc-navy);border-color:var(--amc-navy);color:#fff}
 .btn.sm{padding:6px 11px;font-size:12.5px}
 
+/* ---------- 업로드 페이지 바로가기 CTA ---------- */
+.cta-cms{
+  display:flex;gap:18px;align-items:center;flex-wrap:wrap;
+  border:1px solid #cfe4f6;background:linear-gradient(105deg,#f4faff,#fff 60%);
+  border-radius:10px;padding:20px 24px;margin-block:26px;
+}
+.cta-cms .ic{
+  flex:none;width:46px;height:46px;border-radius:10px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--amc-navy),var(--amc-sky));color:#fff;font-size:21px;
+}
+.cta-cms .tx{flex:1 1 300px}
+.cta-cms .tx b{display:block;font-size:16.5px;letter-spacing:-0.03em;color:var(--ink)}
+.cta-cms .tx span{display:block;font-size:13px;color:var(--ink-3);margin-top:5px;line-height:1.6}
+.cta-cms .go{
+  flex:none;display:inline-flex;align-items:center;gap:8px;
+  background:var(--amc-blue);color:#fff;border:1px solid var(--amc-blue);
+  border-radius:999px;padding:13px 26px;font-size:14.5px;font-weight:700;transition:.15s;
+}
+.cta-cms .go:hover{background:var(--amc-navy);border-color:var(--amc-navy)}
+@media (max-width:560px){.cta-cms{padding:16px}.cta-cms .go{width:100%;justify-content:center}}
+
 .toast{
   position:fixed;left:50%;bottom:88px;transform:translate(-50%,14px);z-index:120;
   background:#111820;color:#fff;font-size:13.5px;padding:12px 22px;border-radius:999px;
