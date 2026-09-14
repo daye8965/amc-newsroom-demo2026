@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>업로드 페이지 가안 | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=10">
+<link rel="stylesheet" href="assets/css/main.css?v=11">
 <style>
   /* ===== 모드 전환 바 ===== */
   .modebar{background:#fff;border:1px solid var(--line);
@@ -135,9 +135,38 @@
   .toolbar button:hover{border-color:var(--line);color:var(--amc-blue)}
   .toolbar .sep{width:1px;height:18px;background:var(--line);margin-inline:4px}
   .toolbar + textarea{border-radius:0 0 6px 6px}
+  .toolbar select{border:1px solid var(--line);border-radius:4px;padding:5px 7px;font-size:12.5px;
+    font-family:inherit;color:var(--ink-2);background:#fff;font-weight:600;outline:none}
+  .toolbar select:focus{border-color:var(--amc-blue)}
   .swatches{display:flex;gap:4px;align-items:center;margin-left:auto}
   .swatches i{width:18px;height:18px;border-radius:3px;display:block;border:1px solid rgba(0,0,0,.12);cursor:pointer}
   .swatches .lbl{font-size:11px;color:var(--ink-3);font-weight:700;margin-right:2px}
+
+  /* 서식 편집 영역 */
+  .rte{border:1px solid var(--line);border-top:0;border-radius:0 0 6px 6px;
+    padding:16px 18px;min-height:190px;font-size:14.5px;line-height:1.8;color:var(--ink-2);
+    outline:none;background:#fff}
+  .rte:focus{box-shadow:inset 0 0 0 2px rgba(0,100,174,.1)}
+  .rte p{margin:0 0 13px}
+  .rte h3{font-size:17px;font-weight:800;color:var(--amc-mint);text-align:center;
+    margin:0 0 11px;letter-spacing:-.03em;line-height:1.45}
+  .rte h4{font-size:15.5px;font-weight:800;color:var(--ink);text-align:center;margin:0 0 10px;line-height:1.45}
+  .rte h5{font-size:13.5px;font-weight:700;color:var(--amc-blue);text-align:center;margin:0 0 16px;line-height:1.5}
+  .rte blockquote{margin:14px 0;padding:12px 16px;background:var(--bg-tint);
+    border-left:3px solid var(--amc-blue);border-radius:0 4px 4px 0}
+  .rte:empty::before{content:attr(data-ph);color:var(--ink-3)}
+
+  /* 양식 안내 */
+  .fmtguide{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}
+  @media (max-width:700px){.fmtguide{grid-template-columns:1fr}}
+  .fmtguide div{border:1px solid var(--line);border-radius:6px;padding:10px 12px;background:#fff}
+  .fmtguide .nm{font-size:11px;font-weight:800;color:var(--ink-3)}
+  .fmtguide .ex{margin-top:5px;font-weight:800;letter-spacing:-.02em}
+  .fmtguide .ex.b{font-size:14px;color:var(--amc-mint)}
+  .fmtguide .ex.m{font-size:13px;color:var(--ink)}
+  .fmtguide .ex.s{font-size:12px;color:var(--amc-blue)}
+  .fmtguide .hx{font-size:10.5px;color:var(--ink-3);margin-top:4px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
 
   .dropzone{border:2px dashed #c8d4e0;border-radius:8px;background:#f8fbfe;padding:22px;text-align:center;transition:.15s}
   .dropzone.hot{border-color:var(--amc-blue);background:var(--bg-tint)}
@@ -449,7 +478,7 @@
   <div class="annot">
     <div class="annot-pin"><b>14</b> 게시물 끌고오기 — 재입력 제거</div>
     <div class="annot-box">
-      위 「언론정보」에 입력한 <b>제목 · 본문 · 사진</b>을 버튼 한 번으로 아래 「대외용 콘텐츠 등록」에 그대로 채웁니다. 가져온 뒤에는 뉴스룸용으로 자유롭게 고칠 수 있습니다. 아카이브 원본과 뉴스룸 노출본이 서로 다른 경우(제목을 다듬는 등)가 있으므로 <b>자동 동기화가 아니라 담당자가 누르는 방식</b>으로 두었습니다.
+      위 「언론정보」에 입력한 <b>제목 · 본문(지정한 양식 포함) · 사진</b>을 버튼 한 번으로 아래 「대외용 콘텐츠 등록」에 그대로 채웁니다. 가져온 뒤에는 뉴스룸용으로 자유롭게 고칠 수 있습니다. 아카이브 원본과 뉴스룸 노출본이 서로 다른 경우(제목을 다듬는 등)가 있으므로 <b>자동 동기화가 아니라 담당자가 누르는 방식</b>으로 두었습니다.
       <span class="src">근거 · 9/14 회의 「아카이브 ↔ 뉴스룸 노출 분리 문제 — 두 곳에 각각 입력」 / 8/24 팀장 회의 「전체 아카이브 구조 개편은 이번 범위에 포함되지 않는다고 전달받음」</span>
     </div>
   </div>
@@ -493,30 +522,55 @@
         </div>
 
         <div class="fld">
-          <label>본문 <span class="hint">블로그 수준 편집기 · 드래그 삽입 · 표 편집 지원</span></label>
+          <label>본문 <span class="hint">양식·색상 지정 그대로 · 드래그 삽입 · 표 편집 지원</span></label>
           <div class="toolbar">
-            <button onclick="return false">B</button><button onclick="return false"><i>I</i></button>
-            <button onclick="return false">U</button><span class="sep"></span>
+            <select id="fmtSel" onchange="setFormat(this)" title="양식">
+              <option value="">양식</option>
+              <option value="p">본문</option>
+              <option value="h3">대제목</option>
+              <option value="h4">중제목</option>
+              <option value="h5">소제목</option>
+              <option value="blockquote">인용</option>
+            </select>
+            <select id="sizeSel" onchange="setSize(this)" title="글자 크기">
+              <option value="">크기</option>
+              <option value="2">작게</option>
+              <option value="3" selected>보통</option>
+              <option value="5">크게</option>
+            </select>
+            <span class="sep"></span>
+            <button onmousedown="return keep(event)" onclick="exec('bold')"><b>B</b></button>
+            <button onmousedown="return keep(event)" onclick="exec('italic')"><i>I</i></button>
+            <button onmousedown="return keep(event)" onclick="exec('underline')"><u>U</u></button>
+            <span class="sep"></span>
+            <button onmousedown="return keep(event)" onclick="exec('justifyLeft')" title="왼쪽 정렬">≡</button>
+            <button onmousedown="return keep(event)" onclick="exec('justifyCenter')" title="가운데 정렬">⋮≡</button>
+            <span class="sep"></span>
             <button onclick="AMC.toast('표 삽입 — 셀 병합·헤더·정렬 지원 (시연)')">⊞ 표</button>
             <button onclick="AMC.toast('올린 사진 중에서 바로 삽입 (시연)')">🖼 이미지</button>
             <button onclick="AMC.toast('유튜브·건강TV 임베드 (시연)')">▶ 영상</button>
-            <button onclick="AMC.toast('인용구 삽입 (시연)')">❝ 인용</button>
             <div class="swatches">
               <span class="lbl">아산 컬러</span>
-              <i style="background:#00335f" onclick="AMC.toast('AMC Navy #00335F 적용 (시연)')"></i>
-              <i style="background:#0064ae" onclick="AMC.toast('AMC Blue #0064AE 적용 (시연)')"></i>
-              <i style="background:#0091d4" onclick="AMC.toast('AMC Sky #0091D4 적용 (시연)')"></i>
-              <i style="background:#00a19a" onclick="AMC.toast('AMC Mint #00A19A 적용 (시연)')"></i>
-              <i style="background:#111820" onclick="AMC.toast('본문 기본색 적용 (시연)')"></i>
+              <i style="background:#00335f" title="AMC Navy #00335F" onmousedown="return keep(event)" onclick="exec('foreColor','#00335f')"></i>
+              <i style="background:#0064ae" title="AMC Blue #0064AE" onmousedown="return keep(event)" onclick="exec('foreColor','#0064ae')"></i>
+              <i style="background:#0091d4" title="AMC Sky #0091D4" onmousedown="return keep(event)" onclick="exec('foreColor','#0091d4')"></i>
+              <i style="background:#00a19a" title="AMC Mint #00A19A" onmousedown="return keep(event)" onclick="exec('foreColor','#00a19a')"></i>
+              <i style="background:#111820" title="본문 기본색" onmousedown="return keep(event)" onclick="exec('foreColor','#3f4a57')"></i>
             </div>
           </div>
-          <textarea id="gBody">[○○일보] 김○○ 내분비내과 교수(갑상선암센터장) 인터뷰 사진
-- ○○○ 기자
+          <div class="rte" id="gBody" contenteditable="true"><h3>암 환자들이 다시 말하고, 삼키고, 일상으로 돌아갈 수 있는 기반 만드는 ‘미세재건수술’</h3><h4>최근 5년간 연평균 130건 이상 시행, 2000년대 대비 4배 증가… 수술 성공률 97% 기록</h4><h5>최○○ 교수 “이비인후과·종양내과·방사선종양학과·재활의학과·치과 등 의료진 팀워크 있었기에 가능”</h5><p>서울아산병원은 두경부암 미세재건수술 2,000례를 달성했다고 밝혔다. 최근 5년간 연평균 130건 이상을 시행해 2000년대 대비 4배 가까이 늘었으며, 수술 성공률은 97%를 기록했다.</p><p>글자를 끌어서 선택한 뒤 위 <b>양식</b>이나 <b>아산 컬러</b>를 눌러보세요. 지금 편집기에서 쓰던 방식 그대로입니다.</p></div>
 
-갑상선암은 조기에 발견하면 치료 성적이 좋은 편이지만, 결절의 크기와 위치에 따라 수술 여부를 신중하게 판단해야 한다.</textarea>
-          <div class="annot"><div class="annot-box" style="margin-top:10px">
-            편집기 색상 팔레트의 기본값을 아산 브랜드 컬러로 바꿉니다. 현재 팔레트는 무료 버전이라 커스터마이즈에 비용이 든다고 안내받은 상태입니다.
-            <span class="src">근거 · 9/14 회의 「기본 색상을 아산 브랜드 컬러 우선으로 표시되도록 변경 요청」</span>
+          <div class="fmtguide">
+            <div><div class="nm">대제목</div><div class="ex b">미세재건수술 2,000례</div><div class="hx">AMC Mint #00A19A</div></div>
+            <div><div class="nm">중제목</div><div class="ex m">연평균 130건 이상 시행</div><div class="hx">Ink #111820</div></div>
+            <div><div class="nm">소제목</div><div class="ex s">최○○ 교수 “의료진 팀워크”</div><div class="hx">AMC Blue #0064AE</div></div>
+          </div>
+
+          <div class="annot"><div class="annot-box" style="margin-top:12px">
+            <b>양식 지정 기능은 그대로 유지합니다.</b> 대제목·중제목·소제목과 글자 색을 담당자가 직접 지정하는 방식은 지금도 잘 쓰이고 있어 없애지 않습니다. 다만 두 가지를 정리합니다.<br>
+            ① 색상 팔레트의 <b>기본값을 아산 브랜드 컬러</b>로 바꿉니다(현재 팔레트는 무료 버전이라 커스터마이즈 비용이 필요하다고 안내받은 상태).<br>
+            ② 대·중·소제목의 크기와 색을 <b>미리 정의된 양식</b>으로 고정해, 담당자가 바뀌어도 기사마다 제목 모양이 달라지지 않게 합니다. 뉴스룸 노출 화면에도 같은 양식이 그대로 적용됩니다.
+            <span class="src">근거 · 9/14 회의 「기본 색상을 아산 브랜드 컬러 우선으로 표시되도록 변경 요청」 / 분석 리포트 「사진 비율·카드 규격·제목 줄 수·태그 노출 위치를 디자인 시스템으로 표준화」</span>
           </div></div>
         </div>
 
@@ -602,10 +656,10 @@
   <div class="pullzone" data-annot>
     <div class="arrow">▼</div>
     <h4>위 「언론정보」 내용을 아래로 가져옵니다</h4>
-    <p>제목·본문·대표사진을 그대로 채워 넣습니다. 가져온 뒤 뉴스룸용으로 고칠 수 있고, 다시 누르면 최신 내용으로 덮어씁니다.</p>
+    <p>제목·본문·대표사진을 그대로 채워 넣습니다. 본문은 <b>대제목·중제목·소제목과 글자 색 등 지정한 양식까지 그대로</b> 넘어갑니다. 가져온 뒤 뉴스룸용으로 고칠 수 있고, 다시 누르면 최신 내용으로 덮어씁니다.</p>
     <div class="pullopts">
       <label><input type="checkbox" id="pullT" checked> 제목</label>
-      <label><input type="checkbox" id="pullB" checked> 본문</label>
+      <label><input type="checkbox" id="pullB" checked> 본문 (양식 포함)</label>
       <label><input type="checkbox" id="pullP" checked> 대표사진 → 메인 썸네일</label>
     </div>
     <button class="pullbtn" id="pullBtn" onclick="pullContent()">⬇ 게시물 끌고오기</button>
@@ -633,17 +687,31 @@
         <div class="fld">
           <label>본문</label>
           <div class="toolbar">
-            <button onclick="return false">B</button><button onclick="return false"><i>I</i></button>
-            <button onclick="return false">U</button><span class="sep"></span>
+            <select onchange="setFormat(this)" title="양식">
+              <option value="">양식</option>
+              <option value="p">본문</option>
+              <option value="h3">대제목</option>
+              <option value="h4">중제목</option>
+              <option value="h5">소제목</option>
+              <option value="blockquote">인용</option>
+            </select>
+            <span class="sep"></span>
+            <button onmousedown="return keep(event)" onclick="exec('bold')"><b>B</b></button>
+            <button onmousedown="return keep(event)" onclick="exec('italic')"><i>I</i></button>
+            <button onmousedown="return keep(event)" onclick="exec('underline')"><u>U</u></button>
+            <span class="sep"></span>
             <button onclick="AMC.toast('표 삽입 (시연)')">⊞ 표</button>
             <button onclick="AMC.toast('이미지 삽입 (시연)')">🖼 이미지</button>
             <div class="swatches">
               <span class="lbl">아산 컬러</span>
-              <i style="background:#00335f"></i><i style="background:#0064ae"></i>
-              <i style="background:#0091d4"></i><i style="background:#00a19a"></i>
+              <i style="background:#00335f" onmousedown="return keep(event)" onclick="exec('foreColor','#00335f')"></i>
+              <i style="background:#0064ae" onmousedown="return keep(event)" onclick="exec('foreColor','#0064ae')"></i>
+              <i style="background:#0091d4" onmousedown="return keep(event)" onclick="exec('foreColor','#0091d4')"></i>
+              <i style="background:#00a19a" onmousedown="return keep(event)" onclick="exec('foreColor','#00a19a')"></i>
             </div>
           </div>
-          <textarea id="oBody" placeholder="위 끌고오기 버튼을 누르면 자동으로 채워집니다"></textarea>
+          <div class="rte" id="oBody" contenteditable="true"
+               data-ph="위 끌고오기 버튼을 누르면 본문이 양식 그대로 채워집니다"></div>
         </div>
 
         <div class="fld">
@@ -753,8 +821,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=10"></script>
-<script src="assets/js/site.js?v=10"></script>
+<script src="assets/js/data.js?v=11"></script>
+<script src="assets/js/site.js?v=11"></script>
 <script>
 AMC.layout({ active: '' });
 
@@ -812,6 +880,54 @@ function pick(el, multi) {
   AMC.toast('‘' + el.textContent.trim() + '’ 유형에 필요한 항목만 표시됩니다 (시연)');
 }
 
+/* ---------- 서식 편집기 ---------- */
+var lastRange = null;
+
+document.addEventListener('selectionchange', function () {
+  var s = window.getSelection();
+  if (!s.rangeCount) return;
+  var n = s.anchorNode;
+  var el = n && (n.nodeType === 1 ? n : n.parentElement);
+  if (el && el.closest && el.closest('.rte')) lastRange = s.getRangeAt(0).cloneRange();
+});
+
+/* 툴바 버튼을 눌러도 본문 선택이 풀리지 않게 */
+function keep(e) { e.preventDefault(); return false; }
+
+function restoreSel() {
+  if (!lastRange) return false;
+  var host = lastRange.startContainer;
+  host = host.nodeType === 1 ? host : host.parentElement;
+  if (!host || !host.closest('.rte')) return false;
+  host.closest('.rte').focus();
+  var s = window.getSelection();
+  s.removeAllRanges();
+  s.addRange(lastRange);
+  return true;
+}
+
+function exec(cmd, val) {
+  restoreSel();
+  document.execCommand(cmd, false, val || null);
+  return false;
+}
+
+function setFormat(sel) {
+  var v = sel.value;
+  if (!v) return;
+  if (!restoreSel()) { AMC.toast('본문에서 양식을 적용할 부분을 먼저 클릭하거나 선택하세요.'); sel.value = ''; return; }
+  document.execCommand('formatBlock', false, v);
+  var names = { p:'본문', h3:'대제목', h4:'중제목', h5:'소제목', blockquote:'인용' };
+  AMC.toast('‘' + names[v] + '’ 양식을 적용했습니다. 뉴스룸 노출 화면에도 같은 양식이 적용됩니다.');
+  sel.value = '';
+}
+
+function setSize(sel) {
+  if (!sel.value) return;
+  if (!restoreSel()) { AMC.toast('크기를 바꿀 글자를 먼저 선택하세요.'); return; }
+  document.execCommand('fontSize', false, sel.value);
+}
+
 /* ---------- 게시물 끌고오기 ---------- */
 function pullContent() {
   var moved = [];
@@ -826,11 +942,10 @@ function pullContent() {
   }
 
   if (document.getElementById('pullB').checked) {
-    var b = document.getElementById('gBody').value;
     var ob = document.getElementById('oBody');
-    ob.value = b;
+    ob.innerHTML = document.getElementById('gBody').innerHTML;
     ob.classList.add('filled');
-    moved.push('본문');
+    moved.push('본문(양식 포함)');
   }
 
   if (document.getElementById('pullP').checked) {
