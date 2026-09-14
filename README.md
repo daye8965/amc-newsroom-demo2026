@@ -17,13 +17,14 @@
 | `press.html` | 프레스센터 | Fast Facts, 본문 복사, 사진 일괄 다운로드, 미디어 라이브러리 |
 | `admin.html` | 통합 등록화면 (CMS) | 이중 입력 제거, 드래그 업로드, AI 자동 태깅, 3종 미리보기 |
 | `app.html` | 앱 화면 | 웹·앱 통합 구조, 앱 메인/상세, 푸시 선별 발송 |
+| `compare.html` | 현재 vs 개편안 | 현재 뉴스룸과 개편안을 항목별로 나란히 비교 (5개 항목) |
 | `guide.html` | 개편 포인트 정리 | 의견 비중, 요구사항→화면 매핑표, 로드맵, 업체 확인 사항 |
 
 ## 시연 방법
 
 각 화면 우측 하단의 **「개편 포인트」** 버튼을 누르면, 해당 화면에서 무엇이 어떻게 바뀌었고
 그 근거가 어느 회의의 어떤 결정인지가 화면 위에 번호와 함께 표시됩니다.
-시연 순서는 `guide.html` → `index.html` → `article.html` → `admin.html` → `app.html` 을 권장합니다.
+시연 순서는 `compare.html` → `guide.html` → `index.html` → `article.html` → `admin.html` → `app.html` 을 권장합니다.
 
 ## 반영한 주요 결정 사항
 

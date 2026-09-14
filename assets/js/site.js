@@ -10,6 +10,7 @@
     { href: 'press.html', label: '프레스센터' },
     { href: 'admin.html', label: '통합 등록화면(CMS)' },
     { href: 'app.html', label: '앱 화면' },
+    { href: 'compare.html', label: '현재 vs 개편안' },
     { href: 'guide.html', label: '개편 포인트 정리' }
   ];
 
@@ -52,7 +53,10 @@
       '</div></div>',
 
       '<header class="nr-header"><div class="wrap">',
-      '<a class="nr-logo" href="index.html">서울아산병원 <span>뉴스룸</span> <small>NEWSROOM</small></a>',
+      '<a class="nr-logo" href="index.html">',
+      '<span class="ci" aria-hidden="true"></span>',
+      '<span class="lockup"><b>서울아산병원 <span>뉴스룸</span></b>',
+      '<small>Asan Medical Center Newsroom</small></span></a>',
       '<form class="nr-search" onsubmit="return AMC.search(event)">',
       '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">',
       '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',

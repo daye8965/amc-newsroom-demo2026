@@ -16,6 +16,13 @@
 <section class="hero">
   <div class="wrap">
     <div class="annot">
+      <div class="annot-pin"><b>17</b> 상단 메뉴 · 목록 탭 중복 제거</div>
+      <div class="annot-box">
+        현재 뉴스룸은 상단 메뉴(뉴스·헬스·피플·프레스센터)와 목록 위 탭(전체·뉴스·헬스·피플)이 사실상 같은 분류를 두 번 보여줍니다. 개편안에서는 <b>뉴스룸 서브메뉴 한 줄</b>로 통합하고, 통합 홈페이지 GNB와도 중복되지 않도록 그 아래에 배치했습니다.
+        <span class="src">근거 · 8/24 팀장 회의 「메인 페이지 상단 중복 영역 통합」 / 9/14 회의 「뉴스룸 자체 서브 메뉴는 상단 중복 없이 하단에 배치」</span>
+      </div>
+    </div>
+    <div class="annot">
       <div class="annot-pin"><b>1</b> 메인 롤링 축소</div>
       <div class="annot-box">
         통합 홈페이지의 상단 GNB가 화면을 차지하므로 롤링 배너 높이를 기존보다 낮춰 첫 화면에서 카드 콘텐츠가 바로 보이도록 했습니다. 3건만 순환합니다.
@@ -106,7 +113,7 @@ var D = window.AMC_DATA;
 document.getElementById('hero-slides').innerHTML = D.hero.map(function (h, i) {
   return '<div class="hero-slide' + (i === 0 ? ' on' : '') + '">' +
     AMC.ph(h.c1, h.c2, h.tag) +
-    '<div class="hero-cap"><div class="cat">' + h.cat + '</div><h2>' + h.title + '</h2></div>' +
+    '<div class="hero-cap"><div class="cat">' + h.cat + ' 〉 ' + h.sub + '</div><h2>' + h.title + '</h2></div>' +
     '</div>';
 }).join('');
 document.getElementById('hero-dots').innerHTML =
@@ -116,7 +123,7 @@ document.getElementById('hero-dots').innerHTML =
 function cardHTML(c) {
   return '<a class="card" href="article.html">' +
     '<div class="thumb">' + AMC.ph(c.c1, c.c2, '16:9 가로 이미지') + '</div>' +
-    '<div class="cat">' + c.cat + '</div>' +
+    '<div class="cat">' + c.cat + ' 〉 ' + c.sub + '</div>' +
     '<h3>' + c.title + '</h3>' +
     '<div class="date">' + c.date + '</div></a>';
 }
