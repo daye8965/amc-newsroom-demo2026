@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>업로드 페이지 가안 | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=13">
+<link rel="stylesheet" href="assets/css/main.css?v=14">
 <style>
   /* ===== 모드 전환 바 ===== */
   .modebar{background:#fff;border:1px solid var(--line);
@@ -187,6 +187,19 @@
     font-size:11.5px;color:#9a3412;line-height:1.7}
   .removed-row s{color:#c2410c;font-weight:700}
 
+  /* ===== 진입 경로 — 실제 CMS의 브레드크럼을 그대로 옮긴 띠 ===== */
+  .crumb{border:1px solid #d6d9dd;border-radius:3px;background:#fff;margin-bottom:10px;
+    padding:9px 12px;font-size:11.5px;color:#6b7785;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+  .crumb .home{color:#8b9199}
+  .crumb i{font-style:normal;color:#c4c8cd}
+  .crumb b{color:#333;font-weight:700}
+  .crumb .keyname{background:#f3f4f6;border:1px solid #e3e6e9;border-radius:2px;padding:2px 8px;color:#1a5f8f;font-weight:600}
+  .crumb .step{margin-left:auto;font-size:10.5px;font-weight:700;border-radius:999px;padding:2px 9px}
+  .crumb .step.b{background:#fff3e8;color:#c2410c;border:1px solid #f0d3bd}
+  .crumb .step.g{background:#dceefb;color:#1a5f8f;border:1px solid #a9d4f2}
+  body.prob-on .crumb[data-prob]{outline:2px dashed rgba(194,65,12,.55);outline-offset:3px;background:#fffaf6}
+  body.diff-on .crumb[data-new]{outline:2px dashed rgba(0,100,174,.5);outline-offset:3px;background:#fafcff}
+
   /* ===== 연관 콘텐츠 지정 — 기사 상세의 배지(직접지정 / 태그)를 여기서 정한다 ===== */
   .relq{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
   .relq input{flex:1 1 280px}
@@ -312,6 +325,17 @@
      현재 화면 재현
      ================================================================== -->
 <div id="viewNow">
+
+  <div class="crumb" data-prob>
+    <span class="home">⌂</span> 디지털아카이브 <i>〉</i> <b>KEY 관리</b> <i>〉</i>
+    <span class="keyname">서울아산병원, 두경부암 미세재건수술 2,000례 달성</span> <i>〉</i> 언론 콘텐츠 등록
+    <span class="step b">진입 2단계</span>
+  </div>
+  <div class="prob"><div class="prob-tag" style="margin:0 0 14px">
+    등록을 시작하려면 먼저 왼쪽 <b>「KEY 관리」</b> 탭에서 <b>KEY를 만들고</b>, 그 KEY를 눌러 들어와야 합니다.
+    KEY명은 대개 보도자료 제목을 그대로 복사해 넣기 때문에 <b>제목을 한 번 더 입력하는 셈</b>이고,
+    한 번 쓰고 마는 KEY가 목록에 계속 쌓입니다.
+  </div></div>
 
   <div class="legacy">
     <div class="sect"><span class="grip">☰</span> 언론정보</div>
@@ -531,6 +555,21 @@
   </div>
 
   <!-- ===== ① 언론정보 — 현재 화면과 같은 항목·같은 순서 ===== -->
+  <div class="crumb" data-new data-annot>
+    <span class="home">⌂</span> 디지털아카이브 <i>〉</i> 언론 콘텐츠 등록
+    <span class="step g">바로 등록<span class="bnew" style="margin-left:5px">개선</span></span>
+  </div>
+  <div class="newmark"><div class="new-tag" style="margin:0 0 14px">
+    <b>KEY를 먼저 만들지 않아도 등록이 시작됩니다.</b> 지금은 「KEY 관리」에서 KEY를 만들고 그 KEY로 들어와야 하는데,
+    KEY명에 보도자료 제목을 복사해 넣는 일이 반복되고 일회성 KEY가 계속 쌓입니다.
+    묶어야 할 콘텐츠가 생기면 그때 <b>「KEY 관리」에서 연결</b>하면 됩니다. — 등록 화면에서 KEY를 만들 일은 없습니다.
+  </div></div>
+  <div class="annot"><div class="annot-box" style="margin-bottom:14px">
+    KEY는 원소스 멀티유즈로 <b>여러 콘텐츠를 하나로 묶을 때</b> 쓰는 장치인데, 지금은 <b>등록을 시작하기 위한 관문</b>으로 쓰이고 있습니다.
+    보도자료 한 건을 올릴 때도 KEY를 먼저 만들어야 하고, 그렇게 만든 KEY는 재사용되지 않습니다.
+    묶을 일이 없는 콘텐츠는 <b>KEY 없이 바로 등록</b>하고, 묶을 때만 「KEY 관리」에서 연결하는 방향으로 바꿀 수 있는지 업체 확인이 필요합니다.
+    <span class="src">근거 · 9/14 회의 「키 생성 없이 보도자료 등록 가능 여부 검토」</span>
+  </div></div>
   <div class="legacy">
     <div class="sect"><span class="grip">☰</span> 언론정보
       <span class="memo">(아카이브)</span>
@@ -686,23 +725,12 @@
     <div class="row" data-new><div class="lb">배포 범위 : <span class="bnew">개선</span></div>
       <div class="fd">
         <div class="pills">
-          <button class="pill on" onclick="pick(this,true)">전체 언론</button>
-          <button class="pill" onclick="pick(this,true)">의학전문지</button>
-          <button class="pill" onclick="pick(this,true)">지역지</button>
-          <button class="pill" onclick="pick(this,true)">사내</button>
+          <button class="pill on" onclick="pick(this,true)">전체언론</button>
+          <button class="pill" onclick="pick(this,true)">전문지</button>
+          <button class="pill" onclick="pick(this,true)">일간지헬스</button>
+          <button class="pill" onclick="pick(this,true)">기타</button>
         </div>
         <div class="newmark"><div class="new-tag">직접 입력에서 <b>버튼식 선택</b>으로 바꿨습니다.</div></div>
-      </div></div>
-
-    <div class="row" data-new data-annot><div class="lb">KEY 생성 : <span class="bnew">개선</span></div>
-      <div class="fd">
-        <label class="ckbox"><input type="checkbox" id="keyCk"> 필요한 경우에만 생성</label>
-        <div class="note">원소스 멀티유즈로 묶을 콘텐츠가 있을 때만 체크하세요. (현재는 등록 시 필수)</div>
-        <div class="newmark"><div class="new-tag"><b>필수 → 선택</b>. 매번 만들던 일회성 KEY를 없앨 수 있는지 업체 확인이 필요한 항목입니다.</div></div>
-        <div class="annot"><div class="annot-box" style="margin-top:8px">
-          보도자료 제목을 복사해 일회성 KEY를 매번 만드는 현재 방식은 재사용이 되지 않습니다. <b>선택 항목</b>으로 전환하거나 폐지 가능한지 업체 확인이 필요합니다.
-          <span class="src">근거 · 9/14 회의 「키 생성 없이 보도자료 등록 가능 여부 검토」</span>
-        </div></div>
       </div></div>
 
     <div class="foot">
@@ -938,8 +966,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=13"></script>
-<script src="assets/js/site.js?v=13"></script>
+<script src="assets/js/data.js?v=14"></script>
+<script src="assets/js/site.js?v=14"></script>
 <script>
 AMC.layout({ active: '' });
 
