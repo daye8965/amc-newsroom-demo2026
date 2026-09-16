@@ -156,9 +156,11 @@
 </section>
 
 <!-- ============ 보도자료 상세 ============ -->
-<section class="sec" id="detail" style="background:var(--bg-soft);border-top:1px solid var(--line)">
+<section class="sec" id="detail" hidden style="background:var(--bg-soft);border-top:1px solid var(--line)">
   <div class="wrap">
-    <div class="sec-head"><h2>보도자료 상세</h2><span class="desc">공유 버튼을 눌러 동작을 확인해 보세요</span></div>
+    <div class="sec-head"><h2>보도자료 상세</h2><span class="desc">공유 버튼을 눌러 동작을 확인해 보세요</span>
+      <button class="btn sm" style="margin-left:auto" onclick="closeArticle()">← 목록으로</button>
+    </div>
 
     <div class="annot">
       <div class="annot-pin"><b>13</b> 공유 버튼 하나로 — 본문 복사 · 사진 선택 다운로드</div>
@@ -178,7 +180,7 @@
       <h2 id="artTitle">서울아산병원, 두경부암 미세재건수술 2,000례 달성</h2>
 
       <div class="dhead">
-        <span class="date">2026.09.14 · 의료</span>
+        <span class="date" id="artDate">2026.09.14 · 의료</span>
         <div class="tools">
           <button class="iconbtn" title="인쇄" onclick="AMC.toast('인쇄 (시연)')">🖨</button>
           <button class="chipbtn" id="scrapBtn" onclick="toggleScrap()">☆ 스크랩 <b>128</b></button>
@@ -186,13 +188,13 @@
         </div>
       </div>
 
-      <p class="lead1">암 환자들이 다시 말하고, 삼키고, 일상으로 돌아갈 수 있는 기반 만드는 ‘미세재건수술’</p>
-      <p class="lead2">최근 5년간 연평균 130건 이상 시행, 2000년대 대비 4배 증가… 수술 성공률 97% 기록</p>
-      <p class="lead3">최○○ 교수 “이비인후과·종양내과·방사선종양학과·재활의학과·치과 등 의료진 팀워크 있었기에 가능”</p>
+      <p class="lead1" id="artL1"></p>
+      <p class="lead2" id="artL2"></p>
+      <p class="lead3" id="artL3"></p>
 
       <figure>
-        <div class="ph" style="--c1:#00335f;--c2:#0091d4"><span>대표 이미지 (기념촬영)</span></div>
-        <figcaption>▲ 서울아산병원 이비인후과 최○○ 교수, 성형외과 최○○ 교수를 비롯한 의료진이 9월 10일 열린 두경부암 미세재건수술 2,000례 달성 기념식에서 기념촬영을 하고 있다. (시연용 가상 이미지)</figcaption>
+        <div class="ph" id="artFig"><span>대표 이미지</span></div>
+        <figcaption id="artCap"></figcaption>
       </figure>
 
       <div class="body" id="artBody">
@@ -202,18 +204,8 @@
         <p>(※ 이 보도자료는 시연을 위한 가상 콘텐츠이며, 인명은 실제와 관계없이 처리했습니다.)</p>
       </div>
 
-      <div class="dztag">
-        <span class="lb">관련 질환</span>
-        <a href="#" onclick="return AMC.toast('질환 페이지의 관련 뉴스로 이동 (시연)')">두경부암</a>
-        <a href="#" onclick="return AMC.toast('질환 페이지의 관련 뉴스로 이동 (시연)')">구강암</a>
-      </div>
-      <div class="dztag" style="margin-top:9px">
-        <span class="kind">검사·시술</span>
-        <a href="#" onclick="return AMC.toast('검사·시술 연계 검색 (시연)')">미세재건수술</a>
-        <span class="kind" style="margin-left:8px">신체부위</span>
-        <a href="#" onclick="return AMC.toast('신체부위 연계 검색 (시연)')">혀</a>
-        <a href="#" onclick="return AMC.toast('신체부위 연계 검색 (시연)')">두경부</a>
-      </div>
+      <div class="dztag" id="artDz"></div>
+      <div class="dztag" style="margin-top:9px" id="artKs"></div>
 
       <div class="scrapline">
         <span style="font-size:13px;color:var(--ink-3)">이 콘텐츠가 도움이 되었다면 스크랩해 두세요.</span>
@@ -356,26 +348,126 @@ var D = AMC_DATA;
 var LIST = [
   { d:'2026.09.14', c:'의료', t:'서울아산병원, 두경부암 미세재건수술 2,000례 달성',
     e:'지난 4월 송 모 씨(남, 50세)는 구강암 치료를 위해 혀 전체를 절제해야 했다. 암을 제거하는 것만으로도 큰 수술이었지만, 수술 후 말을 하고 음식을 삼키는 기능을 최대한 보존하기 위해서는 절제된 조…',
-    c1:'#00335f', c2:'#0091d4' },
+    c1:'#00335f', c2:'#0091d4',
+    l1:'암 환자들이 다시 말하고, 삼키고, 일상으로 돌아갈 수 있는 기반 만드는 ‘미세재건수술’',
+    l2:'최근 5년간 연평균 130건 이상 시행, 2000년대 대비 4배 증가… 수술 성공률 97% 기록',
+    l3:'최○○ 교수 “이비인후과·종양내과·방사선종양학과·재활의학과·치과 등 의료진 팀워크 있었기에 가능”',
+    fig:'대표 이미지 (기념촬영)',
+    cap:'▲ 서울아산병원 이비인후과 최○○ 교수, 성형외과 최○○ 교수를 비롯한 의료진이 9월 10일 열린 두경부암 미세재건수술 2,000례 달성 기념식에서 기념촬영을 하고 있다. (시연용 가상 이미지)',
+    body:[
+      '지난 4월 송 모 씨(남, 50세)는 구강암 치료를 위해 혀 전체를 절제해야 했다. 암을 제거하는 것만으로도 큰 수술이었지만, 수술 후 말을 하고 음식을 삼키는 기능을 최대한 보존하기 위해서는 절제된 조직을 다시 만들어 주는 과정이 필요했다.',
+      '서울아산병원은 두경부암 미세재건수술 2,000례를 달성했다고 14일 밝혔다. 최근 5년간 연평균 130건 이상을 시행해 2000년대 대비 4배 가까이 늘었으며, 수술 성공률은 97%를 기록했다.',
+      '미세재건수술은 환자의 다른 부위에서 떼어낸 조직을 현미경으로 혈관을 이어 붙여 절제 부위를 복원하는 수술이다. 기능 회복이 목표이기 때문에 이비인후과·성형외과·종양내과·방사선종양학과·재활의학과·치과 등 여러 진료과의 협진이 필수적이다.'
+    ],
+    dz:['두경부암','구강암'], ks:['미세재건수술'], bp:['혀','두경부'] },
+
   { d:'2026.09.11', c:'의료', t:'생후 4주 내 전장유전체로 희귀유전질환 찾는다',
     e:'최근 유전체 분석 기술의 발달로 더 많은 희귀유전질환을 한 번에 진단할 수 있는 전장유전체(모든 유전적 정보) 스크리닝의 필요성이 높아지고 있다. 이러한 가운데 서울아산병원이…',
-    c1:'#1d4ed8', c2:'#00a19a' },
+    c1:'#1d4ed8', c2:'#00a19a',
+    l1:'신생아 선별검사에 전장유전체 분석을 더해 진단까지 걸리던 시간을 크게 줄여',
+    l2:'생후 4주 이내 검사로 희귀유전질환 조기 발견… 치료 시작 시점을 앞당긴다',
+    l3:'박○○ 교수 “진단명을 찾기까지 여러 해를 헤매던 가족들에게 가장 큰 변화”',
+    fig:'대표 이미지 (유전체 분석실)',
+    cap:'▲ 서울아산병원 의료진이 신생아 전장유전체 분석 결과를 검토하고 있다. (시연용 가상 이미지)',
+    body:[
+      '희귀유전질환은 증상이 나타난 뒤에도 원인을 찾기까지 평균 수년이 걸린다. 그 사이 치료 시기를 놓치는 경우가 적지 않다.',
+      '서울아산병원은 생후 4주 이내 신생아를 대상으로 전장유전체 스크리닝을 시행해 희귀유전질환을 조기에 찾아내는 체계를 마련했다고 11일 밝혔다.',
+      '전장유전체 분석은 한 번의 검사로 수천 가지 유전질환을 동시에 확인할 수 있어, 개별 검사를 반복하던 기존 방식보다 진단까지 걸리는 시간을 줄일 수 있다.'
+    ],
+    dz:['희귀유전질환'], ks:['전장유전체 분석','신생아 선별검사'], bp:[] },
+
   { d:'2026.09.10', c:'의료', t:'중이염으로 20년 넘게 난청 겪어도 인공와우 통해 청각 회복',
     e:'만성 중이염 환자들은 오랜 기간 난청을 겪으며 보청기로도 큰 효과를 보지 못했는데, 20년 이상 난청을 방치했더라도 인공와우 수술을 통해 청력을 회복할 수 있다는 연구 결과가…',
-    c1:'#0064ae', c2:'#0091d4' },
+    c1:'#0064ae', c2:'#0091d4',
+    l1:'만성 중이염으로 인한 장기 난청, 인공와우 수술로 회복 가능성 확인',
+    l2:'20년 이상 난청을 겪은 환자군에서도 수술 후 말소리 인지도 뚜렷하게 개선',
+    l3:'정○○ 교수 “늦었다고 포기하기 전에 청력 상태를 정확히 평가받는 것이 우선”',
+    fig:'대표 이미지 (청력검사실)',
+    cap:'▲ 인공와우 수술 후 청력 재활 과정이 진행되고 있다. (시연용 가상 이미지)',
+    body:[
+      '만성 중이염 환자 상당수는 오랜 기간 난청을 안고 지낸다. 보청기로 효과를 보지 못하면 회복을 포기하는 경우도 많다.',
+      '서울아산병원 연구팀은 20년 이상 난청이 이어진 환자에게도 인공와우 수술이 유효했다는 결과를 10일 발표했다.',
+      '연구팀은 수술 후 말소리 인지도가 뚜렷하게 개선됐다고 밝히며, 난청 기간이 길더라도 청력 평가를 먼저 받아볼 것을 권했다.'
+    ],
+    dz:['만성 중이염','난청'], ks:['인공와우 수술','청력검사'], bp:['귀'] },
+
   { d:'2026.09.08', c:'의료', t:'서울아산병원, ‘국내 최고령’ 100세 환자 대동맥 박리 수술',
     e:'지난 8월 5일, 서울아산병원에서 특별한 생일파티가 열렸다. 초응급 질환으로 알려진 대동맥 박리로 서울아산병원 응급실에 실려온 99세 초고령 환자가 무사히 수술을 받고…',
-    c1:'#00a19a', c2:'#0064ae' }
+    c1:'#00a19a', c2:'#0064ae',
+    l1:'초응급 질환 대동맥 박리, 99세 환자가 수술 받고 100번째 생일을 맞다',
+    l2:'응급실 도착부터 수술까지 이어진 다학제 대응… 국내 최고령 수술 기록',
+    l3:'김○○ 교수 “나이보다 중요한 것은 수술을 견딜 수 있는 몸 상태와 신속한 판단”',
+    fig:'대표 이미지 (생일 축하 장면)',
+    cap:'▲ 수술 후 회복한 환자가 병동에서 100번째 생일을 맞았다. (시연용 가상 이미지)',
+    body:[
+      '대동맥 박리는 발병 후 시간이 지날수록 사망률이 가파르게 오르는 초응급 질환이다.',
+      '서울아산병원은 99세 환자가 대동맥 박리 수술을 받고 회복해 100번째 생일을 맞았다고 8일 밝혔다. 국내에서 보고된 같은 수술 가운데 최고령이다.',
+      '응급실 도착 직후 영상 판독과 수술 준비가 동시에 진행됐고, 심장혈관흉부외과·마취통증의학과·중환자실이 함께 대응했다.'
+    ],
+    dz:['대동맥 박리'], ks:['대동맥 수술'], bp:['대동맥'] }
 ];
 
-document.getElementById('prlist').innerHTML = LIST.map(function (p) {
-  return '<a class="pr" href="#detail">' +
+var GONGJI = '(※ 이 보도자료는 시연을 위한 가상 콘텐츠이며, 인명은 실제와 관계없이 처리했습니다.)';
+
+document.getElementById('prlist').innerHTML = LIST.map(function (p, i) {
+  return '<a class="pr" href="#detail" onclick="return openArticle(' + i + ')">' +
     '<div class="th">' + AMC.ph(p.c1, p.c2, '보도자료 사진') + '</div>' +
     '<div><div class="meta"><span>' + p.d + '</span><span class="cat">' + p.c + '</span></div>' +
     '<h3>' + p.t + '</h3>' +
     '<p class="ex">' + p.e + '</p>' +
     '</div></a>';
 }).join('');
+
+/* ---------- 목록에서 고른 자료만 상세로 펼친다 ---------- */
+function tagLinks(items, msg) {
+  return items.map(function (t) {
+    return '<a href="#" onclick="return AMC.toast(&quot;' + msg + '&quot;)">' + t + '</a>';
+  }).join('');
+}
+
+function openArticle(i) {
+  var p = LIST[i];
+  var $ = function (id) { return document.getElementById(id); };
+
+  $('artTitle').textContent = p.t;
+  $('artDate').textContent = p.d + ' · ' + p.c;
+  $('artL1').textContent = p.l1;
+  $('artL2').textContent = p.l2;
+  $('artL3').textContent = p.l3;
+
+  var fig = $('artFig');
+  fig.style.setProperty('--c1', p.c1);
+  fig.style.setProperty('--c2', p.c2);
+  fig.innerHTML = '<span>' + p.fig + '</span>';
+  $('artCap').textContent = p.cap;
+
+  $('artBody').innerHTML = p.body.map(function (t) { return '<p>' + t + '</p>'; }).join('') +
+    '<p>' + GONGJI + '</p>';
+
+  $('artDz').innerHTML = '<span class="lb">관련 질환</span>' +
+    tagLinks(p.dz, '질환 페이지의 관련 뉴스로 이동 (시연)');
+
+  var ks = '<span class="kind">검사·시술</span>' + tagLinks(p.ks, '검사·시술 연계 검색 (시연)');
+  if (p.bp.length) {
+    ks += '<span class="kind" style="margin-left:8px">신체부위</span>' +
+      tagLinks(p.bp, '신체부위 연계 검색 (시연)');
+  }
+  $('artKs').innerHTML = ks;
+
+  var sec = $('detail');
+  sec.hidden = false;
+  setTimeout(function () { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 30);
+  return false;
+}
+
+function closeArticle() {
+  document.getElementById('detail').hidden = true;
+  document.getElementById('prlist').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (location.hash === '#detail') history.replaceState(null, '', location.pathname);
+}
+
+/* 시연 순서에서 press.html#detail 로 바로 들어오는 경우 첫 자료를 펼친다 */
+if (location.hash === '#detail') openArticle(0);
 
 /* ---------- Fast Facts / 미디어 라이브러리 ---------- */
 document.getElementById('facts').innerHTML = D.facts.map(function (f) {
