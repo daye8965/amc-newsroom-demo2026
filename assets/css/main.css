@@ -147,7 +147,9 @@ p{margin:0}
   --slide-w:min(880px,72vw);
   position:relative;overflow:hidden;padding-block:2px;
 }
-@media (max-width:760px){.hero-stage{--slide-w:86vw}}
+@media (max-width:760px){.hero-stage{--slide-w:88vw}}
+/* 손으로 미는 동안 브라우저가 가로 스크롤 제스처를 가로채지 않게 */
+.hero-track{touch-action:pan-y}
 
 .hero-track{display:flex;gap:16px;will-change:transform;
   transition:transform .45s cubic-bezier(.4,0,.2,1)}
@@ -201,7 +203,6 @@ p{margin:0}
 /* ---------- 카드 그리드 (삼성 뉴스룸 방식: 가로이미지 + 제목) ---------- */
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:32px 26px}
 @media (max-width:960px){.cards{grid-template-columns:repeat(2,1fr);gap:26px 18px}}
-@media (max-width:560px){.cards{grid-template-columns:1fr;gap:22px}}
 .card{display:block}
 .card .thumb{position:relative;overflow:hidden;border-radius:var(--radius);background:var(--bg-soft)}
 .card .ph{aspect-ratio:16/9;transition:transform .45s ease}
@@ -213,6 +214,24 @@ p{margin:0}
 }
 .card:hover h3{text-decoration:underline;text-underline-offset:3px}
 .card .date{margin-top:8px;font-size:12.5px;color:var(--ink-3)}
+
+/* 모바일 — 메인 롤링이 크게 서고 목록은 작은 가로형으로 내려앉아 위계가 생긴다 */
+@media (max-width:560px){
+  .cards{grid-template-columns:1fr;gap:0}
+  .card{
+    display:grid;grid-template-columns:132px 1fr;grid-template-rows:auto auto auto;
+    column-gap:13px;align-items:start;
+    padding-block:15px;border-bottom:1px solid var(--line-2);
+  }
+  .card:last-child{border-bottom:0}
+  .card .thumb{grid-area:1/1/4/2;align-self:start}
+  .card .ph{font-size:9.5px;padding:5px}   /* 비율은 16:9 그대로 — 크기만 작아진다 */
+  .card .ph span{font-size:9px;padding:2px 6px}
+  .card .cat{grid-area:1/2/2/3;margin-top:0;font-size:11px}
+  .card h3{grid-area:2/2/3/3;margin-top:4px;font-size:14.5px;line-height:1.42;-webkit-line-clamp:3}
+  .card .date{grid-area:3/2/4/3;margin-top:6px;font-size:11.5px}
+  .card:hover .ph{transform:none}
+}
 
 /* 썸네일 플레이스홀더 */
 .ph{

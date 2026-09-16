@@ -160,14 +160,15 @@
     var n = track.children.length;
     track.innerHTML = track.innerHTML + track.innerHTML + track.innerHTML;
     var all = Array.prototype.slice.call(track.children);
-    var i = n, timer = null;
+    var i = n, timer = null, curX = 0;
 
     function place(animate) {
       if (!animate) track.style.transition = 'none';
       var w = all[0].getBoundingClientRect().width;
       var gap = parseFloat(getComputedStyle(track).columnGap || 0) || 0;
       var x = i * (w + gap) - (stage.clientWidth - w) / 2;
-      track.style.transform = 'translateX(' + (-x) + 'px)';
+      curX = -x;
+      track.style.transform = 'translateX(' + curX + 'px)';
       if (!animate) { void track.offsetWidth; track.style.transition = ''; }
 
       all.forEach(function (s, k) { s.classList.toggle('on', k === i); });
@@ -183,10 +184,60 @@
       if (i < n || i >= n * 2) { i = n + (((i % n) + n) % n); place(false); }
     });
 
-    /* 옆에 걸친 기사를 누르면 그 기사로 넘어간다 */
+    /* 옆에 걸친 기사를 누르면 그 기사로 넘어간다 (민 직후의 클릭은 무시) */
+    var swiped = false;
     all.forEach(function (s, k) {
-      s.addEventListener('click', function () { if (k !== i) go(k - i); });
+      s.addEventListener('click', function () {
+        if (swiped) return;
+        if (k !== i) go(k - i);
+      });
     });
+
+    /* ----- 손으로 옆으로 밀어 넘기기 ----- */
+    var sx = 0, sy = 0, dx = 0, dragging = false, decided = false, sideways = false;
+
+    track.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) return;
+      stop();
+      sx = e.touches[0].clientX;
+      sy = e.touches[0].clientY;
+      dx = 0; dragging = true; decided = false; sideways = false; swiped = false;
+      track.style.transition = 'none';
+    }, { passive: true });
+
+    track.addEventListener('touchmove', function (e) {
+      if (!dragging) return;
+      var x = e.touches[0].clientX - sx;
+      var y = e.touches[0].clientY - sy;
+
+      /* 첫 움직임의 방향으로 가로/세로를 정한다 — 세로면 페이지 스크롤에 양보 */
+      if (!decided) {
+        if (Math.abs(x) < 6 && Math.abs(y) < 6) return;
+        decided = true;
+        sideways = Math.abs(x) > Math.abs(y);
+        if (!sideways) { dragging = false; track.style.transition = ''; return; }
+      }
+
+      e.preventDefault();
+      dx = x;
+      track.style.transform = 'translateX(' + (curX + dx) + 'px)';
+    }, { passive: false });
+
+    function release() {
+      if (!dragging) return;
+      dragging = false;
+      swiped = Math.abs(dx) > 8;
+      if (swiped) setTimeout(function () { swiped = false; }, 300);
+      track.style.transition = '';
+      var w = all[0].getBoundingClientRect().width;
+      var need = Math.min(70, w * 0.18);
+      if (dx < -need) go(1);
+      else if (dx > need) go(-1);
+      else place(true);
+      play();
+    }
+    track.addEventListener('touchend', release);
+    track.addEventListener('touchcancel', release);
 
     stage.querySelector('.js-prev').addEventListener('click', function () { go(-1); });
     stage.querySelector('.js-next').addEventListener('click', function () { go(1); });
@@ -194,7 +245,7 @@
       d.addEventListener('click', function () { go(k - (((i % n) + n) % n)); });
     });
 
-    function play() { timer = setInterval(function () { go(1); }, 5200); }
+    function play() { stop(); timer = setInterval(function () { go(1); }, 5200); }
     function stop() { clearInterval(timer); }
     stage.addEventListener('mouseenter', stop);
     stage.addEventListener('mouseleave', play);
