@@ -335,7 +335,6 @@ body.annot-on [data-annot]{outline:2px dashed rgba(194,65,12,.5);outline-offset:
 }
 .chipbtn:hover{border-color:var(--amc-blue);color:var(--amc-blue)}
 .chipbtn.on{background:var(--amc-blue);border-color:var(--amc-blue);color:#fff}
-.chipbtn.en{border-color:var(--amc-navy);color:var(--amc-navy)}
 
 /* AI 요약 */
 .ai-sum{

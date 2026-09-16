@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기사 상세 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=19">
+<link rel="stylesheet" href="assets/css/main.css?v=20">
 <style>
   .iconbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;
     display:grid;place-items:center;font-size:13px;color:var(--ink-2);flex:none}
@@ -80,7 +80,6 @@
     <span>2026.09.12</span>
     <span>홍보팀 언론Unit</span>
     <div class="right">
-      <a class="chipbtn en" href="#" onclick="return AMC.toast('영문 뉴스룸의 동일 기사로 이동합니다 (시연)')">EN 영문으로 보기</a>
       <button class="iconbtn" title="인쇄" onclick="AMC.toast('인쇄 (시연)')">🖨</button>
       <button class="chipbtn" id="scrapBtn" onclick="toggleScrap()">☆ 스크랩 <b id="scrapN">128</b></button>
       <button class="aibtn" onclick="openAi()"><span class="sp">✦</span> AI 요약</button>
@@ -104,10 +103,12 @@
       중복 클릭이 가능해 신뢰도가 낮았던 ‘좋아요’는 제거하고, 마이페이지에서 모아볼 수 있는 <b>스크랩(별표)</b>으로 대체했습니다. 스크랩 수는 콘텐츠 반응 지표로 함께 노출됩니다.
       <span class="src">근거 · 9/14 회의 「스크랩 기능은 전체 도입, 좋아요 서비스는 삭제 방향」</span>
     </div>
-    <div class="annot-pin"><b>6</b> 영문 기사 바로가기</div>
+    <div class="annot-pin"><b>6</b> 영문 기사 바로가기 — <s>제외</s></div>
     <div class="annot-box">
-      전량 번역·운영은 보류하되, 영문 뉴스룸에 동일 기사가 있는 경우에만 ‘영문으로 보기’ 버튼이 노출되도록 했습니다. 링크드인 영문 공유 시 활용합니다.
-      <span class="src">근거 · 9/14 회의 「국문 기사 하단 버튼으로 영문 기사 바로 이동」, 「전량 번역은 추후 과제로 보류」</span>
+      기사마다 ‘영문으로 보기’ 버튼을 두는 안을 검토했으나 <b>이번 범위에서 제외</b>했습니다.
+      국문 기사를 올릴 때마다 담당자가 영문 기사를 찾아 <b>링크를 하나씩 연결</b>해야 해서, 기사 수가 쌓일수록 부담이 커진다는 의견이 있었습니다.
+      영문 뉴스룸으로 가는 길은 <b>상단 「EN」</b> 하나로 두고, 개별 기사 연결은 나중에 자동 매칭이 가능해질 때 다시 봅니다.
+      <span class="src">근거 · 9/14 회의 「국문 기사 하단 버튼으로 영문 기사 바로 이동」, 「전량 번역은 추후 과제로 보류」 / 9/16 홍보팀 검토 「게시물마다 영문 링크를 새로 연결하는 것이 부담 — 제외」</span>
     </div>
     <div class="annot-pin"><b>9</b> 공유는 제목 옆 버튼으로</div>
     <div class="annot-box">
@@ -268,8 +269,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=19"></script>
-<script src="assets/js/site.js?v=19"></script>
+<script src="assets/js/data.js?v=20"></script>
+<script src="assets/js/site.js?v=20"></script>
 <script>
 AMC.layout({ active: 'research' });
 
