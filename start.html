@@ -31,14 +31,16 @@
   .step p{font-size:13px;color:var(--ink-3);line-height:1.7;margin-top:9px;flex:1}
   .step .go{margin-top:16px;font-size:13px;font-weight:700;color:var(--amc-blue)}
 
-  .howto{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  @media (max-width:820px){.howto{grid-template-columns:1fr}}
+  .howto{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  @media (max-width:1060px){.howto{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:640px){.howto{grid-template-columns:1fr}}
   .how{border:1px solid var(--line);border-radius:10px;padding:20px;background:#fff}
   .how .badge{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;
     border-radius:999px;padding:5px 13px}
   .how .badge.o{background:#c2410c;color:#fff}
   .how .badge.b{background:var(--amc-navy);color:#fff}
   .how .badge.g{background:#fff7ed;color:#9a3412;border:1px solid #f0e0d2}
+  .how .badge.n{background:#f4faff;color:#1a5f8f;border:1px solid #a9d4f2}
   .how p{font-size:13px;color:var(--ink-3);line-height:1.75;margin-top:11px}
 
   .linkbox{border:1px solid var(--line);border-radius:10px;background:var(--bg-soft);padding:22px 24px}
@@ -89,7 +91,7 @@
         <span class="n">2</span>
         <div class="k">★ 핵심 화면</div>
         <h3>업로드 페이지 (관리자)</h3>
-        <p>담당자 업무와 직결되는 화면입니다. 실제 등록 폼을 재현한 <b>현재 화면</b>과 「게시물 끌고오기」로 재입력을 없앤 <b>개편 가안</b>을 전환하며 봅니다. 「문제 지점 표시」를 켜고 설명하세요.</p>
+        <p>담당자 업무와 직결되는 화면입니다. 실제 등록 폼을 재현한 <b>현재 화면</b>과 「게시물 끌고오기」로 재입력을 없앤 <b>개편 가안</b>을 전환하며 봅니다. <b>두 화면은 폼 모양·항목 순서가 같습니다.</b> 「문제 지점 표시」와 「바뀐 곳 표시」를 켜고 설명하세요.</p>
         <span class="go">업로드 페이지 열기 →</span>
       </a>
 
@@ -136,7 +138,7 @@
 <!-- 사용법 -->
 <section class="sec" style="background:var(--bg-soft);border-top:1px solid var(--line)">
   <div class="wrap">
-    <div class="sec-head"><h2>화면에 있는 버튼 세 가지</h2><span class="desc">설명할 때 쓰는 도구입니다</span></div>
+    <div class="sec-head"><h2>화면에 있는 버튼 네 가지</h2><span class="desc">설명할 때 쓰는 도구입니다</span></div>
     <div class="howto">
       <div class="how">
         <span class="badge o">개편 포인트</span>
@@ -144,11 +146,15 @@
       </div>
       <div class="how">
         <span class="badge b">현재 화면 / 개편 가안</span>
-        <p>업로드 페이지 <b>상단</b>에 있습니다. 같은 화면의 두 버전을 오갑니다. 현재 화면은 실제 등록 폼의 필드와 안내문구를 그대로 옮긴 것입니다.</p>
+        <p>업로드 페이지 <b>상단</b>에 있습니다. 같은 화면의 두 버전을 오갑니다. 현재 화면은 실제 등록 폼의 필드와 안내문구를 그대로 옮긴 것이고, <b>개편 가안도 같은 폼·같은 항목 순서</b>로 그렸습니다.</p>
       </div>
       <div class="how">
         <span class="badge g">문제 지점 표시</span>
         <p>업로드 페이지의 ‘현재 화면’에서만 나타납니다. 켜면 어느 필드가 왜 불편한지 주황색으로 표시됩니다.</p>
+      </div>
+      <div class="how">
+        <span class="badge n">바뀐 곳 표시</span>
+        <p>업로드 페이지의 ‘개편 가안’에서만 나타납니다. 켜면 <b>실제로 손대는 자리</b>만 파란색으로 드러납니다. 꺼두면 지금 쓰는 폼과 거의 같아 보이므로, <b>“이만큼만 바뀝니다”</b>를 켜고 끄며 보여주세요.</p>
       </div>
     </div>
   </div>
