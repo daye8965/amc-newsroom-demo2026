@@ -85,7 +85,7 @@ p{margin:0}
 
 /* ---------- 뉴스룸 헤더 (컴팩트) ---------- */
 .nr-header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line)}
-.nr-header .wrap{display:flex;align-items:center;gap:16px;height:60px}
+.nr-header .wrap{display:flex;align-items:center;gap:16px;height:74px}
 .nr-logo{display:flex;align-items:center;gap:10px;color:var(--amc-navy);white-space:nowrap}
 .nr-logo .ci{
   flex:none;width:30px;height:30px;border-radius:50%;
@@ -101,11 +101,18 @@ p{margin:0}
 .nr-logo small{font-size:9.5px;font-weight:600;color:var(--ink-3);letter-spacing:0.01em;margin-top:2px}
 @media (max-width:560px){.nr-logo b{font-size:16px}.nr-logo small{display:none}.nr-logo .ci{width:26px;height:26px}}
 
+/* 검색창 + 그 아래 주요 태그 한 줄 */
+.nr-searchwrap{margin-left:auto;flex:0 1 340px;min-width:150px;display:flex;flex-direction:column;gap:5px}
 .nr-search{
-  margin-left:auto;display:flex;align-items:center;gap:8px;
+  display:flex;align-items:center;gap:8px;
   background:var(--bg-soft);border:1px solid var(--line);border-radius:999px;
-  padding:7px 14px;min-width:150px;flex:0 1 320px;
+  padding:7px 14px;width:100%;
 }
+.nr-tags{display:flex;gap:7px;align-items:center;padding-left:3px;
+  overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.nr-tags::-webkit-scrollbar{display:none}
+.nr-tags a{font-size:11px;color:var(--ink-3);white-space:nowrap;transition:.15s;line-height:1.5}
+.nr-tags a:hover{color:var(--amc-blue)}
 .nr-search input{border:0;background:transparent;outline:none;font-size:13.5px;width:100%;font-family:inherit;color:var(--ink)}
 .nr-search svg{flex:none;color:var(--ink-3)}
 .nr-utils{display:flex;align-items:center;gap:6px}
@@ -117,7 +124,7 @@ p{margin:0}
 @media (max-width:700px){.nr-utils{display:none}}
 
 /* ---------- 뉴스룸 자체 서브메뉴 (하단 배치) ---------- */
-.nr-nav{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:60px;z-index:39}
+.nr-nav{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:74px;z-index:39}
 .nr-nav .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
 .nr-nav .wrap::-webkit-scrollbar{display:none}
 .nr-nav a{

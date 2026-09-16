@@ -30,6 +30,11 @@
       return '<a href="' + p.href + '"' + (p.href === here ? ' class="on"' : '') + '>' + p.label + '</a>';
     }).join('');
 
+    /* 검색창 아래 주요 태그 — 게시물마다 칩을 붙이는 대신 한 줄로 모아 노출 */
+    var tagRow = ((window.AMC_DATA && window.AMC_DATA.topTags) || []).map(function (t) {
+      return '<a href="#" data-tag="' + t + '" onclick="return AMC.tag(this.dataset.tag)">#' + t + '</a>';
+    }).join('');
+
     var nrNav = nav.map(function (n) {
       var cls = [];
       if (n.id === opts.active) cls.push('on');
@@ -58,11 +63,14 @@
       '<span class="ci" aria-hidden="true"></span>',
       '<span class="lockup"><b>서울아산병원 <span>뉴스룸</span></b>',
       '<small>Asan Medical Center Newsroom</small></span></a>',
+      '<div class="nr-searchwrap">',
       '<form class="nr-search" onsubmit="return AMC.search(event)">',
       '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">',
       '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
       '<input type="search" placeholder="의료진·질환·검사명으로 검색" aria-label="뉴스룸 통합검색">',
       '</form>',
+      '<div class="nr-tags" aria-label="주요 태그">' + tagRow + '</div>',
+      '</div>',
       '<div class="nr-utils">',
       '<a href="#" onclick="return AMC.toast(\'마이페이지 &gt; 스크랩한 콘텐츠로 이동합니다 (시연)\')">☆ 스크랩</a>',
       '<a href="#" onclick="return AMC.toast(\'영문 뉴스룸으로 이동합니다 (시연)\')">EN</a>',
@@ -162,8 +170,13 @@
     go(0); play();
   }
 
+  function tag(name) {
+    return toast('<b>#' + name + '</b> 태그가 붙은 콘텐츠를 모아 보여줍니다 (시연)');
+  }
+
   window.AMC = {
     toast: toast,
+    tag: tag,
     ph: ph,
     search: search,
     layout: function (opts) {
