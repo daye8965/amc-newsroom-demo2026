@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>앱 화면 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=16">
+<link rel="stylesheet" href="assets/css/main.css?v=17">
 <style>
   .phones{display:grid;grid-template-columns:repeat(3,minmax(0,320px));gap:28px;justify-content:center}
   @media (max-width:1040px){.phones{grid-template-columns:repeat(2,minmax(0,320px))}}
@@ -31,12 +31,27 @@
   .atabs::-webkit-scrollbar{display:none}
   .atabs a{padding:10px 11px;font-size:13px;font-weight:600;color:var(--ink-3);white-space:nowrap;border-bottom:2px solid transparent}
   .atabs a.on{color:var(--amc-blue);border-bottom-color:var(--amc-blue)}
-  .acards{padding:12px}
-  .acard{margin-bottom:18px}
-  .acard .ph{aspect-ratio:16/9;border-radius:5px;font-size:10.5px}
-  .acard .c{font-size:10.5px;font-weight:700;color:var(--amc-blue);margin-top:8px}
-  .acard .t{font-size:14px;font-weight:700;letter-spacing:-.03em;margin-top:4px;line-height:1.45}
-  .acard .d{font-size:11px;color:var(--ink-3);margin-top:5px}
+  /* 검색창 아래 주요 태그 — 웹 헤더와 같은 자리 */
+  .atags-top{display:flex;gap:6px;margin:-4px 12px 10px;padding-left:3px;
+    overflow-x:auto;scrollbar-width:none}
+  .atags-top::-webkit-scrollbar{display:none}
+  .atags-top span{font-size:10px;color:var(--ink-3);white-space:nowrap}
+
+  .asec{display:flex;align-items:baseline;gap:8px;padding:16px 12px 2px}
+  .asec h4{font-size:13.5px;letter-spacing:-.03em}
+  .asec .more{margin-left:auto;font-size:10.5px;color:var(--ink-3)}
+
+  /* 목록 — 롤링과 크기로 구분되도록 작은 가로형 (웹 모바일과 같은 방식) */
+  .acards{padding:0 12px 12px}
+  .acard{display:grid;grid-template-columns:104px 1fr;grid-template-rows:auto auto auto;
+    column-gap:11px;align-items:start;padding-block:11px;border-bottom:1px solid var(--line-2)}
+  .acard:last-child{border-bottom:0}
+  .acard .ph{grid-area:1/1/4/2;aspect-ratio:16/9;border-radius:4px;font-size:9px;padding:4px}
+  .acard .ph span{font-size:8.5px;padding:1px 6px}
+  .acard .c{grid-area:1/2/2/3;font-size:10px;font-weight:700;color:var(--amc-blue);margin-top:0}
+  .acard .t{grid-area:2/2/3/3;font-size:12.5px;font-weight:700;letter-spacing:-.03em;margin-top:3px;line-height:1.4;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .acard .d{grid-area:3/2/4/3;font-size:10px;color:var(--ink-3);margin-top:4px}
 
   .aart{padding:14px}
   .aart .c{font-size:11px;font-weight:700;color:var(--amc-blue)}
@@ -93,8 +108,10 @@
     <div class="annot">
       <div class="annot-pin"><b>16</b> 하나의 콘텐츠, 여러 채널</div>
       <div class="annot-box">
-        앱에 들어가려면 뉴스룸이 하나의 카테고리 홈페이지로 통합되어야 합니다. 카드형 레이아웃은 모바일·앱 구현이 쉬워 별도 앱 디자인을 따로 만들 필요가 줄어듭니다.
-        <span class="src">근거 · 9/1 실무진 회의 「앱으로 들어가려면 하나의 카테고리 홈페이지로 통합되는 방식」 / 9/14 회의 「카드형으로 변경 시 모바일 구현도 용이」</span>
+        앱에 들어가려면 뉴스룸이 하나의 카테고리 홈페이지로 통합되어야 합니다. 카드형 레이아웃은 모바일·앱 구현이 쉬워 별도 앱 디자인을 따로 만들 필요가 줄어듭니다.<br>
+        그래서 앱 메인도 <b>웹 모바일과 같은 구성</b>으로 맞췄습니다. 검색창 아래 주요 태그, 옆으로 밀어 넘기는 롤링, 작은 가로형 목록까지
+        <b>같은 화면을 폭만 줄여 쓰는 구조</b>라 앱 전용 디자인을 따로 만들 필요가 없습니다.
+        <span class="src">근거 · 9/1 실무진 회의 「앱으로 들어가려면 하나의 카테고리 홈페이지로 통합되는 방식」 / 9/14 회의 「카드형으로 변경 시 모바일 구현도 용이」 / 9/16 홍보팀 검토 「앱 메인도 모바일과 같은 롤링·목록 구성으로」</span>
       </div>
     </div>
 
@@ -116,14 +133,27 @@
           <div class="screen">
             <div class="abar"><span class="t">뉴스룸</span><span class="ic">☆ 🔔 ⋮</span></div>
             <div class="asearch">🔍 의료진·질환·검사명으로 검색</div>
+            <div class="atags-top" id="appTags"></div>
             <div class="atabs">
               <a class="on">전체</a><a>뉴스</a><a>헬스</a><a>피플</a><a>리서치·AI</a><a>프레스센터</a>
             </div>
+
+            <div style="padding:12px 12px 0">
+              <div class="hero-stage in-app" data-dots="#appHeroDots">
+                <div class="hero-track" id="appHero"></div>
+                <button class="hero-arw prev js-prev" aria-label="이전 기사">‹</button>
+                <button class="hero-arw next js-next" aria-label="다음 기사">›</button>
+              </div>
+              <div class="hero-dots in-app" id="appHeroDots"></div>
+            </div>
+
+            <div class="asec"><h4>최신 콘텐츠</h4><span class="more">전체보기 ›</span></div>
             <div class="acards" id="appCards"></div>
           </div>
         </div>
         <div class="phone-cap">앱 메인
-          <span>웹과 동일한 카드형 목록 · 검색창을 첫 화면에 노출</span>
+          <span>웹 모바일과 같은 구성 — 검색창과 주요 태그를 첫 화면에 노출,
+          롤링은 옆으로 밀어 넘기고 목록은 작은 가로형으로 구분</span>
         </div>
       </div>
 
@@ -197,13 +227,26 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=16"></script>
-<script src="assets/js/site.js?v=16"></script>
+<script src="assets/js/data.js?v=17"></script>
+<script src="assets/js/site.js?v=17"></script>
 <script>
 AMC.layout({ active: '' });
 
+/* 검색창 아래 주요 태그 — 웹 헤더와 같은 목록을 그대로 쓴다 */
+document.getElementById('appTags').innerHTML =
+  AMC_DATA.topTags.map(function (t) { return '<span>#' + t + '</span>'; }).join('');
+
+/* 롤링 — 웹과 같은 컴포넌트, 폰 폭에 맞춰 축소만 */
+document.getElementById('appHero').innerHTML = AMC_DATA.hero.map(function (h) {
+  return '<div class="hero-slide">' + AMC.ph(h.c1, h.c2, '16:9') +
+    '<div class="hero-cap"><div class="cat">' + h.cat + ' 〉 ' + h.sub + '</div>' +
+    '<h2>' + h.title + '</h2></div></div>';
+}).join('');
+document.getElementById('appHeroDots').innerHTML =
+  AMC_DATA.hero.map(function () { return '<i></i>'; }).join('');
+
 document.getElementById('appCards').innerHTML = AMC_DATA.cards.slice(0, 6).map(function (c) {
-  return '<a class="acard" style="display:block" href="#" onclick="return AMC.toast(\'앱 기사 상세로 이동 (시연)\')">' +
+  return '<a class="acard" href="#" onclick="return AMC.toast(\'앱 기사 상세로 이동 (시연)\')">' +
     AMC.ph(c.c1, c.c2, '16:9') +
     '<div class="c">' + c.cat + '</div><div class="t">' + c.title + '</div>' +
     '<div class="d">' + c.date + '</div></a>';

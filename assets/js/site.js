@@ -151,11 +151,18 @@
      끝에 닿으면 애니메이션이 끝난 뒤 같은 장의 가운데 벌 위치로 조용히 옮겨,
      마지막에서 처음으로 되감기는 움직임이 보이지 않게 한다. */
   function initHero() {
-    var stage = document.querySelector('.hero-stage');
-    if (!stage) return;
+    Array.prototype.forEach.call(document.querySelectorAll('.hero-stage'), buildHero);
+  }
+
+  function buildHero(stage) {
     var track = stage.querySelector('.hero-track');
-    var dots = Array.prototype.slice.call(stage.parentNode.querySelectorAll('.hero-dots i'));
     if (!track || !track.children.length) return;
+
+    /* 점은 data-dots 로 지정한 곳을 쓰고, 없으면 같은 부모 안에서 찾는다 */
+    var dotBox = stage.getAttribute('data-dots')
+      ? document.querySelector(stage.getAttribute('data-dots'))
+      : stage.parentNode.querySelector('.hero-dots');
+    var dots = dotBox ? Array.prototype.slice.call(dotBox.querySelectorAll('i')) : [];
 
     var n = track.children.length;
     track.innerHTML = track.innerHTML + track.innerHTML + track.innerHTML;
@@ -239,8 +246,10 @@
     track.addEventListener('touchend', release);
     track.addEventListener('touchcancel', release);
 
-    stage.querySelector('.js-prev').addEventListener('click', function () { go(-1); });
-    stage.querySelector('.js-next').addEventListener('click', function () { go(1); });
+    var prev = stage.querySelector('.js-prev');
+    var next = stage.querySelector('.js-next');
+    if (prev) prev.addEventListener('click', function () { go(-1); });
+    if (next) next.addEventListener('click', function () { go(1); });
     dots.forEach(function (d, k) {
       d.addEventListener('click', function () { go(k - (((i % n) + n) % n)); });
     });

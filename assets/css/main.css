@@ -188,6 +188,20 @@ p{margin:0}
   .hero-arw.next{left:calc(50% + var(--slide-w)/2 - 17px)}
 }
 
+/* 앱 목업 안의 롤링 — 폰 화면(약 300px) 안에서 같은 구조로 축소 */
+.hero-stage.in-app{--slide-w:82%;padding-block:0}
+.hero-stage.in-app .hero-track{gap:8px}
+.hero-stage.in-app .hero-slide{border-radius:5px}
+.hero-stage.in-app .hero-cap{padding:11px 12px}
+.hero-stage.in-app .hero-cap .cat{font-size:9.5px}
+.hero-stage.in-app .hero-cap h2{font-size:13px;margin-top:4px;line-height:1.4}
+.hero-stage.in-app .hero-arw{width:26px;height:26px;font-size:13px;box-shadow:0 2px 8px rgba(17,24,32,.2)}
+.hero-stage.in-app .hero-arw.prev{left:calc(50% - var(--slide-w)/2 - 13px)}
+.hero-stage.in-app .hero-arw.next{left:calc(50% + var(--slide-w)/2 - 13px)}
+.hero-dots.in-app{margin-top:10px}
+.hero-dots.in-app i{width:5px;height:5px}
+.hero-dots.in-app i.on{width:14px}
+
 .hero-dots{display:flex;gap:6px;justify-content:center;margin-top:16px}
 .hero-dots i{width:7px;height:7px;border-radius:50%;background:#cbd3db;display:block;cursor:pointer;transition:.2s}
 .hero-dots i.on{background:var(--amc-blue);width:20px;border-radius:999px}
