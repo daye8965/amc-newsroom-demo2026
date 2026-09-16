@@ -6,7 +6,7 @@
 <title>서울아산병원 뉴스룸 (개편 시안) | 2026 웹·앱 통합개편 시연용</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="2026 뉴스룸 웹·앱 통합개편 논의를 위한 시연용 프로토타입입니다. 실제 서비스가 아닙니다.">
-<link rel="stylesheet" href="assets/css/main.css?v=14">
+<link rel="stylesheet" href="assets/css/main.css?v=15">
 </head>
 <body>
 
@@ -34,20 +34,24 @@
       </div>
     </div>
     <div class="annot">
-      <div class="annot-pin"><b>1</b> 메인 롤링 축소</div>
+      <div class="annot-pin"><b>1</b> 메인 롤링 축소 · 사진 비율 정상화</div>
       <div class="annot-box">
-        통합 홈페이지의 상단 GNB가 화면을 차지하므로 롤링 배너 높이를 기존보다 낮춰 첫 화면에서 카드 콘텐츠가 바로 보이도록 했습니다. 3건만 순환합니다.
-        <span class="src">근거 · 9/14 직원 의견 취합 회의 「메인 롤링 페이지 크기 축소 검토」</span>
+        통합 홈페이지의 상단 GNB가 화면을 차지하므로 롤링 배너 높이를 기존보다 낮춰 첫 화면에서 카드 콘텐츠가 바로 보이도록 했습니다. 3건만 순환합니다.<br>
+        다만 <b>가로로만 길게 늘이면 사진 위아래가 잘려</b> 인물 얼굴이나 현판이 날아갑니다. 그래서 <b>양 사이드를 잘라 카드 그리드와 같은 16:9</b>로 맞추고,
+        남는 좌우 공간에는 <b>앞뒤 기사를 걸쳐 보여</b> 눌러서 넘어갈 수 있게 했습니다. 화살표·점·옆 기사 클릭 모두 동작합니다.
+        <span class="src">근거 · 9/14 직원 의견 취합 회의 「메인 롤링 페이지 크기 축소 검토」 / 분석 리포트 「사진 비율·카드 규격을 디자인 시스템으로 표준화」 / 9/16 홍보팀 검토 「롤링 사진이 잘리지 않게 비율을 맞추고 양옆에 이전·다음 기사 노출」</span>
       </div>
     </div>
-    <div class="hero-stage" data-annot>
-      <div id="hero-slides"></div>
-      <div class="hero-ctrl">
-        <div class="hero-dots" id="hero-dots"></div>
-        <button class="js-prev" aria-label="이전 슬라이드">‹</button>
-        <button class="js-next" aria-label="다음 슬라이드">›</button>
-      </div>
-    </div>
+  </div>
+
+  <div class="hero-stage" data-annot>
+    <div class="hero-track" id="hero-slides"></div>
+    <button class="hero-arw prev js-prev" aria-label="이전 기사">‹</button>
+    <button class="hero-arw next js-next" aria-label="다음 기사">›</button>
+  </div>
+
+  <div class="wrap">
+    <div class="hero-dots" id="hero-dots"></div>
   </div>
 </section>
 
@@ -113,16 +117,16 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=14"></script>
-<script src="assets/js/site.js?v=14"></script>
+<script src="assets/js/data.js?v=15"></script>
+<script src="assets/js/site.js?v=15"></script>
 <script>
 AMC.layout({ active: 'all' });
 
 var D = window.AMC_DATA;
 
 /* 히어로 */
-document.getElementById('hero-slides').innerHTML = D.hero.map(function (h, i) {
-  return '<div class="hero-slide' + (i === 0 ? ' on' : '') + '">' +
+document.getElementById('hero-slides').innerHTML = D.hero.map(function (h) {
+  return '<div class="hero-slide">' +
     AMC.ph(h.c1, h.c2, h.tag) +
     '<div class="hero-cap"><div class="cat">' + h.cat + ' 〉 ' + h.sub + '</div><h2>' + h.title + '</h2></div>' +
     '</div>';

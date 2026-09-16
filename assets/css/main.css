@@ -138,30 +138,57 @@ p{margin:0}
   border-radius:3px;padding:1px 4px;margin-left:5px;vertical-align:2px;letter-spacing:0.02em;
 }
 
-/* ---------- 히어로 (축소된 롤링) ---------- */
+/* ---------- 히어로 (가운데 한 장 + 양옆 미리보기) ----------
+   가로로 길면 사진 위아래가 잘려 인물·현판이 날아간다.
+   양 사이드를 잘라 카드 그리드와 같은 16:9로 맞추고,
+   남는 좌우 공간에 앞뒤 기사를 걸쳐 보여 넘길 수 있게 한다. */
 .hero{padding-top:28px}
-.hero-stage{position:relative;border-radius:var(--radius);overflow:hidden;background:#000}
-.hero-slide{display:none;position:relative}
-.hero-slide.on{display:block}
-.hero-slide .ph{aspect-ratio:32/11;width:100%}
-@media (max-width:760px){.hero-slide .ph{aspect-ratio:16/10}}
+.hero-stage{
+  --slide-w:min(880px,72vw);
+  position:relative;overflow:hidden;padding-block:2px;
+}
+@media (max-width:760px){.hero-stage{--slide-w:86vw}}
+
+.hero-track{display:flex;gap:16px;will-change:transform;
+  transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.hero-slide{
+  flex:0 0 var(--slide-w);position:relative;overflow:hidden;
+  border-radius:var(--radius);background:#000;cursor:pointer;
+  opacity:.4;transition:opacity .35s ease;
+}
+.hero-slide.on{opacity:1;cursor:default}
+.hero-slide .ph{aspect-ratio:16/9;width:100%}
+
 .hero-cap{
   position:absolute;inset:auto 0 0 0;padding:24px 28px;
   background:linear-gradient(to top,rgba(0,20,40,.88),rgba(0,20,40,.45) 55%,transparent);
-  color:#fff;
+  color:#fff;opacity:0;transition:opacity .3s ease;
 }
+.hero-slide.on .hero-cap{opacity:1}
 .hero-cap .cat{font-size:12px;font-weight:700;letter-spacing:.04em;color:#8fd0ff}
 .hero-cap h2{font-size:27px;margin-top:8px;max-width:760px;letter-spacing:-0.035em;color:#fff}
-@media (max-width:760px){.hero-cap{padding:18px}.hero-cap h2{font-size:19px}}
-.hero-ctrl{position:absolute;right:16px;bottom:16px;display:flex;gap:6px;align-items:center}
-.hero-ctrl button{
-  width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.5);
-  background:rgba(0,0,0,.3);color:#fff;font-size:13px;line-height:1;
-  display:grid;place-items:center;backdrop-filter:blur(4px);
+@media (max-width:760px){.hero-cap{padding:16px 18px}.hero-cap h2{font-size:18px}}
+
+/* 좌우 화살표 — 가운데 카드의 경계선 위에 놓는다 */
+.hero-arw{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
+  background:#fff;color:var(--ink);font-size:19px;line-height:1;
+  display:grid;place-items:center;box-shadow:0 3px 14px rgba(17,24,32,.16);
+  transition:.15s;
 }
-.hero-dots{display:flex;gap:5px;margin-right:6px}
-.hero-dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.45);display:block;cursor:pointer;transition:.2s}
-.hero-dots i.on{background:#fff;width:18px;border-radius:999px}
+.hero-arw:hover{background:var(--amc-blue);border-color:var(--amc-blue);color:#fff}
+.hero-arw.prev{left:calc(50% - var(--slide-w)/2 - 22px)}
+.hero-arw.next{left:calc(50% + var(--slide-w)/2 - 22px)}
+@media (max-width:760px){
+  .hero-arw{width:34px;height:34px;font-size:15px}
+  .hero-arw.prev{left:calc(50% - var(--slide-w)/2 - 17px)}
+  .hero-arw.next{left:calc(50% + var(--slide-w)/2 - 17px)}
+}
+
+.hero-dots{display:flex;gap:6px;justify-content:center;margin-top:16px}
+.hero-dots i{width:7px;height:7px;border-radius:50%;background:#cbd3db;display:block;cursor:pointer;transition:.2s}
+.hero-dots i.on{background:var(--amc-blue);width:20px;border-radius:999px}
 
 /* ---------- 섹션 ---------- */
 .sec{padding-block:44px}

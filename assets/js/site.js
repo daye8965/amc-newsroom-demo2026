@@ -146,28 +146,62 @@
     return false;
   }
 
-  /* ---------- 히어로 롤링 ---------- */
+  /* ---------- 히어로 — 가운데 한 장 + 양옆 미리보기 ----------
+     원본 n장을 세 벌 이어 붙이고 가운데 벌에서 시작한다.
+     끝에 닿으면 애니메이션이 끝난 뒤 같은 장의 가운데 벌 위치로 조용히 옮겨,
+     마지막에서 처음으로 되감기는 움직임이 보이지 않게 한다. */
   function initHero() {
     var stage = document.querySelector('.hero-stage');
     if (!stage) return;
-    var slides = stage.querySelectorAll('.hero-slide');
-    var dots = stage.querySelectorAll('.hero-dots i');
-    var i = 0, timer = null;
+    var track = stage.querySelector('.hero-track');
+    var dots = Array.prototype.slice.call(stage.parentNode.querySelectorAll('.hero-dots i'));
+    if (!track || !track.children.length) return;
 
-    function go(n) {
-      i = (n + slides.length) % slides.length;
-      slides.forEach(function (s, k) { s.classList.toggle('on', k === i); });
-      dots.forEach(function (d, k) { d.classList.toggle('on', k === i); });
+    var n = track.children.length;
+    track.innerHTML = track.innerHTML + track.innerHTML + track.innerHTML;
+    var all = Array.prototype.slice.call(track.children);
+    var i = n, timer = null;
+
+    function place(animate) {
+      if (!animate) track.style.transition = 'none';
+      var w = all[0].getBoundingClientRect().width;
+      var gap = parseFloat(getComputedStyle(track).columnGap || 0) || 0;
+      var x = i * (w + gap) - (stage.clientWidth - w) / 2;
+      track.style.transform = 'translateX(' + (-x) + 'px)';
+      if (!animate) { void track.offsetWidth; track.style.transition = ''; }
+
+      all.forEach(function (s, k) { s.classList.toggle('on', k === i); });
+      var real = ((i % n) + n) % n;
+      dots.forEach(function (d, k) { d.classList.toggle('on', k === real); });
     }
-    function play() { timer = setInterval(function () { go(i + 1); }, 5200); }
-    function stop() { clearInterval(timer); }
 
-    stage.querySelector('.js-prev').addEventListener('click', function () { go(i - 1); });
-    stage.querySelector('.js-next').addEventListener('click', function () { go(i + 1); });
-    dots.forEach(function (d, k) { d.addEventListener('click', function () { go(k); }); });
+    function go(step) { i += step; place(true); }
+
+    /* 애니메이션이 끝나고 바깥 벌에 있으면 가운데 벌의 같은 장으로 옮긴다 */
+    track.addEventListener('transitionend', function (e) {
+      if (e.target !== track || e.propertyName !== 'transform') return;
+      if (i < n || i >= n * 2) { i = n + (((i % n) + n) % n); place(false); }
+    });
+
+    /* 옆에 걸친 기사를 누르면 그 기사로 넘어간다 */
+    all.forEach(function (s, k) {
+      s.addEventListener('click', function () { if (k !== i) go(k - i); });
+    });
+
+    stage.querySelector('.js-prev').addEventListener('click', function () { go(-1); });
+    stage.querySelector('.js-next').addEventListener('click', function () { go(1); });
+    dots.forEach(function (d, k) {
+      d.addEventListener('click', function () { go(k - (((i % n) + n) % n)); });
+    });
+
+    function play() { timer = setInterval(function () { go(1); }, 5200); }
+    function stop() { clearInterval(timer); }
     stage.addEventListener('mouseenter', stop);
     stage.addEventListener('mouseleave', play);
-    go(0); play();
+    window.addEventListener('resize', function () { place(false); });
+
+    place(false);
+    play();
   }
 
   function tag(name) {
