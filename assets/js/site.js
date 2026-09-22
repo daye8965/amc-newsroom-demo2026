@@ -202,12 +202,27 @@
       dots.forEach(function (d, k) { d.classList.toggle('on', k === real); });
     }
 
-    function go(step) { i += step; place(true); }
+    /* 바깥 벌에 있으면 가운데 벌의 같은 장으로 조용히 옮긴다 */
+    function normalize() {
+      if (i < n || i >= n * 2) { i = n + (((i % n) + n) % n); place(false); }
+    }
 
-    /* 애니메이션이 끝나고 바깥 벌에 있으면 가운데 벌의 같은 장으로 옮긴다 */
+    /* transitionend 만 믿으면 안 된다.
+       탭이 뒤에 있거나 렌더링이 멈춘 상태에서는 이벤트가 오지 않아
+       i 가 계속 커지고, 결국 어느 슬라이드에도 .on 이 붙지 않는다.
+       타이머를 보험으로 같이 건다 (둘 중 먼저 오는 쪽이 처리, 중복 호출은 무해). */
+    var resetTimer = null;
+    function go(step) {
+      i += step;
+      place(true);
+      clearTimeout(resetTimer);
+      resetTimer = setTimeout(normalize, 520);
+    }
+
     track.addEventListener('transitionend', function (e) {
       if (e.target !== track || e.propertyName !== 'transform') return;
-      if (i < n || i >= n * 2) { i = n + (((i % n) + n) % n); place(false); }
+      clearTimeout(resetTimer);
+      normalize();
     });
 
     /* 옆에 걸친 기사를 누르면 그 기사로 넘어간다 (민 직후의 클릭은 무시) */
