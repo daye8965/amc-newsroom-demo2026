@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기사 상세 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=20">
+<link rel="stylesheet" href="assets/css/main.css?v=21">
 <style>
   .iconbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;
     display:grid;place-items:center;font-size:13px;color:var(--ink-2);flex:none}
@@ -130,7 +130,9 @@
   <!-- 본문 -->
   <div class="art-body">
     <figure>
-      <div class="ph" style="--c1:#00335f;--c2:#0091d4"><span>대표 이미지 (썸네일과 동일 사진)</span></div>
+      <div class="ph has-img" style="--c1:#00335f;--c2:#0091d4">
+        <img src="assets/img/hero-01.jpg" alt="">
+        <span>대표 이미지 (썸네일과 동일 사진)</span></div>
       <figcaption>중입자치료실에서 치료 준비가 진행되고 있다. (시연용 가상 이미지)</figcaption>
     </figure>
 
@@ -269,14 +271,14 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=20"></script>
-<script src="assets/js/site.js?v=20"></script>
+<script src="assets/js/data.js?v=21"></script>
+<script src="assets/js/site.js?v=21"></script>
 <script>
 AMC.layout({ active: 'research' });
 
 document.getElementById('more-grid').innerHTML = AMC_DATA.cards.slice(0, 3).map(function (c) {
   return '<a class="card" href="article.html">' +
-    '<div class="thumb">' + AMC.ph(c.c1, c.c2, '16:9 가로 이미지') + '</div>' +
+    '<div class="thumb">' + AMC.ph(c.c1, c.c2, '16:9 가로 이미지', '', c.img) + '</div>' +
     '<div class="cat">' + c.cat + '</div><h3>' + c.title + '</h3>' +
     '<div class="date">' + c.date + '</div></a>';
 }).join('');

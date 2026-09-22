@@ -6,7 +6,7 @@
 <title>서울아산병원 뉴스룸 (개편 시안) | 2026 웹·앱 통합개편 시연용</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="2026 뉴스룸 웹·앱 통합개편 논의를 위한 시연용 프로토타입입니다. 실제 서비스가 아닙니다.">
-<link rel="stylesheet" href="assets/css/main.css?v=20">
+<link rel="stylesheet" href="assets/css/main.css?v=21">
 </head>
 <body>
 
@@ -108,8 +108,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=20"></script>
-<script src="assets/js/site.js?v=20"></script>
+<script src="assets/js/data.js?v=21"></script>
+<script src="assets/js/site.js?v=21"></script>
 <script>
 AMC.layout({ active: 'all' });
 
@@ -118,7 +118,7 @@ var D = window.AMC_DATA;
 /* 히어로 */
 document.getElementById('hero-slides').innerHTML = D.hero.map(function (h) {
   return '<div class="hero-slide">' +
-    AMC.ph(h.c1, h.c2, h.tag) +
+    AMC.ph(h.c1, h.c2, h.tag, '', h.img) +
     '<div class="hero-cap"><div class="cat">' + h.cat + ' 〉 ' + h.sub + '</div><h2>' + h.title + '</h2></div>' +
     '</div>';
 }).join('');
@@ -128,7 +128,7 @@ document.getElementById('hero-dots').innerHTML =
 /* 카드 */
 function cardHTML(c) {
   return '<a class="card" href="article.html">' +
-    '<div class="thumb">' + AMC.ph(c.c1, c.c2, '16:9 가로 이미지') + '</div>' +
+    '<div class="thumb">' + AMC.ph(c.c1, c.c2, '16:9 가로 이미지', '', c.img) + '</div>' +
     '<div class="cat">' + c.cat + ' 〉 ' + c.sub + '</div>' +
     '<h3>' + c.title + '</h3>' +
     '<div class="date">' + c.date + '</div></a>';
@@ -140,7 +140,7 @@ document.getElementById('research-grid').innerHTML =
 /* 건강TV */
 document.getElementById('tv-grid').innerHTML = D.tv.map(function (t) {
   return '<a class="tv-card" href="#" onclick="return AMC.toast(\'건강TV 영상 재생 (시연)\')">' +
-    '<div class="thumb">' + AMC.ph(t.c1, t.c2, '영상 썸네일') +
+    '<div class="thumb">' + AMC.ph(t.c1, t.c2, '영상 썸네일', '', t.img) +
     '<div class="play"><i></i></div><div class="dur">' + t.dur + '</div></div>' +
     '<h4>' + t.title + '</h4></a>';
 }).join('');

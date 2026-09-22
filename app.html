@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>앱 화면 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=20">
+<link rel="stylesheet" href="assets/css/main.css?v=21">
 <style>
   .phones{display:grid;grid-template-columns:repeat(3,minmax(0,320px));gap:28px;justify-content:center}
   @media (max-width:1040px){.phones{grid-template-columns:repeat(2,minmax(0,320px))}}
@@ -227,8 +227,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=20"></script>
-<script src="assets/js/site.js?v=20"></script>
+<script src="assets/js/data.js?v=21"></script>
+<script src="assets/js/site.js?v=21"></script>
 <script>
 AMC.layout({ active: '' });
 
@@ -238,7 +238,7 @@ document.getElementById('appTags').innerHTML =
 
 /* 롤링 — 웹과 같은 컴포넌트, 폰 폭에 맞춰 축소만 */
 document.getElementById('appHero').innerHTML = AMC_DATA.hero.map(function (h) {
-  return '<div class="hero-slide">' + AMC.ph(h.c1, h.c2, '16:9') +
+  return '<div class="hero-slide">' + AMC.ph(h.c1, h.c2, '16:9', '', h.img) +
     '<div class="hero-cap"><div class="cat">' + h.cat + ' 〉 ' + h.sub + '</div>' +
     '<h2>' + h.title + '</h2></div></div>';
 }).join('');
@@ -247,7 +247,7 @@ document.getElementById('appHeroDots').innerHTML =
 
 document.getElementById('appCards').innerHTML = AMC_DATA.cards.slice(0, 6).map(function (c) {
   return '<a class="acard" href="#" onclick="return AMC.toast(\'앱 기사 상세로 이동 (시연)\')">' +
-    AMC.ph(c.c1, c.c2, '16:9') +
+    AMC.ph(c.c1, c.c2, '16:9', '', c.img) +
     '<div class="c">' + c.cat + '</div><div class="t">' + c.title + '</div>' +
     '<div class="d">' + c.date + '</div></a>';
 }).join('');

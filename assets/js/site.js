@@ -132,10 +132,29 @@
     return false;
   }
 
-  function ph(c1, c2, label, extra) {
-    return '<div class="ph" style="--c1:' + c1 + ';--c2:' + c2 + ';' + (extra || '') + '">' +
-      '<span>' + (label || '이미지 영역') + '</span></div>';
+  /* 썸네일 자리.
+     img 를 주면 실제 사진을 깔고, 없거나 파일을 못 찾으면 그라데이션 자리표시로 남는다.
+     (시연 장소에서 사진 파일이 빠져도 화면이 깨지지 않게) */
+  function ph(c1, c2, label, extra, img) {
+    /* lazy 는 쓰지 않는다 - 롤링의 복제 슬라이드와 ZIP 오프라인 시연에서
+       사진이 늦게 뜨거나 아예 안 뜨는 일이 생긴다 (25장 규모라 부담도 없다) */
+    var pic = img ? '<img src="' + img + '" alt="">' : '';
+    return '<div class="ph' + (img ? ' has-img' : '') + '"' +
+      ' style="--c1:' + c1 + ';--c2:' + c2 + ';' + (extra || '') + '">' +
+      pic + '<span>' + (label || '이미지 영역') + '</span></div>';
   }
+
+  /* 사진 파일이 없으면 그라데이션 자리표시로 되돌린다.
+     error 는 버블링하지 않으므로 캡처 단계에서 받는다. */
+  document.addEventListener('error', function (e) {
+    var img = e.target;
+    if (!img || img.tagName !== 'IMG') return;
+    var box = img.parentNode;
+    if (box && box.classList && box.classList.contains('ph')) {
+      box.classList.remove('has-img');
+      img.remove();
+    }
+  }, true);
 
   function search(e) {
     e.preventDefault();
