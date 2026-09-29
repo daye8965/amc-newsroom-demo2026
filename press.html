@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>프레스센터 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=22">
+<link rel="stylesheet" href="assets/css/main.css?v=23">
 <style>
   /* ---------- 목록 ---------- */
   .prhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
@@ -54,15 +54,11 @@
   .detail .body{font-size:16px;line-height:1.85;color:var(--ink-2);margin-top:26px}
   .detail .body p{margin-bottom:20px}
 
-  .dztag{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:28px}
-  .dztag .lb{background:#e8730c;color:#fff;font-size:11.5px;font-weight:700;
-    padding:4px 12px;border-radius:3px;position:relative}
-  .dztag .lb::after{content:"";position:absolute;right:-6px;top:50%;transform:translateY(-50%);
-    border-left:6px solid #e8730c;border-block:9px solid transparent}
+  /* 기사 상세와 같이 종류 구분 없이 한 묶음으로 흐르게 둔다 */
+  .dztag{display:flex;gap:7px;flex-wrap:wrap;margin-top:28px}
   .dztag a{font-size:12.5px;background:var(--bg-tint);border:1px solid #cfe4f6;color:var(--amc-navy);
     border-radius:999px;padding:4px 12px;font-weight:600}
   .dztag a:hover{background:#dceefb}
-  .dztag .kind{font-size:11px;color:var(--ink-3);margin-right:2px}
 
   .scrapline{display:flex;gap:10px;align-items:center;flex-wrap:wrap;
     margin-top:26px;padding-top:20px;border-top:1px solid var(--line)}
@@ -205,7 +201,6 @@
       </div>
 
       <div class="dztag" id="artDz"></div>
-      <div class="dztag" style="margin-top:9px" id="artKs"></div>
 
       <div class="scrapline">
         <span style="font-size:13px;color:var(--ink-3)">이 콘텐츠가 도움이 되었다면 스크랩해 두세요.</span>
@@ -337,8 +332,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=22"></script>
-<script src="assets/js/site.js?v=22"></script>
+<script src="assets/js/data.js?v=23"></script>
+<script src="assets/js/site.js?v=23"></script>
 <script>
 AMC.layout({ active: 'press' });
 
@@ -446,15 +441,11 @@ function openArticle(i) {
   $('artBody').innerHTML = p.body.map(function (t) { return '<p>' + t + '</p>'; }).join('') +
     '<p>' + GONGJI + '</p>';
 
-  $('artDz').innerHTML = '<span class="lb">관련 질환</span>' +
-    tagLinks(p.dz, '질환 페이지의 관련 뉴스로 이동 (시연)');
-
-  var ks = '<span class="kind">검사·시술</span>' + tagLinks(p.ks, '검사·시술 연계 검색 (시연)');
-  if (p.bp.length) {
-    ks += '<span class="kind" style="margin-left:8px">신체부위</span>' +
-      tagLinks(p.bp, '신체부위 연계 검색 (시연)');
-  }
-  $('artKs').innerHTML = ks;
+  /* 질환 · 검사시술 · 신체부위를 구분 없이 이어 붙인다 (기사 상세와 같은 방식) */
+  $('artDz').innerHTML =
+    tagLinks(p.dz, '질환 페이지의 관련 뉴스로 이동 (시연)') +
+    tagLinks(p.ks, '검사·시술 연계 검색 (시연)') +
+    tagLinks(p.bp, '신체부위 연계 검색 (시연)');
 
   var sec = $('detail');
   sec.hidden = false;

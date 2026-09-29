@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기사 상세 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=22">
+<link rel="stylesheet" href="assets/css/main.css?v=23">
 <style>
   .iconbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;
     display:grid;place-items:center;font-size:13px;color:var(--ink-2);flex:none}
@@ -214,22 +214,15 @@
 
   <!-- 이전/다음 -->
   <div class="annot">
-    <div class="annot-pin"><b>11</b> 이전 글 / 다음 글</div>
+    <div class="annot-pin"><b>11</b> 이전 글 / 다음 글 — <s>제외</s></div>
     <div class="annot-box">
-      현재 없는 기능입니다. 같은 코너의 이전·다음 콘텐츠로 바로 이동할 수 있게 해 웹진형 코너(연재물) 탐색을 지원합니다.
-      <span class="src">근거 · 8/24 팀장 회의 「이전 글/다음 글 네비게이션 추가(현재 없음)」</span>
+      같은 코너의 앞뒤 글로 이동하는 버튼을 검토했으나 <b>이번 범위에서 제외</b>했습니다.
+      바로 위 <b>연관 콘텐츠</b>가 이미 같은 코너의 다른 글을 목록으로 보여주고 있어 <b>역할이 겹칩니다.</b>
+      기사 하단에 비슷한 이동 수단이 둘이면 어느 쪽을 눌러야 할지 오히려 헷갈립니다.
+      연재물처럼 순서가 중요한 콘텐츠는 연관 콘텐츠에서 <b>담당자가 직접 지정</b>해 순서대로 노출할 수 있습니다.
+      <span class="src">근거 · 8/24 팀장 회의 「이전 글/다음 글 네비게이션 추가(현재 없음)」 / 9/29 홍보팀 피드백 「연관 콘텐츠 목록과 역할이 중복 — 제외」</span>
     </div>
   </div>
-  <nav class="prevnext" data-annot>
-    <a href="#" onclick="return AMC.toast('이전 글로 이동 (시연)')">
-      <div class="dir">‹ 이전 글 · 리서치·AI</div>
-      <div class="t">면역항암제 반응 예측 바이오마커 국제학술지 게재</div>
-    </a>
-    <a class="next" href="#" onclick="return AMC.toast('다음 글로 이동 (시연)')">
-      <div class="dir">다음 글 · 리서치·AI ›</div>
-      <div class="t">생성형 AI 기반 진료기록 요약, 원내 시범 적용</div>
-    </a>
-  </nav>
 
 </article>
 
@@ -264,8 +257,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=22"></script>
-<script src="assets/js/site.js?v=22"></script>
+<script src="assets/js/data.js?v=23"></script>
+<script src="assets/js/site.js?v=23"></script>
 <script>
 AMC.layout({ active: 'research' });
 
