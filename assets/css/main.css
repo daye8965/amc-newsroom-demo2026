@@ -327,8 +327,7 @@ body.annot-on [data-annot]{outline:2px dashed rgba(194,65,12,.5);outline-offset:
 @media (max-width:560px){.article{padding-inline:16px}}
 .crumb{font-size:12.5px;color:var(--ink-3);margin-bottom:18px}
 .crumb b{color:var(--amc-blue)}
-.art-cat{font-size:13px;font-weight:700;color:var(--amc-blue)}
-.art-title{font-size:33px;margin-top:10px;letter-spacing:-0.045em;line-height:1.32}
+.art-title{font-size:33px;margin-top:0;letter-spacing:-0.045em;line-height:1.32}
 @media (max-width:640px){.art-title{font-size:25px}}
 .art-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px;padding-bottom:16px;
   border-bottom:1px solid var(--line);font-size:13px;color:var(--ink-3)}
