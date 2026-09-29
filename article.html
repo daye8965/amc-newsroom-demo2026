@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기사 상세 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=21">
+<link rel="stylesheet" href="assets/css/main.css?v=22">
 <style>
   .iconbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;
     display:grid;place-items:center;font-size:13px;color:var(--ink-2);flex:none}
@@ -171,33 +171,26 @@
   <div class="annot">
     <div class="annot-pin"><b>8</b> 태깅 확장 · 기준 DB 연결</div>
     <div class="annot-box">
-      기존 ‘관련 질환’ 한 종류에서 <b>의료진 · 질환 · 검사·시술 · 신체부위 · 주제</b>로 태그를 확장했습니다. 단순 텍스트가 아니라 병원 기준정보 DB의 ID와 연결(<b>ID</b> 표시)되어, 홈페이지 의료진·질환 페이지에서 관련 뉴스가 자동으로 노출되고 본문에 이름이 없어도 검색됩니다.
-      <span class="src">근거 · 킥오프 회의 1순위 「의료진·질환·진료과·센터를 ID 기반 관계형 연결」 / 9/14 회의 「검사명·시술명·신체부위 태깅 추가」</span>
+      기존 ‘관련 질환’ 한 종류에서 <b>의료진 · 질환 · 검사·시술 · 신체부위 · 주제</b>로 태그를 확장했습니다. 단순 텍스트가 아니라 병원 기준정보 DB의 ID와 연결(<b>ID</b> 표시)되어, 홈페이지 의료진·질환 페이지에서 관련 뉴스가 자동으로 노출되고 본문에 이름이 없어도 검색됩니다.<br>
+      다만 <b>화면에서는 종류별로 줄을 나누지 않습니다.</b> 종류마다 태그 수가 달라 빈 칸이 생기고 지저분해 보여, 앱·모바일처럼 <b>구분 없이 한 줄로 흐르게</b> 두었습니다. 종류 구분은 화면이 아니라 등록 화면과 검색 쪽에서 씁니다.
+      <span class="src">근거 · 킥오프 회의 1순위 「의료진·질환·진료과·센터를 ID 기반 관계형 연결」 / 9/14 회의 「검사명·시술명·신체부위 태깅 추가」 / 9/29 홍보팀 피드백 「기사 하단 태그가 종류별로 나뉘어 지저분함 — 구분 없이 나열」</span>
     </div>
   </div>
   <section class="tagsec" data-annot>
-    <div class="tagrow"><div class="lb">의료진</div><div class="tags">
-      <a class="tag db" href="#" onclick="return AMC.toast('의료진 페이지의 관련 뉴스로 이동 (시연)')">김○○ 교수 · 방사선종양학과</a>
-      <a class="tag db" href="#" onclick="return AMC.toast('의료진 페이지의 관련 뉴스로 이동 (시연)')">이○○ 교수 · 종양내과</a>
-    </div></div>
-    <div class="tagrow"><div class="lb">질환</div><div class="tags">
-      <a class="tag db" href="#" onclick="return AMC.toast('질환 페이지의 관련 뉴스로 이동 (시연)')">전립선암</a>
-      <a class="tag db" href="#" onclick="return AMC.toast('질환 페이지의 관련 뉴스로 이동 (시연)')">췌장암</a>
-      <a class="tag db" href="#" onclick="return AMC.toast('질환 페이지의 관련 뉴스로 이동 (시연)')">간암</a>
-    </div></div>
-    <div class="tagrow"><div class="lb">검사·시술</div><div class="tags">
-      <a class="tag db" href="#" onclick="return AMC.toast('검사·시술 연계 검색 (시연)')">중입자치료</a>
-      <a class="tag db" href="#" onclick="return AMC.toast('검사·시술 연계 검색 (시연)')">방사선치료</a>
-    </div></div>
-    <div class="tagrow"><div class="lb">신체부위</div><div class="tags">
-      <a class="tag db" href="#" onclick="return AMC.toast('신체부위 연계 검색 (시연)')">전립선</a>
-      <a class="tag db" href="#" onclick="return AMC.toast('신체부위 연계 검색 (시연)')">췌장</a>
-    </div></div>
-    <div class="tagrow"><div class="lb">주제</div><div class="tags">
-      <a class="tag" href="#" onclick="return AMC.toast('주제 태그 모아보기 (시연)')">#암</a>
-      <a class="tag" href="#" onclick="return AMC.toast('주제 태그 모아보기 (시연)')">#중입자</a>
-      <a class="tag" href="#" onclick="return AMC.toast('주제 태그 모아보기 (시연)')">#연구</a>
-    </div></div>
+    <div class="tags">
+      <a class="tag db" href="#" onclick="return AMC.toast(&quot;의료진 페이지의 관련 뉴스로 이동 (시연)&quot;)">김○○ 교수 · 방사선종양학과</a>
+      <a class="tag db" href="#" onclick="return AMC.toast(&quot;의료진 페이지의 관련 뉴스로 이동 (시연)&quot;)">이○○ 교수 · 종양내과</a>
+      <a class="tag db" href="#" onclick="return AMC.toast(&quot;질환 페이지의 관련 뉴스로 이동 (시연)&quot;)">전립선암</a>
+      <a class="tag db" href="#" onclick="return AMC.toast(&quot;질환 페이지의 관련 뉴스로 이동 (시연)&quot;)">췌장암</a>
+      <a class="tag db" href="#" onclick="return AMC.toast(&quot;질환 페이지의 관련 뉴스로 이동 (시연)&quot;)">간암</a>
+      <a class="tag db" href="#" onclick="return AMC.toast(&quot;검사·시술 연계 검색 (시연)&quot;)">중입자치료</a>
+      <a class="tag db" href="#" onclick="return AMC.toast(&quot;검사·시술 연계 검색 (시연)&quot;)">방사선치료</a>
+      <a class="tag db" href="#" onclick="return AMC.toast(&quot;신체부위 연계 검색 (시연)&quot;)">전립선</a>
+      <a class="tag db" href="#" onclick="return AMC.toast(&quot;신체부위 연계 검색 (시연)&quot;)">췌장</a>
+      <a class="tag" href="#" onclick="return AMC.toast(&quot;주제 태그 모아보기 (시연)&quot;)">#암</a>
+      <a class="tag" href="#" onclick="return AMC.toast(&quot;주제 태그 모아보기 (시연)&quot;)">#중입자</a>
+      <a class="tag" href="#" onclick="return AMC.toast(&quot;주제 태그 모아보기 (시연)&quot;)">#연구</a>
+    </div>
   </section>
 
   <!-- 연관 콘텐츠 -->
@@ -271,8 +264,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=21"></script>
-<script src="assets/js/site.js?v=21"></script>
+<script src="assets/js/data.js?v=22"></script>
+<script src="assets/js/site.js?v=22"></script>
 <script>
 AMC.layout({ active: 'research' });
 

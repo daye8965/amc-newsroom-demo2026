@@ -375,10 +375,11 @@ body.annot-on [data-annot]{outline:2px dashed rgba(194,65,12,.5);outline-offset:
 .art-table tr:nth-child(even) td{background:#fafbfc}
 
 /* 태그 */
+/* 종류별로 줄을 나누면 칸이 비어 지저분해진다.
+   앱·모바일처럼 구분 없이 한 줄로 흐르게 둔다.
+   종류 구분은 화면이 아니라 CMS와 검색 쪽에서 쓰인다. */
 .tagsec{margin-top:38px;border-top:1px solid var(--line);padding-top:24px}
-.tagrow{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap}
-.tagrow .lb{flex:none;width:86px;font-size:12px;font-weight:700;color:var(--ink-3);padding-top:6px}
-.tagrow .tags{display:flex;gap:7px;flex-wrap:wrap}
+.tagsec .tags{display:flex;gap:7px;flex-wrap:wrap}
 .tag{font-size:12.5px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);
   background:#fff;color:var(--ink-2);transition:.15s}
 .tag:hover{border-color:var(--amc-blue);color:var(--amc-blue);background:var(--bg-tint)}
