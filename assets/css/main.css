@@ -302,7 +302,17 @@ p{margin:0}
 .tvsec{background:var(--bg-soft);border-top:1px solid var(--line)}
 .tv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 @media (max-width:960px){.tv-grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:520px){.tv-grid{grid-template-columns:1fr}}
+/* 좁은 화면에서는 세로로 쌓지 않고 옆으로 밀어 본다.
+   카드 크기를 유지한 채 다음 영상이 살짝 걸쳐 보이게 둔다. */
+@media (max-width:560px){
+  .tv-grid{
+    display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    margin-inline:-16px;padding-inline:16px;scroll-padding-inline:16px;
+  }
+  .tv-grid::-webkit-scrollbar{display:none}
+  .tv-card{flex:0 0 74%;scroll-snap-align:start}
+}
 .tv-card .thumb{position:relative;border-radius:var(--radius);overflow:hidden}
 .tv-card .ph{aspect-ratio:16/9}
 .tv-card .play{position:absolute;inset:0;display:grid;place-items:center}
