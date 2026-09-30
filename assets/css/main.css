@@ -166,6 +166,10 @@ p{margin:0}
   white-space:nowrap;text-align:center;transition:.12s;
 }
 .nr-drop a:hover{color:var(--amc-blue);font-weight:700}
+.nr-drop a.new::after{
+  content:"NEW";font-size:8.5px;font-weight:800;color:#fff;background:var(--amc-mint);
+  border-radius:3px;padding:1px 4px;margin-left:5px;vertical-align:1px;letter-spacing:0.02em;
+}
 
 /* 좁은 화면에서는 가로로 밀어 보고, 드롭다운은 쓰지 않는다 */
 @media (max-width:700px){

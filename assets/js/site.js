@@ -46,9 +46,12 @@
       var drop = '';
       if (n.sub && n.sub.length) {
         drop = '<div class="nr-drop">' + n.sub.map(function (t) {
+          /* 문자열이거나 { label, isNew } 형태 */
+          var label = (typeof t === 'string') ? t : t.label;
+          var cls = (t && t.isNew) ? ' class="new"' : '';
           return n.subLink
-            ? '<a href="' + n.subLink + '?s=' + encodeURIComponent(t) + '">' + t + '</a>'
-            : '<a href="#" data-sub="' + t + '" onclick="return AMC.sub(this.dataset.sub)">' + t + '</a>';
+            ? '<a' + cls + ' href="' + n.subLink + '?s=' + encodeURIComponent(label) + '">' + label + '</a>'
+            : '<a' + cls + ' href="#" data-sub="' + label + '" onclick="return AMC.sub(this.dataset.sub)">' + label + '</a>';
         }).join('') + '</div>';
       }
 
@@ -100,7 +103,7 @@
     return [
       '<footer class="footer"><div class="wrap">',
       '<div class="cols">',
-      '<div><h5>뉴스룸</h5><ul><li>뉴스</li><li>헬스</li><li>피플</li><li>리서치·AI</li></ul></div>',
+      '<div><h5>뉴스룸</h5><ul><li>뉴스</li><li>헬스</li><li>피플</li></ul></div>',
       '<div><h5>프레스센터</h5><ul><li>보도자료</li><li>미디어 라이브러리</li><li>Fast Facts</li><li>언론문의</li></ul></div>',
       '<div><h5>바로가기</h5><ul><li>서울아산병원 홈</li><li>진료예약</li><li>건강TV</li><li>English Newsroom</li></ul></div>',
       '</div>',
