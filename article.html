@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기사 상세 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=33">
+<link rel="stylesheet" href="assets/css/main.css?v=34">
 <style>
   .iconbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;
     display:grid;place-items:center;font-size:13px;color:var(--ink-2);flex:none}
@@ -258,26 +258,23 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=33"></script>
-<script src="assets/js/site.js?v=33"></script>
+<script src="assets/js/data.js?v=34"></script>
+<script src="assets/js/site.js?v=34"></script>
 <script>
 AMC.layout({ active: 'research' });
 
 /* 연관 콘텐츠 — 담당자가 직접 지정한 건과 태그로 자동 매핑된 건이 섞인다.
    ⚠ 아래 기사는 모두 시연용 가상 예시입니다. */
 var RELATED = [
-  { k:'직접지정', man:true,  cat:'리서치·AI', date:'2025.08.20',
+  { k:'직접지정', man:true,  cat:'리서치·AI',
     title:'중입자치료 도입 준비 과정 ① 장비 반입부터 시운전까지',
     c1:'#00335f', c2:'#0091d4' },
-  { k:'직접지정', man:true,  cat:'리서치·AI', date:'2025.09.03',
+  { k:'직접지정', man:true,  cat:'리서치·AI',
     title:'중입자치료 도입 준비 과정 ② 첫 환자 치료까지',
     c1:'#0064ae', c2:'#00a19a' },
-  { k:'질환 태그', man:false, cat:'리서치·AI', date:'2026.09.11',
+  { k:'질환 태그', man:false, cat:'리서치·AI',
     title:'췌장암 조기 발견을 위한 AI 판독 모델 연구 결과 발표',
-    c1:'#00335f', c2:'#00a19a' },
-  { k:'의료진 태그', man:false, cat:'뉴스', date:'2026.07.14',
-    title:'방사선종양학과, 정밀 표적 치료 국제 심포지엄 개최',
-    c1:'#0091d4', c2:'#1d4ed8', img:'assets/img/news-01.jpg' }
+    c1:'#00335f', c2:'#00a19a', img:'assets/img/news-01.jpg' }
 ];
 
 document.getElementById('rel-list').innerHTML = RELATED.map(function (r) {
@@ -286,7 +283,6 @@ document.getElementById('rel-list').innerHTML = RELATED.map(function (r) {
     '<div class="meta"><span class="k' + (r.man ? ' man' : '') + '">' + r.k + '</span>' +
     '<span class="c">' + r.cat + '</span></div>' +
     '<div class="t">' + r.title + '</div>' +
-    '<div class="d">' + r.date + '</div>' +
     '</a></li>';
 }).join('');
 
