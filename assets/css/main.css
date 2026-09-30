@@ -447,13 +447,14 @@ body.annot-on [data-annot]{outline:2px dashed rgba(194,65,12,.5);outline-offset:
 .rel-list .th{display:block;border-radius:var(--radius);overflow:hidden;background:var(--bg-soft)}
 .rel-list .th .ph{aspect-ratio:16/9;font-size:10.5px;transition:transform .45s ease}
 .rel-list a:hover .th .ph{transform:scale(1.04)}
-.rel-list .meta{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:12px}
+/* 배지는 썸네일 위에 둔다. 썸네일과 제목 사이에 끼면 둘이 떨어져 보인다. */
+.rel-list .meta{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-bottom:9px}
 .rel-list .k{flex:none;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:3px;
   background:var(--bg-tint);color:var(--amc-blue)}
 .rel-list .k.man{background:#fff7ed;color:#c2410c}
 .rel-list .c{font-size:11.5px;font-weight:700;color:var(--amc-blue)}
 .rel-list .t{
-  margin-top:7px;font-size:15.5px;color:var(--ink);letter-spacing:-0.02em;line-height:1.45;
+  margin-top:10px;font-size:15.5px;color:var(--ink);letter-spacing:-0.02em;line-height:1.45;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
 }
 .rel-list a:hover .t{color:var(--amc-blue)}
@@ -470,7 +471,7 @@ body.annot-on [data-annot]{outline:2px dashed rgba(194,65,12,.5);outline-offset:
   .rel-list::-webkit-scrollbar{display:none}
   .rel-list li{flex:0 0 86%;scroll-snap-align:start}
   .rel-list a:hover .th .ph{transform:none}
-  .rel-list .meta{margin-top:10px}
+  .rel-list .meta{margin-bottom:7px}
   .rel-list .t{font-size:15px}
 }
 
