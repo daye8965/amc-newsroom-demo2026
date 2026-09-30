@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>앱 화면 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=39">
+<link rel="stylesheet" href="assets/css/main.css?v=40">
 <style>
   .phones{display:grid;grid-template-columns:repeat(3,minmax(0,320px));gap:28px;justify-content:center}
   @media (max-width:1040px){.phones{grid-template-columns:repeat(2,minmax(0,320px))}}
@@ -52,6 +52,27 @@
   .acard .t{grid-area:2/2/3/3;font-size:12.5px;font-weight:700;letter-spacing:-.03em;margin-top:3px;line-height:1.4;
     display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
   .acard .d{grid-area:3/2/4/3;font-size:10px;color:var(--ink-3);margin-top:4px}
+
+  /* 건강TV — 앱에서도 옆으로 밀어 본다 (웹 모바일과 같은 방식) */
+  .atv{border-top:1px solid var(--line);margin-top:8px;padding-bottom:16px}
+  .atv-row{
+    display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
+    scrollbar-width:none;padding:0 12px;scroll-padding-inline:12px;
+  }
+  .atv-row::-webkit-scrollbar{display:none}
+  .atv-card{flex:0 0 76%;scroll-snap-align:start}
+  .atv-card .th{position:relative;border-radius:5px;overflow:hidden}
+  .atv-card .ph{aspect-ratio:16/9;font-size:9px}
+  .atv-card .play{position:absolute;inset:0;display:grid;place-items:center}
+  .atv-card .play i{
+    width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.5);
+    border:1.5px solid rgba(255,255,255,.85);display:grid;place-items:center;
+  }
+  .atv-card .play i::after{content:"";border-left:9px solid #fff;border-block:5px solid transparent;margin-left:2px}
+  .atv-card .dur{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.75);
+    color:#fff;font-size:9.5px;padding:1px 5px;border-radius:3px}
+  .atv-card .t{font-size:12px;font-weight:700;letter-spacing:-.03em;margin-top:7px;line-height:1.4;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
   .aart{padding:14px}
   .aart .c{font-size:11px;font-weight:700;color:var(--amc-blue)}
@@ -149,11 +170,17 @@
 
             <div class="asec"><h4>최신 콘텐츠</h4><span class="more">전체보기 ›</span></div>
             <div class="acards" id="appCards"></div>
+
+            <div class="atv">
+              <div class="asec"><h4>건강TV</h4><span class="more">전체보기 ›</span></div>
+              <div class="atv-row" id="appTv"></div>
+            </div>
           </div>
         </div>
         <div class="phone-cap">앱 메인
           <span>웹 모바일과 같은 구성 — 검색창과 주요 태그를 첫 화면에 노출,
-          롤링은 옆으로 밀어 넘기고 목록은 작은 가로형으로 구분</span>
+          롤링은 옆으로 밀어 넘기고 목록은 작은 가로형으로 구분,
+          하단 건강TV도 옆으로 밀어 보기</span>
         </div>
       </div>
 
@@ -227,8 +254,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=39"></script>
-<script src="assets/js/site.js?v=39"></script>
+<script src="assets/js/data.js?v=40"></script>
+<script src="assets/js/site.js?v=40"></script>
 <script>
 AMC.layout({ active: '' });
 
@@ -250,6 +277,14 @@ document.getElementById('appCards').innerHTML = AMC_DATA.cards.slice(0, 6).map(f
     AMC.ph(c.c1, c.c2, '16:9', '', c.img) +
     '<div class="c">' + c.cat + '</div><div class="t">' + c.title + '</div>' +
     '<div class="d">' + c.date + '</div></a>';
+}).join('');
+
+/* 건강TV — 웹 모바일과 같이 옆으로 미는 방식 */
+document.getElementById('appTv').innerHTML = AMC_DATA.tv.map(function (t) {
+  return '<a class="atv-card" href="#" onclick="return AMC.toast(&quot;건강TV 영상 재생 (시연)&quot;)">' +
+    '<div class="th">' + AMC.ph(t.c1, t.c2, '16:9', '', t.img) +
+    '<div class="play"><i></i></div><div class="dur">' + t.dur + '</div></div>' +
+    '<div class="t">' + t.title + '</div></a>';
 }).join('');
 </script>
 </body>
