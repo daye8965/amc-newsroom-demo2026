@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>앱 화면 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=40">
+<link rel="stylesheet" href="assets/css/main.css?v=42">
 <style>
   .phones{display:grid;grid-template-columns:repeat(3,minmax(0,320px));gap:28px;justify-content:center}
   @media (max-width:1040px){.phones{grid-template-columns:repeat(2,minmax(0,320px))}}
@@ -72,6 +72,23 @@
   .atv-card .dur{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.75);
     color:#fff;font-size:9.5px;padding:1px 5px;border-radius:3px}
   .atv-card .t{font-size:12px;font-weight:700;letter-spacing:-.03em;margin-top:7px;line-height:1.4;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+  /* 앱 목록 — 제목만 보여 빠르게 훑는다 */
+  .alist-h{padding:14px 12px 4px}
+  .alist-h h4{font-size:15px;letter-spacing:-.03em}
+  .alist-h h4 span{color:var(--ink-3);margin-inline:3px}
+  .alist-h .cnt{font-size:10.5px;color:var(--ink-3);margin-top:4px}
+  .asubs{display:flex;gap:5px;padding:8px 12px 2px;overflow-x:auto;scrollbar-width:none}
+  .asubs::-webkit-scrollbar{display:none}
+  .asubs span{border:1px solid var(--line);border-radius:999px;padding:4px 11px;
+    font-size:11px;font-weight:600;color:var(--ink-3);white-space:nowrap}
+  .asubs span.on{background:var(--amc-blue);border-color:var(--amc-blue);color:#fff}
+  .alist{padding:6px 12px 14px}
+  .alist a{display:block;padding:12px 0;border-bottom:1px solid var(--line-2)}
+  .alist a:last-child{border-bottom:0}
+  .alist .d{font-size:10px;color:var(--ink-3)}
+  .alist .t{font-size:13px;font-weight:700;letter-spacing:-.03em;margin-top:4px;line-height:1.45;
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
   .aart{padding:14px}
@@ -184,7 +201,26 @@
         </div>
       </div>
 
-      <!-- 2. 앱 기사 -->
+      <!-- 2. 앱 목록 -->
+      <div>
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="screen">
+            <div class="abar"><span>‹</span><span class="t">뉴스</span><span class="ic">🔍 ⋮</span></div>
+            <div class="alist-h">
+              <h4>뉴스 <span>〉</span> 의료</h4>
+              <div class="cnt">총 922 개</div>
+            </div>
+            <div class="asubs"><span class="on">의료</span><span>행사</span><span>사회공헌</span></div>
+            <div class="alist" id="appList"></div>
+          </div>
+        </div>
+        <div class="phone-cap">앱 메뉴별 목록
+          <span>웹과 같은 화면이지만 본문 발췌를 빼고 제목만 — 좁은 화면에서 더 많이 훑을 수 있게</span>
+        </div>
+      </div>
+
+      <!-- 3. 앱 기사 -->
       <div>
         <div class="phone">
           <div class="notch"></div>
@@ -210,7 +246,7 @@
         </div>
       </div>
 
-      <!-- 3. 푸시 관리 -->
+      <!-- 4. 푸시 관리 -->
       <div>
         <div class="phone">
           <div class="notch"></div>
@@ -254,8 +290,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=40"></script>
-<script src="assets/js/site.js?v=40"></script>
+<script src="assets/js/data.js?v=42"></script>
+<script src="assets/js/site.js?v=42"></script>
 <script>
 AMC.layout({ active: '' });
 
@@ -277,6 +313,20 @@ document.getElementById('appCards').innerHTML = AMC_DATA.cards.slice(0, 6).map(f
     AMC.ph(c.c1, c.c2, '16:9', '', c.img) +
     '<div class="c">' + c.cat + '</div><div class="t">' + c.title + '</div>' +
     '<div class="d">' + c.date + '</div></a>';
+}).join('');
+
+/* 앱 메뉴별 목록 — 제목만 (웹 목록 화면의 좁은 화면 형태) */
+var APP_LIST = [
+  { d:'2026.09.28', t:'서울아산병원, 국내 첫 ‘태아심장센터’ 개소' },
+  { d:'2026.09.18', t:'서울아산병원, 美 뉴스위크 평가 ‘6개 임상분야 세계 TOP 10’ 국내 최다' },
+  { d:'2026.09.17', t:'소외계층과 함께한 32년, ‘더 큰 사랑’은 계속됩니다' },
+  { d:'2026.09.12', t:'로봇수술 20,000례 달성… 국내 최다 기록' },
+  { d:'2026.09.08', t:'소아 중증질환 통합진료센터 문 열어' },
+  { d:'2026.09.03', t:'국제 의료봉사단, 중앙아시아 심장수술 100례 지원' }
+];
+document.getElementById('appList').innerHTML = APP_LIST.map(function (a) {
+  return '<a href="#" onclick="return AMC.toast(&quot;앱 기사 상세로 이동 (시연)&quot;)">' +
+    '<div class="d">' + a.d + '</div><div class="t">' + a.t + '</div></a>';
 }).join('');
 
 /* 건강TV — 웹 모바일과 같이 옆으로 미는 방식 */

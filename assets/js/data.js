@@ -15,8 +15,8 @@ window.AMC_DATA = {
      헬스의 '연구이야기'만 신설된 리서치·AI 로 옮겼습니다. */
   nav: [
     { id: 'all',      label: '전체',      href: 'index.html' },
-    { id: 'news',     label: '뉴스',      href: 'index.html#news',
-      sub: ['의료', '행사', '사회공헌'] },
+    { id: 'news',     label: '뉴스',      href: 'list.html',
+      sub: ['의료', '행사', '사회공헌'], subLink: 'list.html' },
     { id: 'health',   label: '헬스',      href: 'index.html#health',
       sub: ['건강이야기'] },
     { id: 'people',   label: '피플',      href: 'index.html#people',

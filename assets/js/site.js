@@ -7,6 +7,7 @@
   var PAGES = [
     { href: 'start.html', label: '시연 시작' },
     { href: 'index.html', label: '뉴스룸 메인' },
+    { href: 'list.html', label: '메뉴별 목록' },
     { href: 'article.html', label: '기사 상세' },
     { href: 'press.html', label: '프레스센터' },
     { href: 'admin.html', label: '업로드 페이지(CMS)' },
@@ -41,10 +42,13 @@
       if (n.id === opts.active) cls.push('on');
       if (n.isNew) cls.push('new');
 
+      /* subLink 가 있는 코너는 실제 목록 화면으로 넘어간다 (시연용 예시 코너) */
       var drop = '';
       if (n.sub && n.sub.length) {
         drop = '<div class="nr-drop">' + n.sub.map(function (t) {
-          return '<a href="#" data-sub="' + t + '" onclick="return AMC.sub(this.dataset.sub)">' + t + '</a>';
+          return n.subLink
+            ? '<a href="' + n.subLink + '?s=' + encodeURIComponent(t) + '">' + t + '</a>'
+            : '<a href="#" data-sub="' + t + '" onclick="return AMC.sub(this.dataset.sub)">' + t + '</a>';
         }).join('') + '</div>';
       }
 
