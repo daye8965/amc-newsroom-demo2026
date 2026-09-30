@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기사 상세 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=32">
+<link rel="stylesheet" href="assets/css/main.css?v=33">
 <style>
   .iconbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;
     display:grid;place-items:center;font-size:13px;color:var(--ink-2);flex:none}
@@ -205,21 +205,18 @@
 
   <!-- 연관 콘텐츠 -->
   <div class="annot">
-    <div class="annot-pin"><b>10</b> 연관 콘텐츠 — 텍스트 목록형</div>
+    <div class="annot-pin"><b>10</b> 연관 콘텐츠 — 작은 썸네일 목록</div>
     <div class="annot-box">
-      기준이 불명확했던 이미지 롤링 방식을 <b>텍스트 제목 목록</b>으로 바꿨습니다. 키워드 기반 자동 매핑을 기본으로 하되, 상·하편처럼 시리즈로 묶어야 하는 경우 담당자가 URL을 <b>직접 지정</b>할 수 있습니다(주황색 배지). 지정은 <a href="admin.html" style="color:var(--amc-blue);font-weight:700">업로드 페이지</a>의 「연관 콘텐츠」 칸에서 하고, 비워두면 이 목록이 태그로 자동 채워집니다.
-      <span class="src">근거 · 8/24 팀장 회의 「연관페이지 — 이미지 롤링 아닌 텍스트 제목」 / 9/14 회의 「키워드 기반 자동 매핑 또는 URL 직접 지정」</span>
+      기준이 불명확했던 <b>이미지 롤링</b> 방식을 <b>제목이 먼저 보이는 목록</b>으로 바꿨습니다.
+      제목을 훑을 수 있게 하되, 어떤 기사인지 알아보기 쉽도록 <b>작은 썸네일</b>을 왼쪽에 함께 둡니다.
+      아래에 따로 있던 「같은 코너의 다른 콘텐츠」는 이 목록과 역할이 겹쳐 없앴습니다. 키워드 기반 자동 매핑을 기본으로 하되, 상·하편처럼 시리즈로 묶어야 하는 경우 담당자가 URL을 <b>직접 지정</b>할 수 있습니다(주황색 배지). 지정은 <a href="admin.html" style="color:var(--amc-blue);font-weight:700">업로드 페이지</a>의 「연관 콘텐츠」 칸에서 하고, 비워두면 이 목록이 태그로 자동 채워집니다.
+      <span class="src">근거 · 8/24 팀장 회의 「연관페이지 — 이미지 롤링 아닌 텍스트 제목」 / 9/14 회의 「키워드 기반 자동 매핑 또는 URL 직접 지정」 / 9/30 홍보팀 피드백 「같은 코너 다른 콘텐츠는 삭제하고 연관 콘텐츠에 작은 썸네일을 함께」</span>
     </div>
   </div>
   <section class="related" data-annot>
     <h3>연관 콘텐츠</h3>
     <p class="sub">질환·의료진 태그 기반 자동 매핑 + 담당자 직접 지정</p>
-    <ul class="rel-list">
-      <li><a href="#" onclick="return AMC.toast('연관 기사로 이동 (시연)')"><span class="k man">직접지정</span><span class="t">중입자치료 도입 준비 과정 ① 장비 반입부터 시운전까지</span><span class="d">2025.08.20</span></a></li>
-      <li><a href="#" onclick="return AMC.toast('연관 기사로 이동 (시연)')"><span class="k man">직접지정</span><span class="t">중입자치료 도입 준비 과정 ② 첫 환자 치료까지</span><span class="d">2025.09.03</span></a></li>
-      <li><a href="#" onclick="return AMC.toast('연관 기사로 이동 (시연)')"><span class="k">질환 태그</span><span class="t">췌장암 조기 발견을 위한 AI 판독 모델 연구 결과 발표</span><span class="d">2026.09.11</span></a></li>
-      <li><a href="#" onclick="return AMC.toast('연관 기사로 이동 (시연)')"><span class="k">의료진 태그</span><span class="t">방사선종양학과, 정밀 표적 치료 국제 심포지엄 개최</span><span class="d">2026.07.14</span></a></li>
-    </ul>
+    <ul class="rel-list" id="rel-list"></ul>
   </section>
 
   <!-- 이전/다음 -->
@@ -236,12 +233,6 @@
 
 </article>
 
-<section class="sec" style="background:var(--bg-soft);border-top:1px solid var(--line);margin-top:50px">
-  <div class="wrap">
-    <div class="sec-head"><h2>같은 코너의 다른 콘텐츠</h2><span class="desc">리서치 · AI</span></div>
-    <div class="cards" id="more-grid"></div>
-  </div>
-</section>
 
 <!-- AI 요약 팝업 -->
 <div class="aiscrim" id="aiScrim" onclick="closeAi()"></div>
@@ -267,16 +258,36 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=32"></script>
-<script src="assets/js/site.js?v=32"></script>
+<script src="assets/js/data.js?v=33"></script>
+<script src="assets/js/site.js?v=33"></script>
 <script>
 AMC.layout({ active: 'research' });
 
-document.getElementById('more-grid').innerHTML = AMC_DATA.cards.slice(0, 3).map(function (c) {
-  return '<a class="card" href="article.html">' +
-    '<div class="thumb">' + AMC.ph(c.c1, c.c2, '16:9 가로 이미지', '', c.img) + '</div>' +
-    '<div class="cat">' + c.cat + '</div><h3>' + c.title + '</h3>' +
-    '<div class="date">' + c.date + '</div></a>';
+/* 연관 콘텐츠 — 담당자가 직접 지정한 건과 태그로 자동 매핑된 건이 섞인다.
+   ⚠ 아래 기사는 모두 시연용 가상 예시입니다. */
+var RELATED = [
+  { k:'직접지정', man:true,  cat:'리서치·AI', date:'2025.08.20',
+    title:'중입자치료 도입 준비 과정 ① 장비 반입부터 시운전까지',
+    c1:'#00335f', c2:'#0091d4' },
+  { k:'직접지정', man:true,  cat:'리서치·AI', date:'2025.09.03',
+    title:'중입자치료 도입 준비 과정 ② 첫 환자 치료까지',
+    c1:'#0064ae', c2:'#00a19a' },
+  { k:'질환 태그', man:false, cat:'리서치·AI', date:'2026.09.11',
+    title:'췌장암 조기 발견을 위한 AI 판독 모델 연구 결과 발표',
+    c1:'#00335f', c2:'#00a19a' },
+  { k:'의료진 태그', man:false, cat:'뉴스', date:'2026.07.14',
+    title:'방사선종양학과, 정밀 표적 치료 국제 심포지엄 개최',
+    c1:'#0091d4', c2:'#1d4ed8', img:'assets/img/news-01.jpg' }
+];
+
+document.getElementById('rel-list').innerHTML = RELATED.map(function (r) {
+  return '<li><a href="#" onclick="return AMC.toast(&quot;연관 기사로 이동 (시연)&quot;)">' +
+    '<div class="th">' + AMC.ph(r.c1, r.c2, '16:9', '', r.img) + '</div>' +
+    '<div class="meta"><span class="k' + (r.man ? ' man' : '') + '">' + r.k + '</span>' +
+    '<span class="c">' + r.cat + '</span></div>' +
+    '<div class="t">' + r.title + '</div>' +
+    '<div class="d">' + r.date + '</div>' +
+    '</a></li>';
 }).join('');
 
 /* AI 요약 팝업 */
