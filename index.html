@@ -6,7 +6,7 @@
 <title>서울아산병원 뉴스룸 (개편 시안) | 2026 웹·앱 통합개편 시연용</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="2026 뉴스룸 웹·앱 통합개편 논의를 위한 시연용 프로토타입입니다. 실제 서비스가 아닙니다.">
-<link rel="stylesheet" href="assets/css/main.css?v=37">
+<link rel="stylesheet" href="assets/css/main.css?v=39">
 </head>
 <body>
 
@@ -21,6 +21,15 @@
         현재 뉴스룸은 상단 메뉴(뉴스·헬스·피플·프레스센터)와 목록 위 탭(전체·뉴스·헬스·피플)이 사실상 같은 분류를 두 번 보여줍니다. 개편안에서는 <b>뉴스룸 서브메뉴 한 줄</b>로 통합하고, 통합 홈페이지 GNB와도 중복되지 않도록 그 아래에 배치했습니다.<br>
         <b>2단 분류는 드롭다운으로 그대로 씁니다.</b> 메뉴에 올리면 지금 뉴스룸과 같이 하위 분류가 펼쳐지므로, 탭 줄을 하나 더 두지 않아도 의료·행사·건강이야기 같은 하위 목록으로 바로 갈 수 있습니다. 좁은 화면에서는 드롭다운 대신 메뉴 줄을 옆으로 밀어 봅니다.
         <span class="src">근거 · 8/24 팀장 회의 「메인 페이지 상단 중복 영역 통합」 / 9/14 회의 「뉴스룸 자체 서브 메뉴는 상단 중복 없이 하단에 배치」 / 9/30 홍보팀 피드백 「현재 뉴스룸의 메뉴 드롭다운을 시연 화면에도 반영」</span>
+      </div>
+    </div>
+    <div class="annot">
+      <div class="annot-pin"><b>3</b> ‘리서치·AI’ 카테고리 신설</div>
+      <div class="annot-box">
+        환자에게 바로 적용되지 않는 기초연구·논문 기반 보도자료를 별도 디렉토리로 분리해 메인 혼잡도를 낮추고, 연구 중심 브랜드 이미지를 강화합니다. 영문 뉴스룸에는 이미 Research 카테고리가 운영 중입니다.<br>
+        위 <b>메뉴에 올려 보면</b> 지금 <b>헬스</b> 아래에 있던 <b>연구이야기</b>가 <b>리서치·AI</b>로 옮겨간 것을 확인할 수 있습니다. 헬스에는 환자용 <b>건강이야기</b>만 남습니다.<br>
+        메인에 따로 두었던 <b>리서치·AI 전용 영역은 내렸습니다.</b> 「최신 콘텐츠」에 이미 같은 기사가 섞여 나와 화면이 길어지기만 했습니다. 분류는 메뉴에서 들어가 봅니다.
+        <span class="src">근거 · 8/24 팀장 회의 「기초연구 콘텐츠 별도 카테고리 분리」 / 9/14 회의 「리서치/AI 신규 디렉토리 상단 노출 검토」 / 9/30 홍보팀 피드백 「메인의 리서치·AI 영역 삭제」</span>
       </div>
     </div>
     <div class="annot">
@@ -69,26 +78,6 @@
   </div>
 </section>
 
-<!-- ============ 리서치·AI (신설 카테고리) ============ -->
-<section class="sec" id="research" style="background:var(--bg-soft);border-top:1px solid var(--line)">
-  <div class="wrap">
-    <div class="annot">
-      <div class="annot-pin"><b>3</b> ‘리서치·AI’ 카테고리 신설</div>
-      <div class="annot-box">
-        환자에게 바로 적용되지 않는 기초연구·논문 기반 보도자료를 별도 디렉토리로 분리해 메인 혼잡도를 낮추고, 연구 중심 브랜드 이미지를 강화합니다. 영문 뉴스룸에는 이미 Research 카테고리가 운영 중입니다.<br>
-        메뉴에 올려 보면 지금 <b>헬스</b> 아래에 있던 <b>연구이야기</b>가 <b>리서치·AI</b>로 옮겨간 것을 확인할 수 있습니다. 헬스에는 환자용 <b>건강이야기</b>만 남습니다.
-        <span class="src">근거 · 8/24 팀장 회의 「기초연구 콘텐츠 별도 카테고리 분리」 / 9/14 회의 「리서치/AI 신규 디렉토리 상단 노출 검토」</span>
-      </div>
-    </div>
-    <div class="sec-head">
-      <h2>리서치 · AI</h2>
-      <span class="desc">연구성과 · 논문 · 의료 AI</span>
-      <a class="more" href="#" onclick="return AMC.toast('리서치·AI 전체 목록 (시연)')">전체보기 ›</a>
-    </div>
-    <div class="cards" id="research-grid" data-annot></div>
-  </div>
-</section>
-
 <!-- ============ 건강TV ============ -->
 <section class="sec tvsec">
   <div class="wrap">
@@ -110,8 +99,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=37"></script>
-<script src="assets/js/site.js?v=37"></script>
+<script src="assets/js/data.js?v=39"></script>
+<script src="assets/js/site.js?v=39"></script>
 <script>
 AMC.layout({ active: 'all' });
 
@@ -135,9 +124,9 @@ function cardHTML(c) {
     '<h3>' + c.title + '</h3>' +
     '<div class="date">' + c.date + '</div></a>';
 }
-document.getElementById('card-grid').innerHTML = D.cards.slice(0, 9).map(cardHTML).join('');
-document.getElementById('research-grid').innerHTML =
-  D.cards.filter(function (c) { return c.cat === '리서치·AI'; }).map(cardHTML).join('');
+/* 리서치·AI 전용 영역을 내렸으므로 12건을 모두 보여준다.
+   9건만 두면 그 영역에만 있던 기사가 메인에서 사라진다. */
+document.getElementById('card-grid').innerHTML = D.cards.map(cardHTML).join('');
 
 /* 건강TV */
 document.getElementById('tv-grid').innerHTML = D.tv.map(function (t) {
