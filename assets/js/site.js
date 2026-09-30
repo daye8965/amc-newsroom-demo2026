@@ -175,6 +175,18 @@
     return false;
   }
 
+  /* 메가메뉴 배경 판의 높이를 가장 긴 열에 맞춘다.
+     열이 절대배치라 부모가 높이를 모르므로 한 번 재서 변수로 넘긴다. */
+  function sizeMega() {
+    var nav = document.querySelector('.nr-nav');
+    if (!nav) return;
+    var h = 0;
+    Array.prototype.forEach.call(nav.querySelectorAll('.nr-drop'), function (d) {
+      h = Math.max(h, d.offsetHeight);
+    });
+    nav.style.setProperty('--mega-h', h ? h + 'px' : '0px');
+  }
+
   /* ---------- 히어로 — 가운데 한 장 + 양옆 미리보기 ----------
      원본 n장을 세 벌 이어 붙이고 가운데 벌에서 시작한다.
      끝에 닿으면 애니메이션이 끝난 뒤 같은 장의 가운데 벌 위치로 조용히 옮겨,
@@ -333,5 +345,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     initHero();
     initAnnotations();
+    sizeMega();
+    window.addEventListener('resize', sizeMega);
   });
 })();

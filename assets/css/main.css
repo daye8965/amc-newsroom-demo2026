@@ -127,6 +127,12 @@ p{margin:0}
 .nr-nav{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:74px;z-index:39}
 .nr-nav .wrap{display:flex;gap:2px}
 .nr-item{position:relative}
+/* 메뉴 사이가 좁으면 아래 서브메뉴 열끼리 겹친다.
+   가장 긴 서브메뉴(아산인 이야기)가 들어갈 만큼 항목 폭을 확보한다. */
+@media (min-width:701px){
+  .nr-item{min-width:116px;display:flex;justify-content:center}
+  .nr-item > a{padding-inline:8px}
+}
 .nr-item > a{
   display:block;padding:14px 16px;font-size:15px;font-weight:600;color:var(--ink-2);
   white-space:nowrap;border-bottom:2px solid transparent;transition:.15s;
@@ -138,20 +144,28 @@ p{margin:0}
   border-radius:3px;padding:1px 4px;margin-left:5px;vertical-align:2px;letter-spacing:0.02em;
 }
 
-/* 서브메뉴 — 올리거나 키보드로 들어오면 펼쳐진다 */
+/* 서브메뉴 — 메뉴 줄에 올리면 모든 분류가 한 판에 같이 펼쳐진다.
+   각 열은 자기 상위 메뉴 아래에 자동으로 붙는다 (같은 .nr-item 안에 있으므로). */
+.nr-nav::after{
+  content:"";position:absolute;left:0;right:0;top:100%;height:var(--mega-h,0px);
+  background:#fff;border-bottom:1px solid var(--line);
+  box-shadow:0 12px 24px rgba(17,24,32,.08);
+  opacity:0;visibility:hidden;transition:.15s ease;z-index:55;
+}
 .nr-drop{
-  position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(-4px);
-  min-width:132px;background:#fff;border:1px solid var(--line);border-radius:0 0 6px 6px;
-  box-shadow:0 10px 24px rgba(17,24,32,.12);padding:6px 0;
+  position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  padding:16px 4px 20px;display:grid;gap:11px;
   opacity:0;visibility:hidden;transition:.15s ease;z-index:60;
 }
-.nr-item:hover > .nr-drop,
-.nr-item:focus-within > .nr-drop{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nr-nav:hover::after,
+.nr-nav:focus-within::after,
+.nr-nav:hover .nr-drop,
+.nr-nav:focus-within .nr-drop{opacity:1;visibility:visible}
 .nr-drop a{
-  display:block;padding:8px 18px;font-size:13.5px;color:var(--ink-2);
+  display:block;padding:2px 10px;font-size:13.5px;color:var(--ink-2);
   white-space:nowrap;text-align:center;transition:.12s;
 }
-.nr-drop a:hover{background:var(--bg-tint);color:var(--amc-blue);font-weight:600}
+.nr-drop a:hover{color:var(--amc-blue);font-weight:700}
 
 /* 좁은 화면에서는 가로로 밀어 보고, 드롭다운은 쓰지 않는다 */
 @media (max-width:700px){
