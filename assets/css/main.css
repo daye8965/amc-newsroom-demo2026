@@ -125,17 +125,39 @@ p{margin:0}
 
 /* ---------- 뉴스룸 자체 서브메뉴 (하단 배치) ---------- */
 .nr-nav{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:74px;z-index:39}
-.nr-nav .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
-.nr-nav .wrap::-webkit-scrollbar{display:none}
-.nr-nav a{
-  padding:14px 16px;font-size:15px;font-weight:600;color:var(--ink-2);
+.nr-nav .wrap{display:flex;gap:2px}
+.nr-item{position:relative}
+.nr-item > a{
+  display:block;padding:14px 16px;font-size:15px;font-weight:600;color:var(--ink-2);
   white-space:nowrap;border-bottom:2px solid transparent;transition:.15s;
 }
-.nr-nav a:hover{color:var(--amc-blue)}
-.nr-nav a.on{color:var(--amc-blue);border-bottom-color:var(--amc-blue)}
-.nr-nav a.new::after{
+.nr-item > a:hover{color:var(--amc-blue)}
+.nr-item > a.on{color:var(--amc-blue);border-bottom-color:var(--amc-blue)}
+.nr-item > a.new::after{
   content:"NEW";font-size:9px;font-weight:800;color:#fff;background:var(--amc-mint);
   border-radius:3px;padding:1px 4px;margin-left:5px;vertical-align:2px;letter-spacing:0.02em;
+}
+
+/* 서브메뉴 — 올리거나 키보드로 들어오면 펼쳐진다 */
+.nr-drop{
+  position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(-4px);
+  min-width:132px;background:#fff;border:1px solid var(--line);border-radius:0 0 6px 6px;
+  box-shadow:0 10px 24px rgba(17,24,32,.12);padding:6px 0;
+  opacity:0;visibility:hidden;transition:.15s ease;z-index:60;
+}
+.nr-item:hover > .nr-drop,
+.nr-item:focus-within > .nr-drop{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nr-drop a{
+  display:block;padding:8px 18px;font-size:13.5px;color:var(--ink-2);
+  white-space:nowrap;text-align:center;transition:.12s;
+}
+.nr-drop a:hover{background:var(--bg-tint);color:var(--amc-blue);font-weight:600}
+
+/* 좁은 화면에서는 가로로 밀어 보고, 드롭다운은 쓰지 않는다 */
+@media (max-width:700px){
+  .nr-nav .wrap{overflow-x:auto;scrollbar-width:none}
+  .nr-nav .wrap::-webkit-scrollbar{display:none}
+  .nr-drop{display:none}
 }
 
 /* ---------- 히어로 (가운데 한 장 + 양옆 미리보기) ----------

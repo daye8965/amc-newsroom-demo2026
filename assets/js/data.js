@@ -11,13 +11,20 @@
 window.AMC_DATA = {
 
   /* 뉴스룸 자체 서브메뉴 (상단 통합 GNB와 중복 없이 하단 배치) */
+  /* 서브메뉴(sub)는 현재 뉴스룸의 드롭다운을 그대로 옮긴 것입니다.
+     헬스의 '연구이야기'만 신설된 리서치·AI 로 옮겼습니다. */
   nav: [
     { id: 'all',      label: '전체',      href: 'index.html' },
-    { id: 'news',     label: '뉴스',      href: 'index.html#news' },
-    { id: 'health',   label: '헬스',      href: 'index.html#health' },
-    { id: 'people',   label: '피플',      href: 'index.html#people' },
-    { id: 'research', label: '리서치·AI', href: 'index.html#research', isNew: true },
-    { id: 'press',    label: '프레스센터', href: 'press.html' }
+    { id: 'news',     label: '뉴스',      href: 'index.html#news',
+      sub: ['의료', '행사', '사회공헌'] },
+    { id: 'health',   label: '헬스',      href: 'index.html#health',
+      sub: ['건강이야기'] },
+    { id: 'people',   label: '피플',      href: 'index.html#people',
+      sub: ['환자 이야기', '아산인 이야기', '동정', '뉴스룸 칼럼'] },
+    { id: 'research', label: '리서치·AI', href: 'index.html#research', isNew: true,
+      sub: ['연구이야기', '연구성과', '논문', '의료AI'] },
+    { id: 'press',    label: '프레스센터', href: 'press.html',
+      sub: ['보도자료', '병원 소개', '정기간행물'] }
   ],
 
   /* 검색창 아래에 노출하는 주요 태그

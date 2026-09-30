@@ -35,11 +35,22 @@
       return '<a href="#" data-tag="' + t + '" onclick="return AMC.tag(this.dataset.tag)">#' + t + '</a>';
     }).join('');
 
+    /* 서브메뉴가 있으면 올렸을 때 아래로 펼쳐진다 (현재 뉴스룸과 같은 방식) */
     var nrNav = nav.map(function (n) {
       var cls = [];
       if (n.id === opts.active) cls.push('on');
       if (n.isNew) cls.push('new');
-      return '<a href="' + n.href + '"' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') + '>' + n.label + '</a>';
+
+      var drop = '';
+      if (n.sub && n.sub.length) {
+        drop = '<div class="nr-drop">' + n.sub.map(function (t) {
+          return '<a href="#" data-sub="' + t + '" onclick="return AMC.sub(this.dataset.sub)">' + t + '</a>';
+        }).join('') + '</div>';
+      }
+
+      return '<div class="nr-item">' +
+        '<a href="' + n.href + '"' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') + '>' + n.label + '</a>' +
+        drop + '</div>';
     }).join('');
 
     return [
@@ -301,9 +312,14 @@
     return toast('<b>#' + name + '</b> 태그가 붙은 콘텐츠를 모아 보여줍니다 (시연)');
   }
 
+  function sub(name) {
+    return toast('<b>' + name + '</b> 목록으로 이동합니다 (시연)');
+  }
+
   window.AMC = {
     toast: toast,
     tag: tag,
+    sub: sub,
     ph: ph,
     search: search,
     layout: function (opts) {
