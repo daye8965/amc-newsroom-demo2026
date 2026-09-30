@@ -72,7 +72,6 @@
       '<div class="nr-tags" aria-label="주요 태그">' + tagRow + '</div>',
       '</div>',
       '<div class="nr-utils">',
-      '<a href="#" onclick="return AMC.toast(\'마이페이지 &gt; 스크랩한 콘텐츠로 이동합니다 (시연)\')">☆ 스크랩</a>',
       '<a href="#" onclick="return AMC.toast(\'영문 뉴스룸으로 이동합니다 (시연)\')">EN</a>',
       '</div>',
       '</div></header>',
