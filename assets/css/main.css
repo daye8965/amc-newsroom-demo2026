@@ -179,12 +179,13 @@ p{margin:0}
 }
 
 /* ---------- 히어로 (가운데 한 장 + 양옆 미리보기) ----------
-   가로로 길면 사진 위아래가 잘려 인물·현판이 날아간다.
-   양 사이드를 잘라 카드 그리드와 같은 16:9로 맞추고,
-   남는 좌우 공간에 앞뒤 기사를 걸쳐 보여 넘길 수 있게 한다. */
+   폭은 아래 카드 3장을 합한 길이(본문 단 전체)와 같게 맞춘다.
+   가로로 길고 세로로 짧은 띠 모양이라 사진 위아래가 잘리는데,
+   어느 쪽을 남길지는 등록할 때 썸네일로 직접 잡는다.
+   본문 단 바깥에 남는 여백으로 앞뒤 기사가 걸쳐 보여 넘길 수 있다. */
 .hero{padding-top:28px}
 .hero-stage{
-  --slide-w:min(880px,72vw);
+  --slide-w:min(calc(var(--wrap) - 48px),calc(100vw - 48px));
   position:relative;overflow:hidden;padding-block:2px;
 }
 @media (max-width:760px){.hero-stage{--slide-w:88vw}}
@@ -199,7 +200,12 @@ p{margin:0}
   opacity:.4;transition:opacity .35s ease;
 }
 .hero-slide.on{opacity:1;cursor:default}
-.hero-slide .ph{aspect-ratio:16/9;width:100%}
+/* 넓은 화면에서만 띠 모양. 폰에서까지 2.7:1 이면 높이가 120px밖에 안 된다. */
+.hero-slide .ph{aspect-ratio:2.7/1;width:100%}
+@media (max-width:760px){.hero-slide .ph{aspect-ratio:16/9}}
+/* 띠로 자르면 가운데만 남아 인물 머리가 날아간다. 조금 위쪽을 남기는 것을
+   기본값으로 두고, 사진마다 달리 잡아야 하면 등록 화면에서 지정한다. */
+.hero-slide .ph > img{object-position:center 30%}
 
 .hero-cap{
   position:absolute;inset:auto 0 0 0;padding:24px 28px;
@@ -230,6 +236,7 @@ p{margin:0}
 
 /* 앱 목업 안의 롤링 — 폰 화면(약 300px) 안에서 같은 구조로 축소 */
 .hero-stage.in-app{--slide-w:82%;padding-block:0}
+.hero-stage.in-app .hero-slide .ph{aspect-ratio:16/9}
 .hero-stage.in-app .hero-track{gap:8px}
 .hero-stage.in-app .hero-slide{border-radius:5px}
 .hero-stage.in-app .hero-cap{padding:11px 12px}
