@@ -194,12 +194,18 @@ p{margin:0}
 
 .hero-track{display:flex;gap:16px;will-change:transform;
   transition:transform .45s cubic-bezier(.4,0,.2,1)}
+/* 가운데로 오면 커지고 옆으로 빠지면 작아진다.
+   축은 가운데 쪽 모서리에 둔다 — 바깥쪽을 축으로 줄이면
+   걸쳐 보이던 부분이 화면 밖으로 밀려나 아예 안 보인다. */
 .hero-slide{
   flex:0 0 var(--slide-w);position:relative;overflow:hidden;
   border-radius:var(--radius);background:#000;cursor:pointer;
-  opacity:.4;transition:opacity .35s ease;
+  opacity:.4;transform:scale(.82);transform-origin:center;
+  transition:opacity .35s ease,transform .45s cubic-bezier(.4,0,.2,1);
 }
-.hero-slide.on{opacity:1;cursor:default}
+.hero-slide.side-l{transform-origin:right center}
+.hero-slide.side-r{transform-origin:left center}
+.hero-slide.on{opacity:1;transform:none;cursor:default}
 /* 넓은 화면에서만 띠 모양. 폰에서까지 2.7:1 이면 높이가 120px밖에 안 된다. */
 .hero-slide .ph{aspect-ratio:2.7/1;width:100%}
 @media (max-width:760px){.hero-slide .ph{aspect-ratio:16/9}}

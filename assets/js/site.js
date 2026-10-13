@@ -219,14 +219,22 @@
 
     function place(animate) {
       if (!animate) track.style.transition = 'none';
-      var w = all[0].getBoundingClientRect().width;
+      /* 옆 장은 작게 줄여 두므로 getBoundingClientRect 를 쓰면 줄어든 폭이 나온다.
+         자리 계산은 줄이기 전의 폭(offsetWidth)으로 해야 한다. */
+      var w = all[0].offsetWidth;
       var gap = parseFloat(getComputedStyle(track).columnGap || 0) || 0;
       var x = i * (w + gap) - (stage.clientWidth - w) / 2;
       curX = -x;
       track.style.transform = 'translateX(' + curX + 'px)';
       if (!animate) { void track.offsetWidth; track.style.transition = ''; }
 
-      all.forEach(function (s, k) { s.classList.toggle('on', k === i); });
+      /* 가운데 장만 제 크기로, 양옆은 가운데 쪽 모서리를 축으로 줄인다
+         (바깥쪽을 축으로 줄이면 걸쳐 보이던 부분이 화면 밖으로 밀려난다) */
+      all.forEach(function (s, k) {
+        s.classList.toggle('on', k === i);
+        s.classList.toggle('side-l', k === i - 1);
+        s.classList.toggle('side-r', k === i + 1);
+      });
       var real = ((i % n) + n) % n;
       dots.forEach(function (d, k) { d.classList.toggle('on', k === real); });
     }
@@ -299,7 +307,7 @@
       swiped = Math.abs(dx) > 8;
       if (swiped) setTimeout(function () { swiped = false; }, 300);
       track.style.transition = '';
-      var w = all[0].getBoundingClientRect().width;
+      var w = all[0].offsetWidth;
       var need = Math.min(70, w * 0.18);
       if (dx < -need) go(1);
       else if (dx > need) go(-1);
