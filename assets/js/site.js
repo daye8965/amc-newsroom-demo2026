@@ -103,7 +103,7 @@
     return [
       '<footer class="footer"><div class="wrap">',
       '<div class="cols">',
-      '<div><h5>뉴스룸</h5><ul><li>뉴스</li><li>헬스</li><li>피플</li></ul></div>',
+      '<div><h5>뉴스룸</h5><ul><li>뉴스</li><li>헬스</li><li>피플</li><li>리서치·AI</li></ul></div>',
       '<div><h5>프레스센터</h5><ul><li>보도자료</li><li>미디어 라이브러리</li><li>Fast Facts</li><li>언론문의</li></ul></div>',
       '<div><h5>바로가기</h5><ul><li>서울아산병원 홈</li><li>진료예약</li><li>건강TV</li><li>English Newsroom</li></ul></div>',
       '</div>',
@@ -327,6 +327,11 @@
     play();
   }
 
+  /* 「코너 〉 분류」 표기. 리서치·AI 처럼 하위 분류가 없는 코너는 코너명만 쓴다. */
+  function crumb(cat, sub) {
+    return sub ? cat + ' 〉 ' + sub : cat;
+  }
+
   function tag(name) {
     return toast('<b>#' + name + '</b> 태그가 붙은 콘텐츠를 모아 보여줍니다 (시연)');
   }
@@ -340,6 +345,7 @@
     tag: tag,
     sub: sub,
     ph: ph,
+    crumb: crumb,
     search: search,
     layout: function (opts) {
       var top = document.getElementById('site-top');
