@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>앱 화면 (개편 시안) | 서울아산병원 뉴스룸 시연용</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="assets/css/main.css?v=51">
+<link rel="stylesheet" href="assets/css/main.css?v=52">
 <style>
   .phones{display:grid;grid-template-columns:repeat(3,minmax(0,320px));gap:28px;justify-content:center}
   @media (max-width:1040px){.phones{grid-template-columns:repeat(2,minmax(0,320px))}}
@@ -333,8 +333,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/data.js?v=51"></script>
-<script src="assets/js/site.js?v=51"></script>
+<script src="assets/js/data.js?v=52"></script>
+<script src="assets/js/site.js?v=52"></script>
 <script>
 AMC.layout({ active: '' });
 
@@ -362,7 +362,7 @@ document.getElementById('appCards').innerHTML = AMC_DATA.cards.slice(0, 6).map(f
 var APP_LIST = [
   { d:'2026.09.28', t:'서울아산병원, 국내 첫 ‘태아심장센터’ 개소', c1:'#00335f', c2:'#0091d4' },
   { d:'2026.09.18', t:'서울아산병원, 美 뉴스위크 평가 ‘6개 임상분야 세계 TOP 10’ 국내 최다', c1:'#0064ae', c2:'#00a19a' },
-  { d:'2026.09.17', t:'소외계층과 함께한 32년, ‘더 큰 사랑’은 계속됩니다', c1:'#0091d4', c2:'#1d4ed8', img:'assets/img/news-01.jpg' },
+  { d:'2026.09.17', t:'소외계층과 함께한 32년, ‘더 큰 사랑’은 계속됩니다', c1:'#0091d4', c2:'#1d4ed8' },
   { d:'2026.09.12', t:'로봇수술 20,000례 달성… 국내 최다 기록', c1:'#0064ae', c2:'#0091d4' },
   { d:'2026.09.08', t:'소아 중증질환 통합진료센터 문 열어', c1:'#0064ae', c2:'#1d4ed8' },
   { d:'2026.09.03', t:'국제 의료봉사단, 중앙아시아 심장수술 100례 지원', c1:'#0064ae', c2:'#00335f' }
@@ -381,7 +381,7 @@ var APP_REL = [
     t:'중입자치료 도입 준비 과정 ② 첫 환자 치료까지', c1:'#0064ae', c2:'#00a19a' },
   { k:'질환 태그', man:false, cat:'리서치·AI',
     t:'췌장암 조기 발견을 위한 AI 판독 모델 연구 결과 발표',
-    c1:'#00335f', c2:'#00a19a', img:'assets/img/news-01.jpg' }
+    c1:'#00335f', c2:'#00a19a' }
 ];
 document.getElementById('appRel').innerHTML = APP_REL.map(function (r) {
   return '<a href="#" onclick="return AMC.toast(&quot;연관 기사로 이동 (시연)&quot;)">' +
